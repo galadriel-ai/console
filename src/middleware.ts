@@ -2,15 +2,16 @@ import {NextResponse} from 'next/server';
 import type {NextRequest} from 'next/server';
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get('accessToken');
+  const token = req.cookies.get("accessToken");
   // Optimistic approach, if cookie is still present assume it's OK
   // Browser automatically deletes expired cookies
-  if (!token) {
+  if (!token && req.nextUrl.pathname !== "/login") {
     // If no session token, redirect to login page
-    return NextResponse.redirect(new URL('/login', req.url));
+    // return NextResponse.redirect("/login");
+    return NextResponse.redirect(new URL("/login", req.url));
   }
-  if (req.nextUrl.pathname === '/') {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
+  if (req.nextUrl.pathname === "/") {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
   // Optional: verify the token server-side if necessary
@@ -21,5 +22,7 @@ export function middleware(req: NextRequest) {
 export const config = {
   // matcher: ['/dashboard/:path*', '/profile/:path*'], // Protect these routes
   // TODO: match only authenticated routes
-  matcher: ["/:path*"], // All routes
-};
+  // https://stackoverflow.com/questions/76348460/nextjs-13-4-app-router-middleware-page-redirect-has-no-styles
+  // Exclude all static files etc
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
+}
