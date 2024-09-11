@@ -21,8 +21,8 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   // matcher: ['/dashboard/:path*', '/profile/:path*'], // Protect these routes
-  // TODO: match only authenticated routes
+  // Excludes /api and static files from middleware, and whitelisted pages that dont require to be logged in
   // https://stackoverflow.com/questions/76348460/nextjs-13-4-app-router-middleware-page-redirect-has-no-styles
-  // Exclude all static files etc
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
+  // Exclude all static files etc, just |route_name to exclude some page
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|authenticate).*)']
 }
