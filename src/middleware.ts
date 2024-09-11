@@ -3,10 +3,8 @@ import type {NextRequest} from 'next/server';
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get('accessToken');
-  // TODO: check token expiration
-
-  console.log("Middleware token")
-  console.log(token)
+  // Optimistic approach, if cookie is still present assume it's OK
+  // Browser automatically deletes expired cookies
   if (!token) {
     // If no session token, redirect to login page
     return NextResponse.redirect(new URL('/login', req.url));
@@ -20,7 +18,6 @@ export function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-// Apply middleware to certain routes
 export const config = {
   // matcher: ['/dashboard/:path*', '/profile/:path*'], // Protect these routes
   // TODO: match only authenticated routes

@@ -23,7 +23,7 @@ export async function POST(req: Request) {
   const cookie = serialize('accessToken', responseJson.session_token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 60 * 60 * 24, // 1 day
+    maxAge: parseInt(process.env.SESSION_TOKEN_AGE_SECONDS || `${2 * 60 * 60 * 24}`),
     sameSite: 'strict',
     path: '/',
   });
