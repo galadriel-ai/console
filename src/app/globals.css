@@ -9,6 +9,8 @@
   --Light-grey-1: #F3F4F6;
   --Light-grey-3: #E3E6EB;
 
+  --Red: #FC5A8D;
+
   --White: #FCFCFC;
 
   --background: #F3F4F6;
@@ -47,9 +49,13 @@ body {
   letter-spacing: -0.32px;
 }
 
-.unit {
+.gal-unit {
   font-size: 14px;
   font-weight: 500;
+}
+
+.gal-error {
+  color: var(--Red);
 }
 
 .gal-subtitle {

@@ -1,4 +1,5 @@
 import {getIcon, IconName} from "@/components/Icons";
+import {useRouter} from "next/navigation";
 
 export type MenuItemType = "network_stats" | "node_stats"
 
@@ -10,6 +11,20 @@ export default function Sidebar(
     onMenuItemChange: (menuItem: MenuItemType) => void
   }
 ) {
+  const router = useRouter();
+
+  const onLogout = async () => {
+    const response = await fetch('/api/logout', {
+      method: 'GET',
+    });
+
+    if (response.ok) {
+      // Redirect to the login page after logging out
+      router.push('/login');
+    } else {
+      console.error('Logout failed');
+    }
+  }
 
   return (
     <>
@@ -45,6 +60,7 @@ export default function Sidebar(
         </div>
       </div>
       <div className="flex flex-col gap-4">
+        <div className={"cursor-pointer"} onClick={onLogout}>Log out</div>
         <div className="gal-subtitle">Community & Support</div>
         <div className="flex flex-row gap-4">
           <a
