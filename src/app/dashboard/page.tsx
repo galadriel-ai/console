@@ -2,7 +2,9 @@
 
 import {useState} from "react";
 import Sidebar, {MenuItemType} from "@/components/Sidebar";
-import {Network} from "@/components/dashboard/Network";
+import {NetworkStats} from "@/components/dashboard/NetworkStats";
+import {NodeStats} from "@/components/dashboard/NodeStats";
+import {ApiKeys} from "@/components/dashboard/ApiKeys";
 
 export default function LoginPage() {
 
@@ -24,7 +26,13 @@ export default function LoginPage() {
       </div>
       <div className="w-4/5 h-full">
         {selectedMenu === "network_stats" &&
-          <Network/>
+          <NetworkStats/>
+        }
+        {selectedMenu === "node_stats" &&
+          <NodeStats/>
+        }
+        {selectedMenu === "api_keys" &&
+          <ApiKeys/>
         }
 
       </div>

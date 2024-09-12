@@ -1,7 +1,7 @@
 import {getIcon, IconName} from "@/components/Icons";
 import {useRouter} from "next/navigation";
 
-export type MenuItemType = "network_stats" | "node_stats"
+export type MenuItemType = "network_stats" | "node_stats" | "api_keys"
 
 export default function Sidebar(
   {
@@ -42,6 +42,12 @@ export default function Sidebar(
             isActive={selectedMenu === "node_stats"}
             iconName={"menu_mystats"}
             onClick={() => onMenuItemChange("node_stats")}
+          />
+          <MenuItem
+            name={"API Keys"}
+            isActive={selectedMenu === "api_keys"}
+            iconName={"menu_keys"}
+            onClick={() => onMenuItemChange("api_keys")}
           />
           <a
             href={process.env.NEXT_PUBLIC_DOCS_URL}
