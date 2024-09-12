@@ -3,6 +3,7 @@
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from "react";
 import {zxcvbn} from '@zxcvbn-ts/core';
+import {Suspense} from "react";
 
 export default function AuthenticatePage() {
   const router = useRouter();
@@ -68,39 +69,41 @@ export default function AuthenticatePage() {
   }
 
   return (
-    <div
-      className="flex w-full min-h-screen max-w-[1200px] mx-auto flex-col items-center gap-20 pt-10 py-2 px-5 lg:px-10 z-2 relative">
-      <div>Auth page</div>
+    <Suspense>
+      <div
+        className="flex w-full min-h-screen max-w-[1200px] mx-auto flex-col items-center gap-20 pt-10 py-2 px-5 lg:px-10 z-2 relative">
+        <div>Auth page</div>
 
-      <div>Lets finish setting up your account</div>
-      <div className={"gal-error"}>{errorMessage}</div>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        {/*TODO: whatever fields required here*/}
-        {/*<input*/}
-        {/*  type="email"*/}
-        {/*  placeholder="email"*/}
-        {/*  value={email}*/}
-        {/*  onChange={(e) => setEmail(e.target.value)}*/}
-        {/*  className="border px-4 py-2 text-black"*/}
-        {/*/>*/}
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="border px-4 py-2 text-black"
-        />
-        <input
-          type="password"
-          placeholder="Confirm password"
-          value={passwordConfirmation}
-          onChange={(e) => setPasswordConfirmation(e.target.value)}
-          className="border px-4 py-2 text-black"
-        />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2">
-          Sign up
-        </button>
-      </form>
-    </div>
+        <div>Lets finish setting up your account</div>
+        <div className={"gal-error"}>{errorMessage}</div>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          {/*TODO: whatever fields required here*/}
+          {/*<input*/}
+          {/*  type="email"*/}
+          {/*  placeholder="email"*/}
+          {/*  value={email}*/}
+          {/*  onChange={(e) => setEmail(e.target.value)}*/}
+          {/*  className="border px-4 py-2 text-black"*/}
+          {/*/>*/}
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="border px-4 py-2 text-black"
+          />
+          <input
+            type="password"
+            placeholder="Confirm password"
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+            className="border px-4 py-2 text-black"
+          />
+          <button type="submit" className="bg-blue-500 text-white px-4 py-2">
+            Sign up
+          </button>
+        </form>
+      </div>
+    </Suspense>
   )
 }
