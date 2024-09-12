@@ -7,6 +7,7 @@ import {Card} from "@/components/dashboard/components/Card";
 interface NetworkStats {
   nodesOnline: number
   nodesTotal: number
+  inferencesCount: number
   networkThroughput: number
 }
 
@@ -36,6 +37,7 @@ export function Network() {
       setNetworkStats({
         nodesOnline: responseJson.connected_nodes_count,
         nodesTotal: responseJson.nodes_count,
+        inferencesCount: responseJson.inference_count_day,
         networkThroughput: Number.parseFloat(responseJson.network_throughput.split(" ")[0])
       })
     } catch {
@@ -56,6 +58,12 @@ export function Network() {
           isLoading={isLoading}
           text={networkStats ? formatNumber(networkStats.nodesOnline) : ""}
           iconName={"online_nodes"}
+        />
+        <Card
+          title="24h total inferences"
+          isLoading={isLoading}
+          text={networkStats ? formatNumber(networkStats.inferencesCount) : ""}
+          iconName={"count"}
         />
         <Card
           title="Network throughput"
