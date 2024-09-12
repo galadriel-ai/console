@@ -3,10 +3,13 @@
 @tailwind utilities;
 
 :root {
+  --Black: #232324;
   --Grey: #828288;
 
   --Light-grey-1: #F3F4F6;
   --Light-grey-3: #E3E6EB;
+
+  --White: #FCFCFC;
 
   --background: #F3F4F6;
   --foreground: #171717;
@@ -16,12 +19,37 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.gal-title {
+  color: var(--Black, #232324);
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px; /* 50% */
+  letter-spacing: -0.384px;
+}
+
+.gal-text {
+  color: var(--Grey, #828288);
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+  letter-spacing: -0.32px;
+}
+
+.unit {
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .gal-subtitle {
@@ -40,8 +68,18 @@ body {
 
 .gal-sidebar-menu-item {
   border-radius: 8px;
+  color: var(--Grey);
 }
 
 .gal-sidebar-menu-item-active {
   background: var(--Light-grey-3);
+  color: var(--Black);
+}
+
+.gal-card {
+  border-radius: 0.5rem;
+  border: 1px solid var(--White, #FCFCFC);
+  background: linear-gradient(254deg, #F9FAFF 0%, #F7F7F7 100.06%);
+
+  box-shadow: 0 2px 8px 0 rgba(130, 130, 136, 0.15);
 }

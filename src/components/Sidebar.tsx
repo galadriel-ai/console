@@ -1,3 +1,5 @@
+import {getIcon, IconName} from "@/components/Icons";
+
 export type MenuItemType = "network_stats" | "node_stats"
 
 export default function Sidebar(
@@ -9,10 +11,6 @@ export default function Sidebar(
   }
 ) {
 
-  // const onMenuItemChange = (name: MenuItemType) => {
-  //   setSelectedMenu(name)
-  // }
-
   return (
     <>
       <div className="flex flex-col gap-4">
@@ -21,11 +19,13 @@ export default function Sidebar(
           <MenuItem
             name={"Network stats"}
             isActive={selectedMenu === "network_stats"}
+            iconName={"menu_network"}
             onClick={() => onMenuItemChange("network_stats")}
           />
           <MenuItem
             name={"My stats"}
             isActive={selectedMenu === "node_stats"}
+            iconName={"menu_mystats"}
             onClick={() => onMenuItemChange("node_stats")}
           />
           <a
@@ -33,24 +33,50 @@ export default function Sidebar(
             target="_blank"
           >
             <div
-              className={`min-h-[40px] py-[10px] px-[12px] items-center cursor-pointer gal-sidebar-menu-item`}
+              className={`flex flex-row gap-4 min-h-[40px] py-[10px] px-[12px] items-center cursor-pointer gal-sidebar-menu-item`}
             >
-              Docs
+              {getIcon("menu_docs")}
+              <div className={"flex flex-row gap-2 items-center"}>
+                Docs
+                {getIcon("arrow")}
+              </div>
             </div>
           </a>
         </div>
       </div>
-      <div>footer</div>
+      <div className="flex flex-col gap-4">
+        <div className="gal-subtitle">Community & Support</div>
+        <div className="flex flex-row gap-4">
+          <a
+            href="https://discord.gg/4UuffUbkjb"
+            target="_blank"
+          >
+            {getIcon("discord")}
+          </a>
+          <a
+            href="https://x.com/Galadriel_AI"
+            target="_blank"
+          >
+            {getIcon("twitter")}
+          </a>
+        </div>
+      </div>
     </>
   )
 }
 
-function MenuItem({name, isActive, onClick}: { name: string, isActive: boolean, onClick: () => void }) {
+function MenuItem({name, isActive, iconName, onClick}: {
+  name: string,
+  isActive: boolean,
+  iconName: IconName,
+  onClick: () => void
+}) {
   return (
     <div
-      className={`min-h-[40px] py-[10px] px-[12px] items-center cursor-pointer gal-sidebar-menu-item ${isActive && "gal-sidebar-menu-item-active"}`}
+      className={`flex flex-row gap-4 min-h-[40px] py-[10px] px-[12px] items-center cursor-pointer gal-sidebar-menu-item gal-text ${isActive && "gal-sidebar-menu-item-active"}`}
       onClick={() => onClick()}
     >
+      {getIcon(iconName)}
       {name}
     </div>
   )
