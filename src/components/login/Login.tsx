@@ -2,6 +2,7 @@
 
 import {useState} from "react";
 import {useRouter} from "next/navigation";
+import {getIcon} from "@/components/Icons";
 
 export default function Login() {
   const router = useRouter();
@@ -64,7 +65,11 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
           className="border px-4 py-2 text-black"
         />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2">
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 flex flex-row items-center justify-center">
+          {isLoading && <>
+            {getIcon("spinner")}
+          </>
+          }
           Login
         </button>
       </form>

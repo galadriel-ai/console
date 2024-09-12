@@ -4,6 +4,7 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from "react";
 import {zxcvbn} from '@zxcvbn-ts/core';
 import {Suspense} from "react";
+import {getIcon} from "@/components/Icons";
 
 export default function AuthenticatePage() {
 
@@ -107,7 +108,11 @@ function Authenticate() {
           onChange={(e) => setPasswordConfirmation(e.target.value)}
           className="border px-4 py-2 text-black"
         />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2">
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 flex flex-row items-center justify-center">
+          {isLoading && <>
+            {getIcon("spinner")}
+          </>
+          }
           Sign up
         </button>
       </form>
