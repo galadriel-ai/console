@@ -1,25 +1,41 @@
 "use client"
 
-import {useSearchParams} from 'next/navigation';
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from "react";
-import {Suspense} from "react";
+import {zxcvbn} from '@zxcvbn-ts/core';
 
 export default function AuthenticatePage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
+
+  const [errorMessage, setErrorMessage] = useState<string>("")
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    onSignup(password);
+    onSignup(password, passwordConfirmation);
   };
 
-  const onSignup = async (inputPassword: string) => {
+  const onSignup = async (inputPassword: string, inputPasswordConfirmation: string) => {
+    if (isLoading) return
+    setErrorMessage("")
+
+    if (inputPassword !== inputPasswordConfirmation) {
+      setErrorMessage("Passwords must match")
+      return
+    }
+    setIsLoading(true)
+    const passwordInfo = zxcvbn(password)
+    if (passwordInfo.score < 3) {
+      setErrorMessage("Password is not strong enough, use numbers and symbols")
+      setIsLoading(false)
+      return
+    }
+
     const token = searchParams.get('token');
     if (!token) {
       router.push("/login")
@@ -39,54 +55,52 @@ export default function AuthenticatePage() {
       });
 
       const responseJson = await response.json()
-      console.log("responseJson")
-      console.log(responseJson)
       if (responseJson.isSuccess) {
         router.push("/dashboard")
+        return
+      } else {
+        setErrorMessage("An error occurred during login, please try again.")
       }
-
-      // The cookie is set on the server side, nothing more to do here
-      console.log('Login successful, cookies set on the server!');
-    } catch {
-      console.log("ERROR")
-      // setError(error.message || 'An error occurred during login.');
+    } catch (error: any) {
+      setErrorMessage((error && error.message) || "An error occurred during login.")
     }
+    setIsLoading(false)
   }
 
   return (
-    <Suspense>
-      <div
-        className="flex w-full min-h-screen max-w-[1200px] mx-auto flex-col items-center gap-20 pt-10 py-2 px-5 lg:px-10 z-2 relative">
-        Auth page
+    <div
+      className="flex w-full min-h-screen max-w-[1200px] mx-auto flex-col items-center gap-20 pt-10 py-2 px-5 lg:px-10 z-2 relative">
+      <div>Auth page</div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/*TODO: whatever fields required here*/}
-          {/*<input*/}
-          {/*  type="email"*/}
-          {/*  placeholder="email"*/}
-          {/*  value={email}*/}
-          {/*  onChange={(e) => setEmail(e.target.value)}*/}
-          {/*  className="border px-4 py-2 text-black"*/}
-          {/*/>*/}
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="border px-4 py-2 text-black"
-          />
-          <input
-            type="password"
-            placeholder="Confirm password"
-            value={passwordConfirmation}
-            onChange={(e) => setPasswordConfirmation(e.target.value)}
-            className="border px-4 py-2 text-black"
-          />
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2">
-            Sign up
-          </button>
-        </form>
-      </div>
-    </Suspense>
+      <div>Lets finish setting up your account</div>
+      <div className={"gal-error"}>{errorMessage}</div>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        {/*TODO: whatever fields required here*/}
+        {/*<input*/}
+        {/*  type="email"*/}
+        {/*  placeholder="email"*/}
+        {/*  value={email}*/}
+        {/*  onChange={(e) => setEmail(e.target.value)}*/}
+        {/*  className="border px-4 py-2 text-black"*/}
+        {/*/>*/}
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="border px-4 py-2 text-black"
+        />
+        <input
+          type="password"
+          placeholder="Confirm password"
+          value={passwordConfirmation}
+          onChange={(e) => setPasswordConfirmation(e.target.value)}
+          className="border px-4 py-2 text-black"
+        />
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2">
+          Sign up
+        </button>
+      </form>
+    </div>
   )
 }
