@@ -9,12 +9,18 @@ export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const [errorMessage, setErrorMessage] = useState<string>("")
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     onLogin(email, password);
   };
 
   const onLogin = async (inputEmail: string, inputPassword: string) => {
+    if (isLoading) return
+    setErrorMessage("")
+    setIsLoading(true)
     try {
       const response = await fetch('/api/login', {
         method: 'POST',
@@ -26,23 +32,23 @@ export default function Login() {
           "password": inputPassword,
         }),
       });
-
       const responseJson = await response.json()
       if (responseJson.isSuccess) {
         router.push("/dashboard")
+        return
+      } else {
+        setErrorMessage("Invalid username or password")
       }
-
-      // The cookie is set on the server side, nothing more to do here
-      console.log('Login successful, cookies set on the server!');
-    } catch {
-      console.log("ERROR")
-      // setError(error.message || 'An error occurred during login.');
+    } catch (error: any) {
+      setErrorMessage((error && error.message) || "An error occurred during login.");
     }
+    setIsLoading(false)
   }
 
   return (
     <>
       <div>Login page</div>
+      <div className={"gal-error"}>{errorMessage}</div>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="email"

@@ -28,7 +28,7 @@ export function Card({title, text, isLoading, subText, iconName}: Props) {
             {text}
           </Title>
           {subText &&
-            <span className={"unit"}>{subText}</span>
+            <span className={"gal-unit"}>{subText}</span>
           }
         </div>
       }
