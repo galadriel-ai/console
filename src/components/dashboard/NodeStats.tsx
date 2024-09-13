@@ -38,7 +38,6 @@ export function NodeStats() {
         inferencesCount: responseJson.requests_served_day || 0,
       })
     } catch {
-      console.log("ERROR")
       // setError(error.message || 'An error occurred during login.');
     }
     setIsLoading(false)

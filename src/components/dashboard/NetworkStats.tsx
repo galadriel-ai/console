@@ -41,7 +41,6 @@ export function NetworkStats() {
         networkThroughput: Number.parseFloat(responseJson.network_throughput.split(" ")[0])
       })
     } catch {
-      console.log("ERROR")
       // setError(error.message || 'An error occurred during login.');
     }
     setIsLoading(false)
