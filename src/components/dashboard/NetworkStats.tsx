@@ -11,7 +11,7 @@ interface NetworkStats {
   networkThroughput: number
 }
 
-export function Network() {
+export function NetworkStats() {
   const [networkStats, setNetworkStats] = useState<NetworkStats | undefined>()
   const [isLoading, setIsLoading] = useState(true);
   // const [error, setError] = useState(null);
@@ -41,7 +41,6 @@ export function Network() {
         networkThroughput: Number.parseFloat(responseJson.network_throughput.split(" ")[0])
       })
     } catch {
-      console.log("ERROR")
       // setError(error.message || 'An error occurred during login.');
     }
     setIsLoading(false)
@@ -49,7 +48,7 @@ export function Network() {
 
   return (
     <DashboardContent>
-      <Title>Network stats</Title>
+      <Title>NetworkStats stats</Title>
       <div
         className={"flex flex-row pt-[32px] gap-6"}
       >
@@ -66,7 +65,7 @@ export function Network() {
           iconName={"count"}
         />
         <Card
-          title="Network throughput"
+          title="NetworkStats throughput"
           isLoading={isLoading}
           text={networkStats ? formatNumber(networkStats.networkThroughput) : ""}
           subText={"tok/s"}
