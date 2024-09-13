@@ -166,6 +166,7 @@ function ApiKeyModal({isOpen, apiKey, onClose}: { isOpen: boolean, apiKey: strin
 
   const [isChecked, setIsChecked] = useState<boolean>(false)
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onOpenChange = (open: boolean) => {
   }
 
