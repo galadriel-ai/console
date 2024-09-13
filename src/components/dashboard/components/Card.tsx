@@ -21,7 +21,7 @@ export function Card({title, text, isLoading, subText, iconName}: Props) {
         {getIcon(iconName)}
       </div>
       {(isLoading || !text) ?
-        <div>Loading</div>
+        <div>Loading...</div>
         :
         <div className={"flex flex-row gap-3"}>
           <Title>
