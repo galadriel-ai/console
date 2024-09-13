@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({error: 'Unauthorized: No token provided'}, {status: 401});
   }
 
-  const apiResponse = await fetch(`${process.env.BACKEND_API_URL}/dashboard/network_stats`, {
+  const apiResponse = await fetch(`${process.env.BACKEND_API_URL}/dashboard/network-stats`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
