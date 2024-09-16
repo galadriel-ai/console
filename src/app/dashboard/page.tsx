@@ -5,6 +5,7 @@ import Sidebar, {MenuItemType} from "@/components/Sidebar";
 import {NetworkStats} from "@/components/dashboard/NetworkStats";
 import {NodeStats} from "@/components/dashboard/NodeStats";
 import {ApiKeys} from "@/components/dashboard/ApiKeys";
+import {MyNodes} from "@/components/dashboard/MyNodes";
 
 export default function LoginPage() {
 
@@ -30,6 +31,9 @@ export default function LoginPage() {
         }
         {selectedMenu === "node_stats" &&
           <NodeStats/>
+        }
+        {selectedMenu === "my_nodes" &&
+          <MyNodes/>
         }
         {selectedMenu === "api_keys" &&
           <ApiKeys/>

@@ -1,7 +1,7 @@
 import {getIcon, IconName} from "@/components/Icons";
 import {useRouter} from "next/navigation";
 
-export type MenuItemType = "network_stats" | "node_stats" | "api_keys"
+export type MenuItemType = "network_stats" | "node_stats" | "my_nodes" | "api_keys"
 
 export default function Sidebar(
   {
@@ -44,6 +44,12 @@ export default function Sidebar(
             onClick={() => onMenuItemChange("node_stats")}
           />
           <MenuItem
+            name={"My Nodes"}
+            isActive={selectedMenu === "my_nodes"}
+            iconName={"menu_mynodes"}
+            onClick={() => onMenuItemChange("my_nodes")}
+          />
+          <MenuItem
             name={"API Keys"}
             isActive={selectedMenu === "api_keys"}
             iconName={"menu_keys"}
@@ -54,7 +60,7 @@ export default function Sidebar(
             target="_blank"
           >
             <div
-              className={`flex flex-row gap-4 min-h-[40px] py-[10px] px-[12px] items-center cursor-pointer gal-sidebar-menu-item`}
+              className={`flex flex-row gap-4 min-h-[40px] py-[10px] px-[12px] items-center cursor-pointer gal-sidebar-menu-item gal-group`}
             >
               {getIcon("menu_docs")}
               <div className={"flex flex-row gap-2 items-center"}>
@@ -72,12 +78,14 @@ export default function Sidebar(
           <a
             href="https://discord.gg/4UuffUbkjb"
             target="_blank"
+            className={"gal-group"}
           >
             {getIcon("discord")}
           </a>
           <a
             href="https://x.com/Galadriel_AI"
             target="_blank"
+            className={"gal-group"}
           >
             {getIcon("twitter")}
           </a>
@@ -95,7 +103,7 @@ function MenuItem({name, isActive, iconName, onClick}: {
 }) {
   return (
     <div
-      className={`flex flex-row gap-4 min-h-[40px] py-[10px] px-[12px] items-center cursor-pointer gal-sidebar-menu-item gal-text ${isActive && "gal-sidebar-menu-item-active"}`}
+      className={`flex flex-row gap-4 min-h-[40px] py-[10px] px-[12px] items-center cursor-pointer gal-sidebar-menu-item gal-text gal-group ${isActive && "gal-sidebar-menu-item-active"}`}
       onClick={() => onClick()}
     >
       {getIcon(iconName)}
