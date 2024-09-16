@@ -3,6 +3,7 @@ import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle,} fr
 import {DashboardContent} from "@/components/dashboard/components/DashboardContent";
 import {Title} from "@/components/Text";
 import {useEffect, useState} from "react";
+import {getIcon} from "@/components/Icons";
 
 interface ApiKey {
   key: string
@@ -165,6 +166,7 @@ export function ApiKeys() {
 function ApiKeyModal({isOpen, apiKey, onClose}: { isOpen: boolean, apiKey: string, onClose: () => void }) {
 
   const [isChecked, setIsChecked] = useState<boolean>(false)
+  const [isCopyActive, setIsCopyActive] = useState<boolean>(false)
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onOpenChange = (open: boolean) => {
@@ -172,6 +174,14 @@ function ApiKeyModal({isOpen, apiKey, onClose}: { isOpen: boolean, apiKey: strin
 
   const onCopy = async () => {
     await navigator.clipboard.writeText(apiKey)
+    setIsCopyActive(true)
+    try {
+      setTimeout(() => {
+        setIsCopyActive(false);
+      }, 3000);
+    } catch {
+
+    }
   }
 
   const onCheckedChange = (checked: boolean | "indeterminate") => {
@@ -204,10 +214,21 @@ function ApiKeyModal({isOpen, apiKey, onClose}: { isOpen: boolean, apiKey: strin
               </div>
               <div>Click to copy your API key</div>
               <div
-                className={"text-black cursor-pointer"}
+                className={"text-black cursor-pointer flex flex-row gap-1 items-center gal-group"}
                 onClick={onCopy}
               >
-                {apiKey}
+                <div>
+                  {apiKey}
+                </div>
+                {isCopyActive ?
+                  <div>
+                    {getIcon("check")}
+                  </div>
+                  :
+                  <div>
+                    {getIcon("copy")}
+                  </div>
+                }
               </div>
               <div className="items-top flex space-x-2">
                 <Checkbox id="checkApiKey" onCheckedChange={onCheckedChange}/>

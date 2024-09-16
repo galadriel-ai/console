@@ -20,7 +20,7 @@ export function NodeStats() {
   const getNetworkStats = async () => {
     setIsLoading(true)
     try {
-      const response = await fetch('/api/node', {
+      const response = await fetch('/api/node_stats', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

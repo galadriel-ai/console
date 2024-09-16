@@ -5,7 +5,11 @@
 :root {
   --Black: #232324;
   --Blue: #0657E0;
+
+  --Green: #27E262;
+
   --Grey: #828288;
+  --Grey-2: #59595E;
 
   --Light-grey-1: #F3F4F6;
   --Light-grey-3: #E3E6EB;
@@ -31,6 +35,12 @@ body {
   }
 }
 
+input {
+  border-radius: 0.5rem;
+  border: 1px solid var(--Light-grey-3);
+  background: var(--Light-grey-1);
+}
+
 .gal-title {
   color: var(--Black, #232324);
   font-size: 64px;
@@ -40,7 +50,17 @@ body {
   letter-spacing: -0.384px;
 }
 
-.gal-text {
+.gal-title-secondary {
+  color: var(--Grey-2, #59595E);
+
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 100% */
+  letter-spacing: -0.48px;
+}
+
+.gal-text- {
   color: var(--Grey, #828288);
 
   font-size: 16px;
@@ -88,9 +108,18 @@ body {
   color: var(--Grey);
 }
 
+.gal-sidebar-menu-item:hover {
+  border-radius: 8px;
+  color: var(--Black);
+}
+
 .gal-sidebar-menu-item-active {
   background: var(--Light-grey-3);
   color: var(--Black);
+}
+
+.gal-sidebar-menu-item-active svg path {
+  fill: var(--Black);
 }
 
 .gal-card {
@@ -127,6 +156,10 @@ body {
   color: var(--White);
 }
 
+.gal-button-icon:hover {
+  background: var(--Light-grey-1);
+}
+
 .gal-button-disabled {
   display: flex;
   padding: 10px 12px;
@@ -150,7 +183,34 @@ body {
   border-bottom: 1px solid var(--Light-grey-3);
   max-width: 550px;
   padding: 16px 0;
+}
 
+.gal-group:hover .gal-svg-hover path {
+  fill: var(--Black);
+}
+
+.gal-add-circle {
+  background: var(--Light-grey-3);
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+
+  transition-duration: 0.3s;
+}
+
+.gal-add-circle:hover {
+  background: var(--Blue);
+}
+
+.gal-status-online, .gal-status-offline {
+  width: 13px;
+  height: 13px;
+  border-radius: 15px;
+  background: var(--Green);
+}
+
+.gal-status-offline {
+  background: var(--Red);
 }
 
 @layer base {
