@@ -227,7 +227,7 @@ export function ExtraDataForm({onSuccess}: {
         </div>
 
         <div className={"flex justify-end pt-8"}>
-          <button type="submit" className={"gal-button"}>
+          <button type="submit" className={"gal-button gal-button-primary"}>
             {isLoading && <>
               {getIcon("spinner")}
             </>
