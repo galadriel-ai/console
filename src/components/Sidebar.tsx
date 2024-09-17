@@ -37,12 +37,13 @@ export default function Sidebar(
             iconName={"menu_network"}
             onClick={() => onMenuItemChange("network_stats")}
           />
-          <MenuItem
-            name={"My stats"}
-            isActive={selectedMenu === "node_stats"}
-            iconName={"menu_mystats"}
-            onClick={() => onMenuItemChange("node_stats")}
-          />
+          {/*TODO: add back once working*/}
+          {/*<MenuItem*/}
+          {/*  name={"My stats"}*/}
+          {/*  isActive={selectedMenu === "node_stats"}*/}
+          {/*  iconName={"menu_mystats"}*/}
+          {/*  onClick={() => onMenuItemChange("node_stats")}*/}
+          {/*/>*/}
           <MenuItem
             name={"My Nodes"}
             isActive={selectedMenu === "my_nodes"}
