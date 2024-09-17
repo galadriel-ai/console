@@ -45,7 +45,7 @@ export function NodeStats() {
 
   return (
     <DashboardContent>
-      <Title>Network stats</Title>
+      <Title>Node stats</Title>
       <div
         className={"flex flex-row pt-[32px] gap-6"}
       >
