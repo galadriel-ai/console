@@ -47,6 +47,13 @@ const gpuOptions: Option[] = [
   {value: "other", label: "Other"},
 ]
 
+const gpusCountOptions: Option[] = [
+  {value: "0", label: "0"},
+  {value: "1-10", label: "1-10"},
+  {value: "10-100", label: "10-100"},
+  {value: "100+", label: "100+"},
+]
+
 const ownershipOptions: Option[] = [
   {value: "rent", label: "Rent"},
   {value: "own", label: "Own"},
@@ -140,18 +147,10 @@ export function ExtraDataForm({onSuccess}: {
     if (option) setOwnership(option.value)
   }
 
-  const isInteger = (value: string) => {
-    return parseInt(value).toString() === value.toString()
-  }
 
-  const setGpuCountFromString = (value: string) => {
-    if (value === "") setGpuCount("")
-    else {
-      try {
-        if (isInteger(value)) setGpuCount(value)
-      } catch (e) {
-      }
-    }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const onGpuCountChange = (option: SingleValue<Option>, actionMeta: any) => {
+    if (option) setGpuCount(option.value)
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -210,12 +209,12 @@ export function ExtraDataForm({onSuccess}: {
         </div>
         <div className={"flex flex-col gap-2"}>
           <label className={"gal-text"}>How many GPUs in total?</label>
-          <input
-            type="text"
-            placeholder="Click to write"
-            value={gpuCount}
-            onChange={(e) => setGpuCountFromString(e.target.value)}
-            className="border px-4 py-2 text-black bg-white"
+          <Select
+            options={gpusCountOptions}
+            name={"gpuCount"}
+            className="gal-multi-select"
+            classNamePrefix="gal"
+            onChange={onGpuCountChange}
           />
         </div>
         <div className={"flex flex-col gap-2"}>

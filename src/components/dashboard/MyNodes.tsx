@@ -145,7 +145,14 @@ export function MyNodes() {
               }
               <div className={"flex flex-wrap gap-4"}>
                 {gpuNodes.map((node, i) => {
-                  return (<NodeCard key={i} node={node}/>)
+                  return (
+                    <div
+                      key={`gpuNode-${i}`}
+                      className={"w-1/3 py-6 px-8 flex flex-col gap-8 gal-card max-w-[600px] min-w-[300px]"}
+                    >
+                      <NodeCard node={node}/>
+                    </div>
+                  )
                 })}
               </div>
 
@@ -203,12 +210,9 @@ export function MyNodes() {
   )
 }
 
-function NodeCard({key, node}: { key:number, node: GpuNode }) {
+function NodeCard({node}: { node: GpuNode }) {
   return (
-    <div
-      key={`gpuNode-${key}`}
-      className={"w-1/3 py-6 px-8 flex flex-col gap-8 gal-card max-w-[600px] min-w-[300px]"}
-    >
+    <>
       <div className="gal-title-secondary">
         {node.nameAlias}
       </div>
@@ -256,6 +260,6 @@ function NodeCard({key, node}: { key:number, node: GpuNode }) {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
