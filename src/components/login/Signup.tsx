@@ -77,7 +77,7 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
               </button>
             </form>
             :
-            <div>Check your email!</div>
+            <div>Check your email for the magic link!</div>
           }
 
           <div
