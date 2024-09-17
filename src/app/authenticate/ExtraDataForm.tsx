@@ -81,7 +81,7 @@ export function ExtraDataForm({onSuccess}: {
   const onSendData = async () => {
     if (isLoading) return
     setErrorMessage("")
-    if (!roles || !experience || !gpus || !ownership || !gpuCount || !preferredOs) {
+    if (!roles || !experience || !gpus || !ownership || gpuCount === "" || !preferredOs) {
       setErrorMessage("Make sure to fill all fields.")
       return
     }
