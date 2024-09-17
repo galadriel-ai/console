@@ -65,8 +65,11 @@ export function PasswordForm({searchParams, onNotAuthenticated, onSuccess}: {
         onSuccess()
         return
       } else {
-        // TODO: read errors eg username already taken
-        setErrorMessage("An error occurred during login, please try again.")
+        if (responseJson.status === 409) {
+          setErrorMessage("Username already exists")
+        } else {
+          setErrorMessage("An error occurred during login, please try again.")
+        }
       }
     } catch (error: any) {
       setErrorMessage((error && error.message) || "An error occurred during login.")
