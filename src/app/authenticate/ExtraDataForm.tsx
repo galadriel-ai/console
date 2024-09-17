@@ -140,12 +140,15 @@ export function ExtraDataForm({onSuccess}: {
     if (option) setOwnership(option.value)
   }
 
+  const isInteger = (value: string) => {
+    return parseInt(value).toString() === value.toString()
+  }
+
   const setGpuCountFromString = (value: string) => {
     if (value === "") setGpuCount("")
     else {
       try {
-        const parsedValue = parseInt(value)
-        if (parsedValue && !isNaN(parsedValue)) setGpuCount(value)
+        if (isInteger(value)) setGpuCount(value)
       } catch (e) {
       }
     }
