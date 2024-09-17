@@ -1,9 +1,8 @@
-"use client"
-
 import {useState} from "react";
 import {getIcon} from "@/components/Icons";
+import {Title} from "@/components/Text";
 
-export default function Signup() {
+export default function Signup({onLogin}: { onLogin: () => void }) {
   const [isEmailSent, setIsEmailSent] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
 
@@ -45,30 +44,58 @@ export default function Signup() {
   }
 
   return (
-    <>
-      <div>Signup page</div>
-      <div className={"gal-error"}>{errorMessage}</div>
-      {!isEmailSent ?
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input
-            type="email"
-            placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="border px-4 py-2 text-black"
-          />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 flex flex-row items-center justify-center">
-            {isLoading && <>
-              {getIcon("spinner")}
-            </>
-            }
-            Sign up
-          </button>
-        </form>
-        :
-        <div>Check your email!</div>
-      }
+    <div
+      className="flex w-full min-h-screen max-w-[600px] mx-auto flex-col justify-center items-center gap-20 pt-0 md:pt-10 p-0 md:px-5 lg:px-10 z-2 fixed"
+    >
+      <div className={"flex flex-col gap-6 gal-card p-0 fixed top-0 md:top-auto"}>
+        <div className={"gal-login-image-wrapper z-0 inset-0"}/>
 
-    </>
+        <div className={"flex flex-col gap-6 pt-32 pb-10 px-2 md:px-8 z-10"}>
+          <Title>Sign up!</Title>
+          <div className={"gal-text"}>Enter your email address to get started.</div>
+          <div className={"gal-error"}>{errorMessage}</div>
+          {!isEmailSent ?
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <div className={"flex flex-col gap-2"}>
+                <label className={"gal-text"}>Email</label>
+                <input
+                  type="email"
+                  placeholder="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="border px-4 py-2 text-black"
+                />
+              </div>
+              <button
+                type="submit"
+                className={"gal-button gal-button-primary"}>
+                {isLoading && <>
+                  {getIcon("spinner")}
+                </>
+                }
+                Sign up
+              </button>
+            </form>
+            :
+            <div>Check your email!</div>
+          }
+
+          <div
+            className={"flex flex-col gap-4 mt-12 gal-border-top pt-6"}
+          >
+            <div className={"font-normal"}>
+              {"Already have an account?"}
+            </div>
+            <div
+              className="gal-link flex"
+              onClick={onLogin}
+            >
+              Back to login
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
   )
 }

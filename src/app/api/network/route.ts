@@ -2,13 +2,9 @@ import {NextRequest, NextResponse} from 'next/server';
 import {parse} from 'cookie';
 
 export async function GET(req: NextRequest) {
-  // Get cookies from the request headers
+
   const cookieHeader = req.headers.get('cookie');
-
-  // Parse the cookies
   const cookies = cookieHeader ? parse(cookieHeader) : {};
-
-  // Get the accessToken from cookies
   const token = cookies.accessToken;
 
   if (!token) {
