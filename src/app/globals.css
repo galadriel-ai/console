@@ -208,7 +208,7 @@ input:focus {
   color: var(--Black);
 }
 
-.gal-sidebar-menu-item-active svg path {
+.gal-sidebar-menu-item-active svg path, .gal-sidebar-menu-item-active svg circle {
   fill: var(--Black);
 }
 
@@ -276,7 +276,7 @@ input:focus {
   padding: 16px 0;
 }
 
-.gal-group:hover .gal-svg-hover path {
+.gal-group:hover .gal-svg-hover path, .gal-group:hover .gal-svg-hover circle {
   fill: var(--Black);
 }
 
