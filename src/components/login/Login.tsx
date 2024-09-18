@@ -2,6 +2,7 @@ import {useState} from "react";
 import {useRouter} from "next/navigation";
 import {getIcon} from "@/components/Icons";
 import {Title} from "@/components/Text";
+import {saveUserData} from "@/utils/user";
 
 export default function Login({onSignup}: { onSignup: () => void }) {
   const router = useRouter();
@@ -34,6 +35,10 @@ export default function Login({onSignup}: { onSignup: () => void }) {
       });
       const responseJson = await response.json()
       if (responseJson.isSuccess) {
+        saveUserData({
+          username: inputUsername,
+          email: responseJson.email,
+        })
         router.push("/dashboard")
         return
       } else {
