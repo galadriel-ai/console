@@ -1,0 +1,147 @@
+import {Title} from "@/components/Text";
+import {getIcon} from "@/components/Icons";
+import {useState} from "react";
+import {GpuNode, PageName} from "@/types/gpuNode";
+
+
+interface Props {
+  gpuNodes: GpuNode[]
+  isLoading: boolean
+  onChangePage: (pageName: PageName) => void
+  onDisplayNode: (gpuNode: GpuNode) => void
+}
+
+export function ListNodes({gpuNodes, isLoading, onChangePage, onDisplayNode}: Props) {
+
+  return (
+    <>
+      <Title>My nodes</Title>
+      <div className={"pt-10 gal-text-secondary max-w-4xl"}>
+        Your created and running nodes will appear here.
+      </div>
+      <div className={"pt-10"}>
+        <div
+          className={"gal-add-circle flex items-center justify-center cursor-pointer"}
+          onClick={() => onChangePage("add")}
+        >
+          {getIcon("plus")}
+        </div>
+      </div>
+      <div className={"flex flex-col gap-4 pt-10"}>
+        {isLoading &&
+          <div
+            className={"flex flex-row gap-12"}
+          >
+            Loading...
+          </div>
+        }
+        <div className={"flex flex-wrap gap-4"}>
+          {gpuNodes.map((node, i) => {
+            return (
+              <div
+                key={`gpuNode-${i}`}
+                className={"w-1/3 py-6 px-8 flex flex-col gap-8 gal-card max-w-[600px] min-w-[300px]"}
+              >
+                <NodeCard node={node} onDisplayNode={onDisplayNode}/>
+              </div>
+            )
+          })}
+        </div>
+
+      </div>
+    </>
+  )
+}
+
+function NodeCard({node, onDisplayNode}: { node: GpuNode, onDisplayNode: (gpuNode: GpuNode) => void }) {
+
+  const [isCopyActive, setIsCopyActive] = useState<boolean>(false)
+
+  const onCopy = async () => {
+    await navigator.clipboard.writeText(node.nodeId)
+    setIsCopyActive(true)
+    try {
+      setTimeout(() => {
+        setIsCopyActive(false);
+      }, 3000);
+    } catch {
+    }
+  }
+
+  return (
+    <div className={"flex flex-col gap-8 w-full h-full"}>
+      <div className={"flex flex-col gap-8 w-full h-full"}>
+        <div className="gal-title-secondary">
+          {node.nameAlias}
+        </div>
+
+        <div className={"flex flex-col gap-2"}>
+          <div className={"gal-subtitle"}>
+            Node ID
+          </div>
+          <div className={"flex flex-row gap-2 items-center break-all cursor-pointer"}
+               onClick={onCopy}
+          >
+            {node.nodeId}
+            {isCopyActive ?
+              <div>
+                {getIcon("check")}
+              </div>
+              :
+              <div>
+                {getIcon("copy")}
+              </div>
+            }
+          </div>
+        </div>
+        <div className={"flex flex-row gap-2"}>
+          <div className={"w-1/2 flex flex-col gap-2"}>
+            <div className={"gal-subtitle"}>
+              Status
+            </div>
+            <div className={"flex flex-row gap-2 items-center"}>
+              {node.status === "online" ?
+                <div className={"gal-status-online"}/>
+                :
+                <div className={"gal-status-offline"}/>
+              }
+              {node.status}
+            </div>
+          </div>
+          <div className={"w-1/2 flex flex-col gap-2"}>
+            <div className={"gal-subtitle"}>
+              Inferences
+            </div>
+            <div className={"flex flex-row gap-2 items-center"}>
+              {node.requestsServed}
+            </div>
+          </div>
+        </div>
+        <div className={"flex flex-row gap-2"}>
+          <div className={"w-1/2 flex flex-col gap-2"}>
+            <div className={"gal-subtitle"}>
+              Duration
+            </div>
+            <div className={"flex flex-row gap-2 items-center"}>
+              {node.runDurationSeconds} s
+            </div>
+          </div>
+          <div className={"w-1/2 flex flex-col gap-2"}>
+            <div className={"gal-subtitle"}>
+              GPU
+            </div>
+            <div className={"flex flex-row gap-2 items-center"}>
+              {node.gpuModel}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className={"gal-link align-bottom"}
+        onClick={() => onDisplayNode(node)}
+      >
+        See more stats
+      </div>
+    </div>
+  )
+}
