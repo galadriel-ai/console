@@ -35,7 +35,7 @@ export function createGpuNode(nodeId: string, nameAlias: string): GpuNode {
     operatingSystem: "",
 
     nameAlias,
-    status: "",
+    status: "offline",
     runDurationSeconds: 0,
     totalUptimeSeconds: 0,
     requestsServed: 0,
