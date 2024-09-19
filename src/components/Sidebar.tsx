@@ -1,5 +1,8 @@
 import {getIcon, IconName} from "@/components/Icons";
 import {useRouter} from "next/navigation";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
+import {getEmail, getUsername, removeUserData} from "@/utils/user";
+import {useState} from "react";
 
 export type MenuItemType = "network_stats" | "node_stats" | "my_nodes" | "api_keys"
 
@@ -20,6 +23,7 @@ export default function Sidebar(
 
     if (response.ok) {
       // Redirect to the login page after logging out
+      removeUserData()
       router.push('/login');
     } else {
       console.error('Logout failed');
@@ -28,6 +32,7 @@ export default function Sidebar(
 
   return (
     <>
+      <Settings onLogout={onLogout}/>
       <div className="flex flex-col gap-4">
         <div className="gal-subtitle">Menu</div>
         <div className="col gap-[10px]">
@@ -73,7 +78,6 @@ export default function Sidebar(
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <div className={"cursor-pointer"} onClick={onLogout}>Log out</div>
         <div className="gal-subtitle">Community & Support</div>
         <div className="flex flex-row gap-4">
           <a
@@ -110,5 +114,36 @@ function MenuItem({name, isActive, iconName, onClick}: {
       {getIcon(iconName)}
       {name}
     </div>
+  )
+}
+
+function Settings({onLogout}: { onLogout: () => void }) {
+
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+
+  const onOpenChange = (open: boolean) => {
+    setIsOpen(open)
+  }
+
+  return (
+    <>
+      {isOpen && <div className="fixed inset-0 bg-black bg-opacity-20 z-10"/>}
+      <DropdownMenu onOpenChange={onOpenChange}>
+        <DropdownMenuTrigger asChild>
+          <div
+            className={"gal-settings-wrapper absolute top-12 right-10 flex flex-row gap-2 items-center cursor-pointer gal-group"}>
+            <div>{getIcon("gear")}</div>
+            <div>{isOpen ? getIcon("arrow_up") : getIcon("arrow_down")}</div>
+          </div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-auto py-8 px-6 flex flex-col gap-6" align={"end"} sideOffset={10}>
+          <div className={"flex flex-col gap-2"}>
+            <div>{getUsername()}</div>
+            <div className={"font-normal"}>{getEmail()}</div>
+          </div>
+          <div className={"gal-link cursor-pointer"} onClick={onLogout}>Log out</div>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   )
 }

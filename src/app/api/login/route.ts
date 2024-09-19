@@ -20,16 +20,19 @@ export async function POST(req: Request) {
   const responseJson = await apiResponse.json()
 
   // Set the access token in an HTTP-only cookie
-  const cookie = serialize('accessToken', responseJson.session_token, {
+  const cookie = serialize("accessToken", responseJson.session_token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: process.env.NODE_ENV === "production",
     maxAge: parseInt(process.env.SESSION_TOKEN_AGE_SECONDS || `${2 * 60 * 60 * 24}`),
-    sameSite: 'strict',
-    path: '/',
+    sameSite: "strict",
+    path: "/",
   });
 
-  const response = NextResponse.json({isSuccess: true});
-  response.headers.set('Set-Cookie', cookie);
+  const response = NextResponse.json({
+    isSuccess: true,
+    email: responseJson.email,
+  });
+  response.headers.set("Set-Cookie", cookie);
 
   return response;
 
