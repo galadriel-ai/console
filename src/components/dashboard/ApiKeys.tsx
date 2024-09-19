@@ -144,6 +144,7 @@ export function ApiKeys() {
           <button
             className={"gal-button gal-button-primary"}
             onClick={onCreateNewKey}
+            data-ph-capture-attribute-form-name="create_api_key"
           >
             Create new key
           </button>

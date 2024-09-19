@@ -110,6 +110,7 @@ function MenuItem({name, isActive, iconName, onClick}: {
     <div
       className={`flex flex-row gap-4 min-h-[40px] py-[10px] px-[12px] items-center cursor-pointer gal-sidebar-menu-item gal-text gal-group ${isActive && "gal-sidebar-menu-item-active"}`}
       onClick={() => onClick()}
+      data-ph-capture-attribute-dashboard-page-name={name}
     >
       {getIcon(iconName)}
       {name}

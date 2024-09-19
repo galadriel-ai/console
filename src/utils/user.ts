@@ -1,34 +1,47 @@
 import {User} from "@/types/user";
 
+enum UserKeys {
+  ID = "galUserId",
+  USERNAME = "galUsername",
+  EMAIL = "galEmail",
+}
 
 export function saveUserData(user: User) {
   if (typeof window !== "undefined") {
-
-    localStorage.setItem("galUsername", user.username)
-    localStorage.setItem("galEmail", user.email)
+    localStorage.setItem(UserKeys.ID, user.userId)
+    localStorage.setItem(UserKeys.EMAIL, user.username)
+    localStorage.setItem(UserKeys.EMAIL, user.email)
   }
 }
 
 export function removeUserData() {
   try {
     if (typeof window !== "undefined") {
-      localStorage.removeItem("galUsername")
-      localStorage.removeItem("galEmail")
+      localStorage.removeItem(UserKeys.ID)
+      localStorage.removeItem(UserKeys.EMAIL)
+      localStorage.removeItem(UserKeys.EMAIL)
     }
   } catch {
   }
 }
 
+export function getUserId(): string {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem(UserKeys.ID) || ""
+  }
+  return ""
+}
+
 export function getUsername(): string {
   if (typeof window !== "undefined") {
-    return localStorage.getItem("galUsername") || ""
+    return localStorage.getItem(UserKeys.USERNAME) || ""
   }
   return ""
 }
 
 export function getEmail(): string {
   if (typeof window !== "undefined") {
-    return localStorage.getItem("galEmail") || ""
+    return localStorage.getItem(UserKeys.EMAIL) || ""
   }
   return ""
 }

@@ -164,7 +164,11 @@ export function ExtraDataForm({onSuccess}: {
       <div className={"gal-text"}>Just a few mode details.</div>
 
       <div className={"gal-error"}>{errorMessage}</div>
-      <form onSubmit={handleExtraDataSubmit} className="flex flex-col gap-6 w-full">
+      <form
+        onSubmit={handleExtraDataSubmit}
+        className="flex flex-col gap-6 w-full"
+        data-ph-capture-attribute-form-name="profile_data"
+      >
         <div className={"flex flex-col gap-2"}>
           <label className={"gal-text"}>Role</label>
           <Select

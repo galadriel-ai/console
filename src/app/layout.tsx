@@ -1,6 +1,8 @@
 import type {Metadata} from "next";
 import {IBM_Plex_Mono} from "next/font/google";
 import "./globals.css";
+import {PHProvider} from "@/app/providers";
+import PostHogPageView from "@/app/PostHogPageView";
 
 const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
@@ -21,11 +23,14 @@ export default function RootLayout(
   }>) {
   return (
     <html lang="en">
-    <body
-      className={`${ibmPlexMono.className} antialiased`}
-    >
-    {children}
-    </body>
+    <PHProvider>
+      <body
+        className={`${ibmPlexMono.className} antialiased`}
+      >
+      <PostHogPageView/>
+      {children}
+      </body>
+    </PHProvider>
     </html>
   );
 }

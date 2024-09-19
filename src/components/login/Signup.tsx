@@ -55,7 +55,11 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
           <div className={"gal-text"}>Enter your email address to get started.</div>
           <div className={"gal-error"}>{errorMessage}</div>
           {!isEmailSent ?
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-4"
+              data-ph-capture-attribute-form-name="signup"
+            >
               <div className={"flex flex-col gap-2"}>
                 <label className={"gal-text"}>Email</label>
                 <input
