@@ -36,6 +36,7 @@ export default function Login({onSignup}: { onSignup: () => void }) {
       const responseJson = await response.json()
       if (responseJson.isSuccess) {
         saveUserData({
+          userId: responseJson.userId,
           username: inputUsername,
           email: responseJson.email,
         })

@@ -7,7 +7,7 @@ import {NodeStats} from "@/components/dashboard/NodeStats";
 import {ApiKeys} from "@/components/dashboard/ApiKeys";
 import {MyNodes} from "@/components/dashboard/MyNodes";
 import {usePostHog} from "posthog-js/react";
-import {getEmail} from "@/utils/user";
+import {getUserId} from "@/utils/user";
 
 export default function DashboardPage() {
   const posthog = usePostHog()
@@ -16,9 +16,9 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (isIdentified) return
-    const email = getEmail()
-    if (email) {
-      posthog?.identify(email, {})
+    const userId = getUserId()
+    if (userId) {
+      posthog?.identify(userId, {})
       setIsIdentified(true)
     }
   }, [posthog])
