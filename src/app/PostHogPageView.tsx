@@ -3,7 +3,6 @@
 import {usePathname, useSearchParams} from "next/navigation";
 import {Suspense, useEffect} from "react";
 import {usePostHog} from "posthog-js/react";
-import {getEmail} from "@/utils/user";
 
 export default function PostHogPageView() {
   return (
@@ -24,22 +23,13 @@ function PostHogPageViewLoaded(): null {
       if (searchParams.toString()) {
         url = url + `?${searchParams.toString()}`
       }
-      const email = getEmail()
-      let properties: any = {
-        "$current_url": url,
-        "website": "console",
-      }
-      if (email) {
-        properties = {
-          email, ...properties
-        }
-      }
       posthog.capture(
         "$pageview",
-        properties,
+        {
+          "$current_url": url,
+          "website": "console",
+        },
       )
-
-
     }
   }, [pathname, searchParams, posthog])
 
