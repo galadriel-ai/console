@@ -17,7 +17,6 @@ export function AddNode({gpuNodes, onAddGpuNode, onChangePage}: Props) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log("handle submit")
     if (gpuNodes.filter(g => g.nameAlias.toLowerCase() === nodeName.toLowerCase()).length) {
       setErrorMessage("You already have a node with that name.")
     } else {
@@ -73,7 +72,11 @@ export function AddNode({gpuNodes, onAddGpuNode, onChangePage}: Props) {
         <div
           className={"w-2/3 py-6 px-8 flex flex-col gap-8 gal-card max-w-[600px] min-w-[300px]"}
         >
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4"
+            data-ph-capture-attribute-form-name="create_node"
+          >
             <div className="gal-title-secondary">
               Name
             </div>

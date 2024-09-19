@@ -66,7 +66,12 @@ export default function Login({onSignup}: { onSignup: () => void }) {
           <div className={"gal-text"}>Fill out the fields below to log in.</div>
 
           <div className={"gal-error"}>{errorMessage}</div>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4"
+            data-ph-capture-attribute-form-name="login"
+            data-ph-capture-attribute-login-username={username}
+          >
             <div className={"flex flex-col gap-2"}>
               <label className={"gal-text"}>Username</label>
               <input

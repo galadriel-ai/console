@@ -84,7 +84,11 @@ export function PasswordForm({searchParams, onNotAuthenticated, onSuccess}: {
 
 
       <div className={"gal-error"}>{errorMessage}</div>
-      <form onSubmit={handlePasswordSubmit} className="flex flex-col gap-6">
+      <form
+        onSubmit={handlePasswordSubmit}
+        className="flex flex-col gap-6"
+        data-ph-capture-attribute-form-name="set_password"
+      >
         <div className={"flex flex-col gap-2"}>
           <label className={"gal-text"}>Username</label>
           <input
