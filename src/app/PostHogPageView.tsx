@@ -1,11 +1,19 @@
 "use client"
 
 import {usePathname, useSearchParams} from "next/navigation";
-import {useEffect} from "react";
+import {Suspense, useEffect} from "react";
 import {usePostHog} from "posthog-js/react";
 import {getEmail} from "@/utils/user";
 
-export default function PostHogPageView(): null {
+export default function PostHogPageView() {
+  return (
+    <Suspense>
+      <PostHogPageViewLoaded/>
+    </Suspense>
+  )
+}
+
+function PostHogPageViewLoaded(): null {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const posthog = usePostHog();
