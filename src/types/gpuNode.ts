@@ -18,6 +18,7 @@ export interface GpuNode {
   totalUptimeSeconds: number
   requestsServed: number
   requestsServedDay: number
+  tokensPerSecond: number
   nodeCreatedAt: number
 }
 
@@ -40,6 +41,7 @@ export function createGpuNode(nodeId: string, nameAlias: string): GpuNode {
     totalUptimeSeconds: 0,
     requestsServed: 0,
     requestsServedDay: 0,
+    tokensPerSecond: 0,
     nodeCreatedAt: Math.floor((new Date()).getTime() / 1000),
   }
 }
