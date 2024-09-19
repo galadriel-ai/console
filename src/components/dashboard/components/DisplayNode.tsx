@@ -1,7 +1,7 @@
 import {getIcon, IconName} from "@/components/Icons";
 import {Title} from "@/components/Text";
 import {GpuNode, PageName} from "@/types/gpuNode";
-import {formatTimestampToDate, formatTimestampToTime} from "@/utils/helpers";
+import {formatNumber, formatTimestampToDate, formatTimestampToTime} from "@/utils/helpers";
 import {useState} from "react";
 
 interface Props {
@@ -45,7 +45,7 @@ export function DisplayNode({gpuNode, onChangePage}: Props) {
 
         <Title>{gpuNode.nameAlias}</Title>
         <div className={"flex flex-row gap-12 pt-6"}>
-          <div className={"flex flex-col gap-8"}>
+          <div className={"flex flex-col gap-6"}>
             <div className={"gal-subtitle"}>
               Created:
             </div>
@@ -105,7 +105,8 @@ export function DisplayNode({gpuNode, onChangePage}: Props) {
           <StatCard title={"GPU"} content={gpuNode.gpuModel || "-"}/>
           <StatCard title={"GPU VRAM"} content={formatVram(gpuNode.vram) || "-"}/>
           <StatCard title={"CPU Cores"} content={`${gpuNode.cpuCount || "-"}`}/>
-          <StatCard title={"Memory"} content={gpuNode.ram ? `${Math.round(gpuNode.ram / 1024)} GB` : "-"}/>
+          <StatCard title={"Memory"} content={gpuNode.ram ? `${formatNumber(gpuNode.ram / 1024)} GB` : "-"}/>
+          <StatCard title={"Benchmark result"} content={gpuNode.tokensPerSecond ? `${formatNumber(gpuNode.tokensPerSecond)} tok/s` : "-"}/>
           <StatCard title={"24h Inferences"} content={`${gpuNode.requestsServedDay}`} iconName={"online_nodes"}/>
           <StatCard title={"Total uptime"} content={`${gpuNode.totalUptimeSeconds} s`} iconName={"online_nodes"}/>
         </div>

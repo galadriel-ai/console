@@ -5,7 +5,10 @@ import {formatNumber} from "@/utils/helpers";
 import {Card} from "@/components/dashboard/components/Card";
 
 interface NodeStats {
+  inferencesCountDay: number
   inferencesCount: number
+  averageTimeToFirstToken: number
+  totalTokensPerSecond: number
 }
 
 export function NodeStats() {
@@ -20,7 +23,7 @@ export function NodeStats() {
   const getNetworkStats = async () => {
     setIsLoading(true)
     try {
-      const response = await fetch('/api/node_stats', {
+      const response = await fetch('/api/user_stats', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -30,12 +33,18 @@ export function NodeStats() {
       if (!response.ok) {
         console.log("Not ok")
         setNodeStats({
+          inferencesCountDay: 0,
           inferencesCount: 0,
+          totalTokensPerSecond: 0,
+          averageTimeToFirstToken: 0,
         })
       }
       const responseJson = await response.json()
       setNodeStats({
-        inferencesCount: responseJson.requests_served_day || 0,
+        inferencesCountDay: responseJson.requests_served_day || 0,
+        inferencesCount: responseJson.total_requests_served || 0,
+        averageTimeToFirstToken: responseJson.average_time_to_first_token || 0,
+        totalTokensPerSecond: responseJson.total_tokens_per_second || 0,
       })
     } catch {
       // setError(error.message || 'An error occurred during login.');
@@ -52,11 +61,30 @@ export function NodeStats() {
         <Card
           title="Your inferences last 24h"
           isLoading={isLoading}
-          text={nodeStats ? formatNumber(nodeStats.inferencesCount) : ""}
+          text={(nodeStats && nodeStats.inferencesCountDay) ? formatNumber(nodeStats.inferencesCountDay) : "-"}
+          iconName={"online_nodes"}
+        />
+        <Card
+          title="Your total inferences"
+          isLoading={isLoading}
+          text={(nodeStats && nodeStats.inferencesCount) ? formatNumber(nodeStats.inferencesCount) : "-"}
           iconName={"count"}
+        />
+        <Card
+          title="Total throughput"
+          isLoading={isLoading}
+          text={
+            (nodeStats && nodeStats.totalTokensPerSecond)
+              ?
+              `${formatNumber(nodeStats.totalTokensPerSecond)}`
+              :
+              "-"
+          }
+          subText={(nodeStats && nodeStats.totalTokensPerSecond) ? "tok/s" : ""}
+          iconName={"network_throughput"}
         />
 
       </div>
     </DashboardContent>
-  )
+  );
 }
