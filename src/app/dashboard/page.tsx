@@ -8,6 +8,7 @@ import {ApiKeys} from "@/components/dashboard/ApiKeys";
 import {MyNodes} from "@/components/dashboard/MyNodes";
 import {usePostHog} from "posthog-js/react";
 import {getUserId} from "@/utils/user";
+import {Chat} from "@/components/dashboard/Chat";
 
 export default function DashboardPage() {
   const posthog = usePostHog()
@@ -23,7 +24,7 @@ export default function DashboardPage() {
     }
   }, [posthog])
 
-  const [selectedMenu, setSelectedMenu] = useState<MenuItemType>("network_stats")
+  const [selectedMenu, setSelectedMenu] = useState<MenuItemType>("chat")
 
   const onMenuItemChange = (name: MenuItemType) => {
     setSelectedMenu(name)
@@ -38,6 +39,9 @@ export default function DashboardPage() {
         <Sidebar selectedMenu={selectedMenu} onMenuItemChange={(menuItem: MenuItemType) => onMenuItemChange(menuItem)}/>
       </div>
       <div className="w-4/5 h-full">
+        {selectedMenu === "chat" &&
+          <Chat/>
+        }
         {selectedMenu === "network_stats" &&
           <NetworkStats/>
         }

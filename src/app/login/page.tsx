@@ -10,7 +10,7 @@ export default function LoginPage() {
 
   return (
     <div
-      className="flex w-full min-h-screen max-w-[1200px] mx-auto flex-col items-center gap-20 pt-0 md:pt-10 py-0 md:py-2 px-5 lg:px-10 z-2 relative">
+      className="flex w-full min-h-screen max-w-[1200px] mx-auto flex-col items-center gap-20 pt-0 md:pt-10 py-0 md:py-2 px-5 lg:px-10 z-2 relative overflow-y-auto">
       {mode == "login" ?
         <Login onSignup={() => {
           setMode("signup")

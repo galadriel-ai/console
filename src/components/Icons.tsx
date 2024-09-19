@@ -9,6 +9,7 @@ export type IconName =
   "arrow_left" |
   "arrow_down" |
   "arrow_up" |
+  "menu_chat" |
   "menu_network" |
   "menu_mystats" |
   "menu_mynodes" |
@@ -17,7 +18,8 @@ export type IconName =
   "copy" |
   "check" |
   "plus" |
-  "gear"
+  "gear" |
+  "submit"
 
 export function getIcon(iconName: IconName) {
   if (iconName === "spinner") return <IconSpinner/>
@@ -30,6 +32,7 @@ export function getIcon(iconName: IconName) {
   if (iconName === "arrow_left") return <IconArrowLeft/>
   if (iconName === "arrow_down") return <IconArrowDown/>
   if (iconName === "arrow_up") return <IconArrowUp/>
+  if (iconName === "menu_chat") return <IconMenuChat/>
   if (iconName === "menu_network") return <IconMenuNetwork/>
   if (iconName === "menu_mystats") return <IconMenuMyStats/>
   if (iconName === "menu_mynodes") return <IconMenuMyNodes/>
@@ -39,6 +42,7 @@ export function getIcon(iconName: IconName) {
   if (iconName === "check") return <IconCheck/>
   if (iconName === "plus") return <IconPlus/>
   if (iconName === "gear") return <IconGear/>
+  if (iconName === "submit") return <IconSubmit/>
   return <></>
 }
 
@@ -162,6 +166,17 @@ function IconArrowUp() {
   return (
     <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M9 5L5 1L1 5" stroke="#232324" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+function IconMenuChat() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+         className="gal-svg-hover">
+      <path
+        d="M6.30176 16.9547C7.44001 17.5611 8.71032 17.8772 10 17.875C14.3493 17.875 17.875 14.3492 17.875 10C17.875 5.65075 14.3493 2.125 10 2.125C5.65076 2.125 2.12501 5.65075 2.12501 10C2.12501 11.3387 2.45876 12.598 3.04676 13.7005C3.18395 13.9573 3.21621 14.2574 3.13676 14.5375L2.21126 17.7902L5.46476 16.8655C5.74479 16.7858 6.04482 16.8178 6.30176 16.9547ZM10 19C8.52559 19.0021 7.07344 18.6404 5.77226 17.947L2.19476 18.9647C2.03417 19.0104 1.8643 19.0123 1.70272 18.9703C1.54115 18.9283 1.39372 18.8439 1.27567 18.7258C1.15762 18.6078 1.07323 18.4604 1.03123 18.2988C0.989231 18.1372 0.991139 17.9673 1.03676 17.8067L2.05376 14.2292C1.35985 12.9277 0.997898 11.475 1.00001 10C1.00001 5.02975 5.02976 1 10 1C14.9703 1 19 5.02975 19 10C19 14.9702 14.9703 19 10 19ZM6.62501 8.3125C6.62501 8.16331 6.68427 8.02024 6.78976 7.91475C6.89525 7.80926 7.03832 7.75 7.18751 7.75H12.8125C12.9617 7.75 13.1048 7.80926 13.2103 7.91475C13.3157 8.02024 13.375 8.16331 13.375 8.3125C13.375 8.46168 13.3157 8.60475 13.2103 8.71024C13.1048 8.81573 12.9617 8.875 12.8125 8.875H7.18751C7.03832 8.875 6.89525 8.81573 6.78976 8.71024C6.68427 8.60475 6.62501 8.46168 6.62501 8.3125ZM6.62501 11.6875C6.62501 11.5383 6.68427 11.3952 6.78976 11.2897C6.89525 11.1843 7.03832 11.125 7.18751 11.125H10.5625C10.7117 11.125 10.8548 11.1843 10.9603 11.2897C11.0657 11.3952 11.125 11.5383 11.125 11.6875C11.125 11.8367 11.0657 11.9798 10.9603 12.0852C10.8548 12.1907 10.7117 12.25 10.5625 12.25H7.18751C7.03832 12.25 6.89525 12.1907 6.78976 12.0852C6.68427 11.9798 6.62501 11.8367 6.62501 11.6875Z"
+        fill="#828288"/>
     </svg>
   )
 }
@@ -334,6 +349,17 @@ function IconGear() {
           <rect width="18" height="18" fill="white"/>
         </clipPath>
       </defs>
+    </svg>
+  )
+}
+
+function IconSubmit() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"
+         className={"gal-svg-hover"}>
+      <path
+        d="M15.0515 8.03323L4.87028 2.55448C4.01528 2.09323 3.02528 2.89198 3.29528 3.82573L4.69028 8.70823C4.74653 8.91073 4.74653 9.11322 4.69028 9.31573L3.29528 14.1982C3.02528 15.132 4.01528 15.9307 4.87028 15.4695L15.0515 9.99073C15.2252 9.89582 15.3702 9.75591 15.4711 9.58567C15.5721 9.41544 15.6254 9.22116 15.6254 9.02323C15.6254 8.8253 15.5721 8.63102 15.4711 8.46078C15.3702 8.29054 15.2252 8.15063 15.0515 8.05573V8.03323Z"
+        fill="#59595E"/>
     </svg>
   )
 }
