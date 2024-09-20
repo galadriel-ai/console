@@ -281,10 +281,6 @@ input:focus {
   fill: var(--Black);
 }
 
-.gal-group:hover .gal-svg-hover-light path, .gal-group:hover .gal-svg-hover-light circle {
-  fill: var(--Grey-2);
-}
-
 .gal-add-circle {
   background: var(--Light-grey-3);
   border-radius: 50%;
