@@ -47,6 +47,7 @@ function InputForm() {
   const sendChat = async (inputMessage: string) => {
     try {
       // Automagically streams response to "messages"
+      setInput("")
       await append({content: inputMessage, role: 'user'});
     } catch {
       // setError(error.message || 'An error occurred during login.');

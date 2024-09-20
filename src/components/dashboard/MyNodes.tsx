@@ -4,11 +4,12 @@ import {GpuNode, PageName} from "@/types/gpuNode";
 import {ListNodes} from "@/components/dashboard/components/ListNodes";
 import {AddNode} from "@/components/dashboard/components/AddNode";
 import {DisplayNode} from "@/components/dashboard/components/DisplayNode";
+import {AuthListNodes} from "@/components/dashboard/components/AuthListNodes";
 
 
 export function MyNodes() {
 
-  const [page, setPage] = useState<PageName>("list")
+  const [page, setPage] = useState<PageName>("auth")
 
   const [gpuNodes, setGpuNodes] = useState<GpuNode[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -81,6 +82,9 @@ export function MyNodes() {
   return (
     <DashboardContent>
       <>
+        {page === "auth" &&
+          <AuthListNodes onChangePage={onChangePage}/>
+        }
         {page === "list" &&
           <ListNodes
             gpuNodes={gpuNodes}

@@ -1,4 +1,4 @@
-export type PageName = "list" | "add" | "display"
+export type PageName = "auth" | "list" | "add" | "display"
 
 export interface GpuNode {
   nodeId: string
