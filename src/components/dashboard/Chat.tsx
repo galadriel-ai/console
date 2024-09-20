@@ -4,6 +4,7 @@ import {useState} from "react";
 import {getIcon} from "@/components/Icons";
 import {useChat} from "@ai-sdk/react";
 import {Message} from "ai";
+import ReactMarkdown from 'react-markdown';
 
 interface Props {
   onRunNode: () => void
@@ -137,7 +138,9 @@ function AssistantMessage({content}: { content: string }) {
     <div className={"pt-4"}>
       <div className={"border-l-2 pl-4 flex flex-col gap-2"}>
         <div>
-          {content}
+          <ReactMarkdown>
+            {content}
+          </ReactMarkdown>
         </div>
         {content &&
           <div
