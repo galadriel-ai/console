@@ -4,6 +4,7 @@ import {Title} from "@/components/Text";
 
 export default function Signup({onLogin}: { onLogin: () => void }) {
   const [isEmailSent, setIsEmailSent] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
 
 
@@ -13,10 +14,10 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     // Call the onLogin function passed as a prop with the username and password
-    onSignup(email);
+    onSignup(email, password);
   };
 
-  const onSignup = async (inputEmail: string) => {
+  const onSignup = async (inputEmail: string, inputPassword: string) => {
     if (isLoading) return
     setErrorMessage("")
     setIsLoading(true)
@@ -27,7 +28,8 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          "email": inputEmail,
+          email: inputEmail,
+          password: inputPassword,
         }),
       });
 
@@ -35,7 +37,11 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
       if (responseJson.isSuccess) {
         setIsEmailSent(true)
       } else {
-        setErrorMessage("An unexpected error occurred, please try again.");
+        if (responseJson.error && responseJson.error === "invalid_password") {
+          setErrorMessage("Invalid password.");
+        } else {
+          setErrorMessage("An unexpected error occurred, please try again.");
+        }
       }
     } catch (error: any) {
       setErrorMessage((error && error.message) || "An error occurred during login.");
@@ -67,6 +73,16 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
                   placeholder="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  className="border px-4 py-2 text-black"
+                />
+              </div>
+              <div className={"flex flex-col gap-2"}>
+                <label className={"gal-text"}>Password to join Galadriel</label>
+                <input
+                  type="password"
+                  placeholder="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="border px-4 py-2 text-black"
                 />
               </div>
