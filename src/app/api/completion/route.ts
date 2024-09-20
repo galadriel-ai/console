@@ -21,12 +21,12 @@ export async function POST(req: Request) {
   })
 
   const json = await req.json()
-  const {prompt} = json
+  const {messages} = json
 
   const result = await streamText({
     model: openai.languageModel(process.env.MODEL_ID || ""),
     system: "You are a helpful assistant",
-    prompt
+    messages
   })
   return result.toDataStreamResponse()
 }
