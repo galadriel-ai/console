@@ -70,6 +70,7 @@ export function ExtraDataForm({onSuccess}: {
   onSuccess: () => void,
 }) {
 
+  const [telegram, setTelegram] = useState<string>("")
   const [roles, setRoles] = useState<string[]>([])
   const [experience, setExperience] = useState<string | null>(null)
   const [gpus, setGpus] = useState<string[]>([])
@@ -102,6 +103,7 @@ export function ExtraDataForm({onSuccess}: {
         },
         body: JSON.stringify({
           data: {
+            telegram,
             roles,
             experience,
             gpus,
@@ -169,6 +171,16 @@ export function ExtraDataForm({onSuccess}: {
         className="flex flex-col gap-6 w-full"
         data-ph-capture-attribute-form-name="profile_data"
       >
+        <div className={"flex flex-col gap-2"}>
+          <label className={"gal-text"}>Telegram handle (optional)</label>
+          <input
+            type="telegram"
+            placeholder="@username"
+            value={telegram}
+            onChange={(e) => setTelegram(e.target.value)}
+            className="border px-4 py-2 text-black"
+          />
+        </div>
         <div className={"flex flex-col gap-2"}>
           <label className={"gal-text"}>Role</label>
           <Select
