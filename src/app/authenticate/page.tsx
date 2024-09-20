@@ -35,7 +35,7 @@ function Authenticate() {
     <div
       className="flex w-full min-h-screen max-w-[1200px] mx-auto flex-col justify-center items-center gap-20 pt-10 py-2 px-2 md:px-5 lg:px-10 z-2 relative">
       {stage === "password" ?
-        <div className={"flex flex-col gap-6 gal-card py-10 px-2 md:px-8 fixed w-full md:w-auto"}>
+        <div className={"flex flex-col gap-6 gal-card py-10 px-2 md:px-8 relative w-full md:w-auto"}>
           <PasswordForm
             searchParams={searchParams}
             onNotAuthenticated={onNotAuthenticated}
@@ -44,7 +44,7 @@ function Authenticate() {
         </div>
         :
         // TODO: how to set width properly here
-        <div className={"flex flex-col gap-6 gal-card py-10 px-2 md:px-8 fixed w-full md:w-[600px]"}>
+        <div className={"flex flex-col gap-6 gal-card py-10 px-2 md:px-8 relative w-full md:w-[600px]"}>
           <ExtraDataForm onSuccess={onExtraDataSubmitted}/>
         </div>
       }

@@ -4,7 +4,7 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,} from "@/compone
 import {getEmail, getUsername, removeUserData} from "@/utils/user";
 import {useState} from "react";
 
-export type MenuItemType = "network_stats" | "node_stats" | "my_nodes" | "api_keys"
+export type MenuItemType = "chat" | "network_stats" | "node_stats" | "my_nodes" | "api_keys"
 
 export default function Sidebar(
   {
@@ -36,6 +36,12 @@ export default function Sidebar(
       <div className="flex flex-col gap-4">
         <div className="gal-subtitle">Menu</div>
         <div className="col gap-[10px]">
+          <MenuItem
+            name={"Chat"}
+            isActive={selectedMenu === "chat"}
+            iconName={"menu_chat"}
+            onClick={() => onMenuItemChange("chat")}
+          />
           <MenuItem
             name={"Network stats"}
             isActive={selectedMenu === "network_stats"}
