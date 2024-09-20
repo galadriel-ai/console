@@ -166,16 +166,16 @@ input:focus {
   font-weight: 500;
 }
 
-.gal-error {
-  color: var(--Red);
-}
-
 .gal-subtitle, .gal-text-secondary {
   color: var(--Grey);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 14px; /* 100% */
+}
+
+.gal-error {
+  color: var(--Red);
 }
 
 .gal-text-secondary {
