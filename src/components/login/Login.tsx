@@ -57,13 +57,13 @@ export default function Login({onSignup}: { onSignup: () => void }) {
 
   return (
     <div
-      className="flex w-full min-h-screen max-w-[600px] mx-auto flex-col justify-center items-center gap-20 pt-0 md:pt-10 p-0 md:px-5 lg:px-10 z-2 relative"
+      className="flex w-full min-h-screen max-w-[700px] mx-auto flex-col justify-center items-center gap-20 pt-0 md:pt-10 p-0 md:px-5 lg:px-10 z-2 relative"
     >
-      <div className={"flex flex-col gap-6 gal-card p-0 relative top-0 md:top-auto"}>
+      <div className={"flex flex-col gap-6 gal-card p-0 relative top-0 md:top-auto md:min-w-[500px]"}>
         <div className={"gal-login-image-wrapper z-0 inset-0"}/>
 
         <div className={"flex flex-col gap-6 pt-32 pb-10 px-2 md:px-8 z-10"}>
-          <Title>Welcome!</Title>
+          <Title>Welcome</Title>
           <div className={"gal-text"}>Fill out the fields below to log in.</div>
 
           <div className={"gal-error"}>{errorMessage}</div>
