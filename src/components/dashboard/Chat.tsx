@@ -4,8 +4,11 @@ import {useState} from "react";
 import {getIcon} from "@/components/Icons";
 import {useCompletion} from "@ai-sdk/react";
 
+interface Props {
+  onRunNode: () => void
+}
 
-export function Chat() {
+export function Chat({onRunNode}: Props) {
 
   return (
     <DashboardContent>
@@ -18,6 +21,9 @@ export function Chat() {
           className={"py-8 px-8 flex flex-col gap-8 gal-card max-w-[600px] min-w-[300px]"}
         >
           <InputForm/>
+          <div className={"flex flex-row justify-center"}>
+            <button className={"gal-button gal-button-primary"} onClick={onRunNode}>Run a node</button>
+          </div>
         </div>
       </div>
     </DashboardContent>
@@ -27,11 +33,25 @@ export function Chat() {
 function InputForm() {
 
   const {completion, complete} = useCompletion({
-    api: '/api/completion',
+    api: "/api/completion",
   });
 
   const [message, setMessage] = useState<string>("");
   const [displayMessage, setDisplayMessage] = useState<string>("");
+  const [isCleared, setIsCleared] = useState<boolean>(false);
+
+  const [isCopyActive, setIsCopyActive] = useState<boolean>(false)
+  const onCopy = async () => {
+    if (!completion) return
+    await navigator.clipboard.writeText(completion)
+    setIsCopyActive(true)
+    try {
+      setTimeout(() => {
+        setIsCopyActive(false);
+      }, 3000);
+    } catch {
+    }
+  }
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -43,10 +63,15 @@ function InputForm() {
     try {
       setDisplayMessage(inputMessage)
       // Automagically streams response to "completion"
+      setIsCleared(false)
       await complete(inputMessage)
     } catch {
       // setError(error.message || 'An error occurred during login.');
     }
+  }
+
+  const onClearChat = () => {
+    setIsCleared(true)
   }
 
   return (
@@ -75,13 +100,38 @@ function InputForm() {
       </form>
       <div className={"pt-4 flex flex-col gap-4"}>
         <div className={"gal-text"}>
-          {displayMessage}
+          {!isCleared && displayMessage}
         </div>
-        <div className={"border-l-2 pl-4 flex flex-col gap-2"}>
-          <div>
-            {completion}
+        <div className={"pt-4"}>
+          <div className={"border-l-2 pl-4 flex flex-col gap-2"}>
+            <div>
+              {!isCleared && completion}
+            </div>
+            {(!isCleared && completion) &&
+              <div className={"pt-4"}>
+                <div
+                  className={"p-2 pl-0 cursor-pointer flex w-fit"}
+                  onClick={onCopy}
+                >
+                  {isCopyActive ?
+                    <div className={"flex"}>
+                      {getIcon("check")}
+                    </div>
+                    :
+                    <div>
+                      {getIcon("copy")}
+                    </div>
+                  }
+                </div>
+              </div>
+            }
           </div>
-          {completion && <div>Copy</div>}
+        </div>
+        <div
+          className={"gal-link pt-2 flex self-end"}
+          onClick={onClearChat}
+        >
+          Clear chat
         </div>
       </div>
     </>

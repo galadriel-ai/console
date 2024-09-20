@@ -30,6 +30,9 @@ export default function DashboardPage() {
     setSelectedMenu(name)
   }
 
+  const onRunNode = () => {
+    setSelectedMenu("my_nodes")
+  }
 
   return (
     <div
@@ -40,7 +43,7 @@ export default function DashboardPage() {
       </div>
       <div className="w-4/5 h-full">
         {selectedMenu === "chat" &&
-          <Chat/>
+          <Chat onRunNode={onRunNode}/>
         }
         {selectedMenu === "network_stats" &&
           <NetworkStats/>
