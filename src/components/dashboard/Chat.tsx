@@ -9,7 +9,7 @@ interface Props {
   onRunNode: () => void
 }
 
-export function Chat({onRunNode}: Props) {
+export function Chat({}: Props) {
 
   return (
     <DashboardContent>
@@ -22,9 +22,9 @@ export function Chat({onRunNode}: Props) {
           className={"py-8 px-8 flex flex-col gap-8 gal-card max-w-[600px] min-w-[300px]"}
         >
           <InputForm/>
-          <div className={"flex flex-row justify-center"}>
-            <button className={"gal-button gal-button-primary"} onClick={onRunNode}>Run a node</button>
-          </div>
+          {/*<div className={"flex flex-row justify-center"}>*/}
+          {/*  <button className={"gal-button gal-button-primary"} onClick={onRunNode}>Run a node</button>*/}
+          {/*</div>*/}
         </div>
       </div>
     </DashboardContent>
