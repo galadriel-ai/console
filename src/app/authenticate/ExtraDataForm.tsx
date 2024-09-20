@@ -89,7 +89,7 @@ export function ExtraDataForm({onSuccess}: {
   const onSendData = async () => {
     if (isLoading) return
     setErrorMessage("")
-    if (!roles || !experience || !gpus || !ownership || gpuCount === "" || !preferredOs) {
+    if (!telegram || !roles || !experience || !gpus || !ownership || gpuCount === "" || !preferredOs) {
       setErrorMessage("Make sure to fill all fields.")
       return
     }
@@ -172,7 +172,7 @@ export function ExtraDataForm({onSuccess}: {
         data-ph-capture-attribute-form-name="profile_data"
       >
         <div className={"flex flex-col gap-2"}>
-          <label className={"gal-text"}>Telegram handle (optional)</label>
+          <label className={"gal-text"}>Telegram handle</label>
           <input
             type="telegram"
             placeholder="@username"

@@ -1,7 +1,7 @@
 import {NextResponse} from "next/server";
 
 export async function POST(req: Request) {
-  const {email, password} = await req.json();
+  const {email} = await req.json();
 
   const apiResponse = await fetch(`${process.env.BACKEND_API_URL}/auth/signup`, {
     method: "POST",
@@ -9,7 +9,7 @@ export async function POST(req: Request) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      email, password
+      email
     })
   })
   return NextResponse.json({isSuccess: apiResponse.status === 200});
