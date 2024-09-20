@@ -11,7 +11,7 @@ interface Props {
 export function AuthListNodes({onChangePage}: Props) {
 
   const [password, setPassword] = useState<string>("")
-  const [isLoading, setIsLoading] = useState<string>("")
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>("")
 
   useEffect(() => {
@@ -30,6 +30,7 @@ export function AuthListNodes({onChangePage}: Props) {
 
   const onCheckPassword = async (inputPassword: string) => {
     if (isLoading) return
+    setIsLoading(true)
     setErrorMessage("")
     try {
       const response = await fetch("/api/node_auth", {

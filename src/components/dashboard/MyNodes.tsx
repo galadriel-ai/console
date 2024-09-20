@@ -55,7 +55,7 @@ export function MyNodes() {
           tokensPerSecond: r.tokens_per_second,
           nodeCreatedAt: r.node_created_at,
         })
-      )
+      );
       setGpuNodes(newGpuNodes)
     } catch {
       // setError(error.message || 'An error occurred during login.');
