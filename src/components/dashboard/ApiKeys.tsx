@@ -1,11 +1,12 @@
-import {Checkbox} from "@/components/ui/checkbox"
-import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle,} from "@/components/ui/dialog";
 import {DashboardContent} from "@/components/dashboard/components/DashboardContent";
 import {Title} from "@/components/Text";
 import {useEffect, useState} from "react";
 import {getIcon} from "@/components/Icons";
+import {ApiKeyModal} from "@/components/dashboard/components/ApiKeyModal";
+import {ApiKeyDeletionModal} from "@/components/dashboard/components/ApiKeyDeletionModal";
 
 interface ApiKey {
+  apiKeyId: string
   key: string
   // API format, ISO 8601
   createdAt: string
@@ -17,8 +18,11 @@ export function ApiKeys() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isCreationLoading, setIsCreationLoading] = useState<boolean>(false)
 
-  const [isModelOpen, setIsModelOpen] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [createdApiKey, setCreatedApiKey] = useState<string>("")
+
+  const [isDeletionModalOpen, setIsDeletionModalOpen] = useState<boolean>(false)
+  const [deletionApiKey, setDeletionApiKey] = useState<ApiKey | null>(null)
 
 
   useEffect(() => {
@@ -28,10 +32,10 @@ export function ApiKeys() {
   const getApiKeys = async () => {
     setIsLoading(true)
     try {
-      const response = await fetch('/api/api_key', {
-        method: 'GET',
+      const response = await fetch("/api/api_key", {
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
@@ -40,6 +44,7 @@ export function ApiKeys() {
       }
       const responseJson = await response.json()
       setApiKeys(responseJson.api_keys.map((r: any) => ({
+          apiKeyId: r.api_key_id,
           key: r.api_key_prefix,
           createdAt: r.created_at,
         })
@@ -70,12 +75,13 @@ export function ApiKeys() {
         setApiKeys([
           ...apiKeys,
           {
+            apiKeyId: responseJson.apiKeyId,
             key: responseJson.apiKey.slice(0, 10),
             createdAt: responseJson.createdAt,
           }
         ])
         setCreatedApiKey(responseJson.apiKey)
-        setIsModelOpen(true)
+        setIsModalOpen(true)
       }
     } catch {
       // setError(error.message || 'An error occurred during login.');
@@ -85,7 +91,27 @@ export function ApiKeys() {
 
   const onCloseModal = () => {
     setCreatedApiKey("")
-    setIsModelOpen(false)
+    setIsModalOpen(false)
+  }
+
+  const onDeleteApiKey = async (apiKey: ApiKey) => {
+    setDeletionApiKey(apiKey)
+    setIsDeletionModalOpen(true)
+  }
+
+  const onDeleteApiKeySuccess = async () => {
+    if (!deletionApiKey) return
+    const updatedApiKeys = apiKeys.filter(k => k.apiKeyId !== deletionApiKey.apiKeyId)
+    setApiKeys([
+      ...updatedApiKeys
+    ])
+    setDeletionApiKey(null)
+    setIsDeletionModalOpen(false)
+  }
+
+  const onCloseDeleteModal = () => {
+    setDeletionApiKey(null)
+    setIsDeletionModalOpen(false)
   }
 
   const formatDate = (date: string): string => {
@@ -99,7 +125,16 @@ export function ApiKeys() {
   return (
     <DashboardContent>
       <Title>API keys</Title>
-      <ApiKeyModal isOpen={isModelOpen} apiKey={createdApiKey} onClose={onCloseModal}/>
+      <ApiKeyModal isOpen={isModalOpen} apiKey={createdApiKey} onClose={onCloseModal}/>
+      {deletionApiKey &&
+        <ApiKeyDeletionModal
+          isOpen={isDeletionModalOpen}
+          apiKeyId={deletionApiKey.apiKeyId}
+          apiKey={deletionApiKey.key}
+          onDeleteSuccess={onDeleteApiKeySuccess}
+          onClose={onCloseDeleteModal}
+        />
+      }
       <div className={"pt-10 gal-text-secondary max-w-4xl"}>
         Your secret API keys are listed below. Do not share your API keys with others, or expose them in the browser or
         other client-side code.
@@ -133,8 +168,14 @@ export function ApiKeys() {
                 <div className={"w-1/2"}>
                   {apiKey.key}...
                 </div>
-                <div className={"w-1/2"}>
-                  {formatDate(apiKey.createdAt)}
+                <div className={"w-1/2 flex flex-row justify-between"}>
+                  <div>{formatDate(apiKey.createdAt)}</div>
+                  <div
+                    className={"gal-group cursor-pointer"}
+                    onClick={() => onDeleteApiKey(apiKey)}
+                  >
+                    {getIcon("delete")}
+                  </div>
                 </div>
               </div>
             )
@@ -160,103 +201,5 @@ export function ApiKeys() {
         </div>
       </div>
     </DashboardContent>
-  )
-}
-
-
-function ApiKeyModal({isOpen, apiKey, onClose}: { isOpen: boolean, apiKey: string, onClose: () => void }) {
-
-  const [isChecked, setIsChecked] = useState<boolean>(false)
-  const [isCopyActive, setIsCopyActive] = useState<boolean>(false)
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onOpenChange = (open: boolean) => {
-  }
-
-  const onCopy = async () => {
-    await navigator.clipboard.writeText(apiKey)
-    setIsCopyActive(true)
-    try {
-      setTimeout(() => {
-        setIsCopyActive(false);
-      }, 3000);
-    } catch {
-
-    }
-  }
-
-  const onCheckedChange = (checked: boolean | "indeterminate") => {
-    if (checked === true) {
-      setIsChecked(true)
-    } else {
-      setIsChecked(false)
-    }
-  }
-
-  const onCloseModal = () => {
-    if (isChecked) {
-      onClose()
-    }
-  }
-
-  return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-white">
-        <DialogHeader>
-          <DialogTitle>
-            <div className={"pb-4"}>
-              Copy the API key
-            </div>
-          </DialogTitle>
-          <DialogDescription>
-            <div className={"flex flex-col gap-4"}>
-              <div className={"gal-subtitle gal-text-warning"}>
-                {"Make sure you save your API key, you won't be able to see the full API key again."}
-              </div>
-              <div>Click to copy your API key</div>
-              <div
-                className={"text-black cursor-pointer flex flex-row gap-1 items-center gal-group"}
-                onClick={onCopy}
-              >
-                <div>
-                  {apiKey}
-                </div>
-                {isCopyActive ?
-                  <div>
-                    {getIcon("check")}
-                  </div>
-                  :
-                  <div>
-                    {getIcon("copy")}
-                  </div>
-                }
-              </div>
-              <div className="items-top flex space-x-2">
-                <Checkbox id="checkApiKey" onCheckedChange={onCheckedChange}/>
-                <div className="grid gap-1.5 leading-none cursor-pointer">
-                  <label
-                    htmlFor="checkApiKey"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    I have saved the API key
-                  </label>
-                </div>
-              </div>
-              <div>
-                {isChecked ?
-                  <button className={"gal-button gal-button-primary"} onClick={onCloseModal}>
-                    Done
-                  </button>
-                  :
-                  <button className={"gal-button-disabled"}>
-                    Done
-                  </button>
-                }
-              </div>
-            </div>
-          </DialogDescription>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
   )
 }
