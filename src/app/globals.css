@@ -263,11 +263,14 @@ input:focus {
   background: var(--Light-grey-3);
 }
 
-
 .gal-button-primary {
   color: var(--White);
-  border-radius: 0.5rem;
   background: var(--Blue);
+}
+
+.gal-button-warning {
+  color: var(--White);
+  background: var(--Red);
 }
 
 .gal-api-keys-wrapper {

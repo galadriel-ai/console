@@ -19,7 +19,8 @@ export type IconName =
   "check" |
   "plus" |
   "gear" |
-  "submit"
+  "submit" |
+  "delete"
 
 export function getIcon(iconName: IconName) {
   if (iconName === "spinner") return <IconSpinner/>
@@ -43,6 +44,7 @@ export function getIcon(iconName: IconName) {
   if (iconName === "plus") return <IconPlus/>
   if (iconName === "gear") return <IconGear/>
   if (iconName === "submit") return <IconSubmit/>
+  if (iconName === "delete") return <IconDelete/>
   return <></>
 }
 
@@ -360,6 +362,17 @@ function IconSubmit() {
       <path
         d="M15.0515 8.03323L4.87028 2.55448C4.01528 2.09323 3.02528 2.89198 3.29528 3.82573L4.69028 8.70823C4.74653 8.91073 4.74653 9.11322 4.69028 9.31573L3.29528 14.1982C3.02528 15.132 4.01528 15.9307 4.87028 15.4695L15.0515 9.99073C15.2252 9.89582 15.3702 9.75591 15.4711 9.58567C15.5721 9.41544 15.6254 9.22116 15.6254 9.02323C15.6254 8.8253 15.5721 8.63102 15.4711 8.46078C15.3702 8.29054 15.2252 8.15063 15.0515 8.05573V8.03323Z"
         fill="#59595E"/>
+    </svg>
+  )
+}
+
+function IconDelete() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+         className={"gal-svg-hover"}>
+      <path fillRule="evenodd" clipRule="evenodd"
+            d="M6.75 1C6.33579 1 6 1.33579 6 1.75C6 2.16421 6.33579 2.5 6.75 2.5H12.75C13.1642 2.5 13.5 2.16421 13.5 1.75C13.5 1.33579 13.1642 1 12.75 1H6.75ZM3 4.75C3 4.33579 3.33579 4 3.75 4H6H13.5H15.75C16.1642 4 16.5 4.33579 16.5 4.75C16.5 5.16421 16.1642 5.5 15.75 5.5H15V17.5C15 18.3284 14.3285 19 13.5 19H6C5.17158 19 4.5 18.3284 4.5 17.5V5.5H3.75C3.33579 5.5 3 5.16421 3 4.75ZM6 5.5H13.5V17.5H6V5.5Z"
+            fill="#828288"/>
     </svg>
   )
 }
