@@ -3,6 +3,7 @@ import {Area, AreaChart, CartesianGrid, XAxis, YAxis} from "recharts"
 import {CardContent, CardHeader,} from "@/components/ui/card"
 import {ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent,} from "@/components/ui/chart"
 import {ChartData} from "@/types/chart";
+import {formatTimestampToDate, formatTimestampToTimeNoSecond} from "@/utils/helpers";
 
 
 export function Chart({chartData}: { chartData: ChartData | undefined }) {
@@ -54,8 +55,8 @@ export function Chart({chartData}: { chartData: ChartData | undefined }) {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              minTickGap={8}
-              tickFormatter={(value) => value}
+              minTickGap={50}
+              tick={CustomizedTick}
             />
             <YAxis domain={[0, (dataMax: number) => dataMax + 20]}/>
             <ChartTooltip
@@ -65,7 +66,6 @@ export function Chart({chartData}: { chartData: ChartData | undefined }) {
             <Area
               dataKey={chartData.yDataKey}
               type="natural"
-              // fill="var(--Blue)"
               fill={`url(#colorUv)`}
               fillOpacity={0.4}
               stroke="#4489FF"
@@ -75,4 +75,21 @@ export function Chart({chartData}: { chartData: ChartData | undefined }) {
       </CardContent>
     </div>
   )
+}
+
+function CustomizedTick({x, y, payload}: { x: any, y: any, stroke: any, payload: any }) {
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text x={0} y={0} dy={16}>
+        <tspan textAnchor="middle" x="0">
+          {formatTimestampToTimeNoSecond(payload.value)}
+        </tspan>
+      </text>
+      <text x={0} y={-15} dy={16}>
+        <tspan textAnchor="middle" x="0">
+          {formatTimestampToDate(payload.value)}
+        </tspan>
+      </text>
+    </g>
+  );
 }

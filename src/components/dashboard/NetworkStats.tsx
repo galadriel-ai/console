@@ -1,7 +1,7 @@
 import {DashboardContent} from "@/components/dashboard/components/DashboardContent";
 import {Title} from "@/components/Text";
 import {useEffect, useState} from "react";
-import {formatNumber, formatTimestampToTime} from "@/utils/helpers";
+import {formatNumber} from "@/utils/helpers";
 import {Card} from "@/components/dashboard/components/Card";
 import {Chart} from "@/components/dashboard/components/Chart";
 import {ChartData, DataPoint} from "@/types/chart";
@@ -70,7 +70,7 @@ export function NetworkStats() {
           const dataPoints: DataPoint[] = []
           for (let i = 0; i < responseJson.timestamps.length; i++) {
             dataPoints.push({
-              time: formatTimestampToTime(responseJson.timestamps[i]),
+              time: responseJson.timestamps[i],
               inferences: responseJson.values[i],
             })
           }
