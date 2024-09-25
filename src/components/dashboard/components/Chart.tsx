@@ -31,10 +31,10 @@ export function Chart({chartData}: { chartData: ChartData | undefined }) {
   return (
     <div className={"gal-card"}>
       <CardHeader>
-        <div className={"gal-text"}>Hourly network total inferences</div>
+        <div className={"gal-text"}>{chartData.title}</div>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className={"w-full max-h-[400px]"}>
           <AreaChart
             accessibilityLayer
             data={chartData.dataPoints}

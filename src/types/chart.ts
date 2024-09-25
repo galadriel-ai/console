@@ -5,6 +5,8 @@ export interface DataPoint {
 }
 
 export interface ChartData {
+  title: string
+
   dataPoints: DataPoint[]
   labelName: string
 
