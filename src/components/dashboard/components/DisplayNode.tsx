@@ -61,7 +61,7 @@ export function DisplayNode({gpuNode, onChangePage}: Props) {
           <div>
             <a
               className={"gal-button gal-button-primary"}
-              href={(process.env.NEXT_PUBLIC_DOCS_URL || "") + "quickstart"}
+              href={process.env.NEXT_PUBLIC_DOCS_URL}
               target="_blank"
             >
               Run node
