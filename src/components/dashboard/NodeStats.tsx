@@ -3,6 +3,8 @@ import {Title} from "@/components/Text";
 import {useEffect, useState} from "react";
 import {formatNumber} from "@/utils/helpers";
 import {Card} from "@/components/dashboard/components/Card";
+import {ChartData, DataPoint} from "@/types/chart";
+import {Chart} from "@/components/dashboard/components/Chart";
 
 interface NodeStats {
   inferencesCountDay: number
@@ -16,8 +18,12 @@ export function NodeStats() {
   const [isLoading, setIsLoading] = useState(true);
   // const [error, setError] = useState(null);
 
+  const [chartData, setChartData] = useState<ChartData | undefined>()
+  const [isChartLoading, setIsChartLoading] = useState(false);
+
   useEffect(() => {
     getNetworkStats()
+    getChartData()
   }, [])
 
   const getNetworkStats = async () => {
@@ -52,6 +58,45 @@ export function NodeStats() {
     setIsLoading(false)
   }
 
+  const getChartData = async () => {
+    if (isChartLoading) return
+    setIsChartLoading(true)
+    try {
+      const response = await fetch("/api/graph", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          graphType: "user"
+        })
+      });
+
+      if (response.ok) {
+        const responseJson = await response.json()
+        if (responseJson.timestamps && responseJson.values) {
+          const dataPoints: DataPoint[] = []
+          for (let i = 0; i < responseJson.timestamps.length; i++) {
+            dataPoints.push({
+              time: responseJson.timestamps[i],
+              inferences: responseJson.values[i],
+            })
+          }
+          setChartData({
+            title: "My nodes' total inferences per hour",
+            dataPoints: dataPoints,
+            labelName: "Inferences",
+            xDataKey: "time",
+            yDataKey: "inferences",
+          })
+        }
+      }
+    } catch {
+      // setError(error.message || 'An error occurred during login.');
+    }
+    setIsChartLoading(false)
+  }
+
   return (
     <DashboardContent>
       <Title>Node stats</Title>
@@ -84,6 +129,9 @@ export function NodeStats() {
           iconName={"network_throughput"}
         />
 
+      </div>
+      <div className={"pt-10"}>
+        <Chart chartData={chartData}/>
       </div>
     </DashboardContent>
   );

@@ -30,15 +30,15 @@ export function NetworkStats() {
     setIsLoading(true)
     console.log("getNetworkStats")
     try {
-      const response = await fetch('/api/network', {
-        method: 'GET',
+      const response = await fetch("/api/network", {
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
       if (!response.ok) {
-        throw new Error('Network stats call failed');
+        throw new Error("Network stats call failed");
       }
       const responseJson = await response.json()
       setNetworkStats({
@@ -57,11 +57,14 @@ export function NetworkStats() {
     if (isChartLoading) return
     setIsChartLoading(true)
     try {
-      const response = await fetch('/api/graph', {
-        method: 'GET',
+      const response = await fetch("/api/graph", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          graphType: "network"
+        })
       });
 
       if (response.ok) {
@@ -75,6 +78,7 @@ export function NetworkStats() {
             })
           }
           setChartData({
+            title: "Hourly network total inferences",
             dataPoints: dataPoints,
             labelName: "Inferences",
             xDataKey: "time",
