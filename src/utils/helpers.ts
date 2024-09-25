@@ -18,3 +18,10 @@ export function formatTimestampToTime(timestampSeconds: number): string {
     second: "numeric",
   }).format(new Date(timestampSeconds * 1000)).replaceAll("/", ".");
 }
+
+export function formatTimestampToTimeNoSecond(timestampSeconds: number): string {
+  return new Intl.DateTimeFormat('en-GB', {
+    hour: "numeric",
+    minute: "numeric",
+  }).format(new Date(timestampSeconds * 1000)).replaceAll("/", ".");
+}

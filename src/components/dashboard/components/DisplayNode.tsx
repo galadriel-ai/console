@@ -2,7 +2,9 @@ import {getIcon, IconName} from "@/components/Icons";
 import {Title} from "@/components/Text";
 import {GpuNode, PageName} from "@/types/gpuNode";
 import {formatNumber, formatTimestampToDate, formatTimestampToTime} from "@/utils/helpers";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {ChartData, DataPoint} from "@/types/chart";
+import {Chart} from "@/components/dashboard/components/Chart";
 
 interface Props {
   gpuNode: GpuNode | null
@@ -12,6 +14,56 @@ interface Props {
 export function DisplayNode({gpuNode, onChangePage}: Props) {
 
   const [isCopyActive, setIsCopyActive] = useState<boolean>(false)
+
+  const [chartData, setChartData] = useState<ChartData | undefined>()
+  const [isChartLoading, setIsChartLoading] = useState(false);
+
+  useEffect(() => {
+    if (gpuNode) {
+      getChartData(gpuNode.nodeId)
+    }
+  }, [gpuNode])
+
+  const getChartData = async (nodeId: string) => {
+    if (isChartLoading) return
+    setIsChartLoading(true)
+    try {
+      const response = await fetch("/api/graph", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          graphType: "node",
+          nodeName: nodeId,
+        })
+      });
+
+      if (response.ok) {
+        const responseJson = await response.json()
+        if (responseJson.timestamps && responseJson.values) {
+          const dataPoints: DataPoint[] = []
+          for (let i = 0; i < responseJson.timestamps.length; i++) {
+            dataPoints.push({
+              time: responseJson.timestamps[i],
+              inferences: responseJson.values[i],
+            })
+          }
+          setChartData({
+            title: "Hourly node total inferences",
+            dataPoints: dataPoints,
+            labelName: "Inferences",
+            xDataKey: "time",
+            yDataKey: "inferences",
+          })
+        }
+      }
+    } catch {
+      // setError(error.message || 'An error occurred during login.');
+    }
+    setIsChartLoading(false)
+  }
+
   const onCopy = async () => {
     if (!gpuNode) return
     await navigator.clipboard.writeText(gpuNode.nodeId)
@@ -106,9 +158,13 @@ export function DisplayNode({gpuNode, onChangePage}: Props) {
           <StatCard title={"GPU VRAM"} content={formatVram(gpuNode.vram) || "-"}/>
           <StatCard title={"CPU Cores"} content={`${gpuNode.cpuCount || "-"}`}/>
           <StatCard title={"Memory"} content={gpuNode.ram ? `${formatNumber(gpuNode.ram / 1024)} GB` : "-"}/>
-          <StatCard title={"Benchmark result"} content={gpuNode.tokensPerSecond ? `${formatNumber(gpuNode.tokensPerSecond)} tok/s` : "-"}/>
+          <StatCard title={"Benchmark result"}
+                    content={gpuNode.tokensPerSecond ? `${formatNumber(gpuNode.tokensPerSecond)} tok/s` : "-"}/>
           <StatCard title={"24h Inferences"} content={`${gpuNode.requestsServedDay}`} iconName={"online_nodes"}/>
           <StatCard title={"Total uptime"} content={`${gpuNode.totalUptimeSeconds} s`} iconName={"online_nodes"}/>
+        </div>
+        <div className={"pt-10"}>
+          <Chart chartData={chartData}/>
         </div>
       </div>
     </>

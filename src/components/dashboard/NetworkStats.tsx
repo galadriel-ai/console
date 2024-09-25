@@ -3,6 +3,8 @@ import {Title} from "@/components/Text";
 import {useEffect, useState} from "react";
 import {formatNumber} from "@/utils/helpers";
 import {Card} from "@/components/dashboard/components/Card";
+import {Chart} from "@/components/dashboard/components/Chart";
+import {ChartData, DataPoint} from "@/types/chart";
 
 interface NetworkStats {
   nodesOnline: number
@@ -13,25 +15,30 @@ interface NetworkStats {
 
 export function NetworkStats() {
   const [networkStats, setNetworkStats] = useState<NetworkStats | undefined>()
-  const [isLoading, setIsLoading] = useState(true);
-  // const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const [chartData, setChartData] = useState<ChartData | undefined>()
+  const [isChartLoading, setIsChartLoading] = useState(false);
 
   useEffect(() => {
     getNetworkStats()
+    getChartData()
   }, [])
 
   const getNetworkStats = async () => {
+    if (isLoading) return
     setIsLoading(true)
+    console.log("getNetworkStats")
     try {
-      const response = await fetch('/api/network', {
-        method: 'GET',
+      const response = await fetch("/api/network", {
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
       if (!response.ok) {
-        throw new Error('Network stats call failed');
+        throw new Error("Network stats call failed");
       }
       const responseJson = await response.json()
       setNetworkStats({
@@ -44,6 +51,45 @@ export function NetworkStats() {
       // setError(error.message || 'An error occurred during login.');
     }
     setIsLoading(false)
+  }
+
+  const getChartData = async () => {
+    if (isChartLoading) return
+    setIsChartLoading(true)
+    try {
+      const response = await fetch("/api/graph", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          graphType: "network"
+        })
+      });
+
+      if (response.ok) {
+        const responseJson = await response.json()
+        if (responseJson.timestamps && responseJson.values) {
+          const dataPoints: DataPoint[] = []
+          for (let i = 0; i < responseJson.timestamps.length; i++) {
+            dataPoints.push({
+              time: responseJson.timestamps[i],
+              inferences: responseJson.values[i],
+            })
+          }
+          setChartData({
+            title: "Hourly network total inferences",
+            dataPoints: dataPoints,
+            labelName: "Inferences",
+            xDataKey: "time",
+            yDataKey: "inferences",
+          })
+        }
+      }
+    } catch {
+      // setError(error.message || 'An error occurred during login.');
+    }
+    setIsChartLoading(false)
   }
 
   return (
@@ -71,7 +117,9 @@ export function NetworkStats() {
           subText={"tok/s"}
           iconName={"network_throughput"}
         />
-
+      </div>
+      <div className={"pt-10"}>
+        <Chart chartData={chartData}/>
       </div>
     </DashboardContent>
   )
