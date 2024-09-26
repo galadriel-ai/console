@@ -20,7 +20,8 @@ export type IconName =
   "plus" |
   "gear" |
   "submit" |
-  "delete"
+  "delete" |
+  "burger"
 
 export function getIcon(iconName: IconName) {
   if (iconName === "spinner") return <IconSpinner/>
@@ -45,6 +46,7 @@ export function getIcon(iconName: IconName) {
   if (iconName === "gear") return <IconGear/>
   if (iconName === "submit") return <IconSubmit/>
   if (iconName === "delete") return <IconDelete/>
+  if (iconName === "burger") return <IconBurger/>
   return <></>
 }
 
@@ -373,6 +375,19 @@ function IconDelete() {
       <path fillRule="evenodd" clipRule="evenodd"
             d="M6.75 1C6.33579 1 6 1.33579 6 1.75C6 2.16421 6.33579 2.5 6.75 2.5H12.75C13.1642 2.5 13.5 2.16421 13.5 1.75C13.5 1.33579 13.1642 1 12.75 1H6.75ZM3 4.75C3 4.33579 3.33579 4 3.75 4H6H13.5H15.75C16.1642 4 16.5 4.33579 16.5 4.75C16.5 5.16421 16.1642 5.5 15.75 5.5H15V17.5C15 18.3284 14.3285 19 13.5 19H6C5.17158 19 4.5 18.3284 4.5 17.5V5.5H3.75C3.33579 5.5 3 5.16421 3 4.75ZM6 5.5H13.5V17.5H6V5.5Z"
             fill="#828288"/>
+    </svg>
+  )
+}
+
+function IconBurger() {
+  return (
+    <svg fill="#000000" width="20px" height="20px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+      <link type="text/css" id="dark-mode" rel="stylesheet" href=""/>
+      <style type="text/css" id="dark-mode-custom-style"/>
+      <title>icn/menu</title>
+      <path
+        d="M2 3h12a1 1 0 0 1 0 2H2a1 1 0 1 1 0-2zm0 4h12a1 1 0 0 1 0 2H2a1 1 0 1 1 0-2zm0 4h12a1 1 0 0 1 0 2H2a1 1 0 0 1 0-2z"
+        id="a"/>
     </svg>
   )
 }

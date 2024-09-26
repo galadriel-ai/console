@@ -41,8 +41,8 @@ export function ApiKeyModal({isOpen, apiKey, onClose}: { isOpen: boolean, apiKey
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-white">
-        <DialogHeader>
+      <DialogContent className="bg-white max-w-full md:max-w-lg pt-4 pb-4 px-2 md:p-6">
+        <DialogHeader className={"text-left"}>
           <DialogTitle>
             <div className={"pb-4"}>
               Copy the API key
@@ -55,7 +55,7 @@ export function ApiKeyModal({isOpen, apiKey, onClose}: { isOpen: boolean, apiKey
               </div>
               <div>Click to copy your API key</div>
               <div
-                className={"text-black cursor-pointer flex flex-row gap-1 items-center gal-group"}
+                className={"text-black cursor-pointer flex flex-row flex-wrap gap-1 items-center gal-group"}
                 onClick={onCopy}
               >
                 <div>

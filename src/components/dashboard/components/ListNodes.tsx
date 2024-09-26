@@ -15,22 +15,25 @@ export function ListNodes({gpuNodes, isLoading, onChangePage, onDisplayNode}: Pr
 
   return (
     <>
-      <Title>My nodes</Title>
-      <div className={"pt-10 gal-text-secondary max-w-4xl"}>
-        Your created and running nodes will appear here.
-      </div>
-      <div className={"pt-10"}>
-        <div
-          className={"gal-add-circle flex items-center justify-center cursor-pointer"}
-          onClick={() => onChangePage("add")}
-        >
-          {getIcon("plus")}
+      <div className={"flex flex-col px-3 md:px-0"}>
+        <Title>My nodes</Title>
+        <div className={"pt-10 gal-text-secondary max-w-4xl"}>
+          Your created and running nodes will appear here.
+        </div>
+        <div className={"pt-10"}>
+          <div
+            className={"gal-add-circle flex items-center justify-center cursor-pointer"}
+            onClick={() => onChangePage("add")}
+          >
+            {getIcon("plus")}
+          </div>
         </div>
       </div>
+
       <div className={"flex flex-col gap-4 pt-10"}>
         {isLoading &&
           <div
-            className={"flex flex-row gap-12"}
+            className={"flex flex-row gap-12 px-3 md:px-0"}
           >
             Loading...
           </div>
@@ -40,7 +43,7 @@ export function ListNodes({gpuNodes, isLoading, onChangePage, onDisplayNode}: Pr
             return (
               <div
                 key={`gpuNode-${i}`}
-                className={"w-1/3 py-6 px-8 flex flex-col gap-8 gal-card max-w-[600px] min-w-[300px]"}
+                className={"w-full md:w-1/3 py-6 px-8 flex flex-col gap-8 gal-card md:max-w-[600px] min-w-[300px]"}
               >
                 <NodeCard node={node} onDisplayNode={onDisplayNode}/>
               </div>

@@ -89,58 +89,65 @@ export function DisplayNode({gpuNode, onChangePage}: Props) {
   return (
     <>
       <div className={"flex flex-col gap-8"}>
-        <div className={"flex"}>
-          <button className={"gal-button gal-button-icon"} onClick={() => onChangePage("list")}>
-            {getIcon("arrow_left")}
-          </button>
+        <div className={"flex flex-col px-3 md:px-0"}>
+          <div className={"flex"}>
+            <button className={"gal-button gal-button-icon"} onClick={() => onChangePage("list")}>
+              {getIcon("arrow_left")}
+            </button>
+          </div>
         </div>
 
-        <Title>{gpuNode.nameAlias}</Title>
-        <div className={"flex flex-row gap-12 pt-6"}>
-          <div className={"flex flex-col gap-6"}>
+        <div className={"flex flex-col px-3 md:px-0"}>
+          <Title>{gpuNode.nameAlias}</Title>
+          <div className={"flex flex-col md:flex-row gap-12 pt-6"}>
+            <div className={"flex flex-row md:flex-col gap-6"}>
+              <div className={"gal-subtitle"}>
+                Created:
+              </div>
+              <div className={"gal-subtitle flex flex-col gap-2"}>
+                <div>
+                  {formatTimestampToDate(gpuNode.nodeCreatedAt)}
+                </div>
+                <div>
+                  {formatTimestampToTime(gpuNode.nodeCreatedAt)}
+                </div>
+              </div>
+            </div>
+            <div>
+              <a
+                className={"gal-button gal-button-primary"}
+                href={process.env.NEXT_PUBLIC_DOCS_URL}
+                target="_blank"
+              >
+                Run node
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className={"flex flex-col px-3 md:px-0"}>
+          <div className={"flex flex-col gap-2"}>
             <div className={"gal-subtitle"}>
-              Created:
+              Node ID
             </div>
-            <div className={"gal-subtitle flex flex-col gap-2"}>
-              <div>
-                {formatTimestampToDate(gpuNode.nodeCreatedAt)}
-              </div>
-              <div>
-                {formatTimestampToTime(gpuNode.nodeCreatedAt)}
-              </div>
-            </div>
-          </div>
-          <div>
-            <a
-              className={"gal-button gal-button-primary"}
-              href={process.env.NEXT_PUBLIC_DOCS_URL}
-              target="_blank"
+            <div className={"flex flex-row gap-2 items-center break-all cursor-pointer"}
+                 onClick={onCopy}
             >
-              Run node
-            </a>
+              {gpuNode.nodeId}
+              {isCopyActive ?
+                <div>
+                  {getIcon("check")}
+                </div>
+                :
+                <div>
+                  {getIcon("copy")}
+                </div>
+              }
+            </div>
           </div>
         </div>
-        <div className={"flex flex-col gap-2"}>
-          <div className={"gal-subtitle"}>
-            Node ID
-          </div>
-          <div className={"flex flex-row gap-2 items-center break-all cursor-pointer"}
-               onClick={onCopy}
-          >
-            {gpuNode.nodeId}
-            {isCopyActive ?
-              <div>
-                {getIcon("check")}
-              </div>
-              :
-              <div>
-                {getIcon("copy")}
-              </div>
-            }
-          </div>
-        </div>
-        <div className={"flex flex-row flex-wrap gap-5"}>
 
+        <div className={"flex flex-col md:flex-row flex-wrap gap-5"}>
           <div
             className={"py-6 px-8 flex flex-col gap-4 gal-card"}
           >

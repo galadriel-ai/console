@@ -94,9 +94,11 @@ export function NetworkStats() {
 
   return (
     <DashboardContent>
-      <Title>Network stats</Title>
+      <div className={"flex flex-col px-3 md:px-0"}>
+        <Title>Network stats</Title>
+      </div>
       <div
-        className={"flex flex-row pt-[32px] gap-6"}
+        className={"flex flex-col md:flex-row pt-[32px] gap-6"}
       >
         <Card
           title="Online nodes"

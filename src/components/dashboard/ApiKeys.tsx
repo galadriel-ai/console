@@ -124,24 +124,27 @@ export function ApiKeys() {
 
   return (
     <DashboardContent>
-      <Title>API keys</Title>
-      <ApiKeyModal isOpen={isModalOpen} apiKey={createdApiKey} onClose={onCloseModal}/>
-      {deletionApiKey &&
-        <ApiKeyDeletionModal
-          isOpen={isDeletionModalOpen}
-          apiKeyId={deletionApiKey.apiKeyId}
-          apiKey={deletionApiKey.key}
-          onDeleteSuccess={onDeleteApiKeySuccess}
-          onClose={onCloseDeleteModal}
-        />
-      }
-      <div className={"pt-10 gal-text-secondary max-w-4xl"}>
-        Your secret API keys are listed below. Do not share your API keys with others, or expose them in the browser or
-        other client-side code.
+      <div className={"flex flex-col px-3 md:px-0"}>
+
+        <Title>API keys</Title>
+        <ApiKeyModal isOpen={isModalOpen} apiKey={createdApiKey} onClose={onCloseModal}/>
+        {deletionApiKey &&
+          <ApiKeyDeletionModal
+            isOpen={isDeletionModalOpen}
+            apiKeyId={deletionApiKey.apiKeyId}
+            apiKey={deletionApiKey.key}
+            onDeleteSuccess={onDeleteApiKeySuccess}
+            onClose={onCloseDeleteModal}
+          />
+        }
+        <div className={"pt-10 gal-text-secondary max-w-4xl"}>
+          Your secret API keys are listed below. Do not share your API keys with others, or expose them in the browser
+          or other client-side code.
+        </div>
       </div>
 
       <div
-        className={"flex flex-col pt-[32px] gap-[32px]"}
+        className={"flex flex-col pt-[32px] gap-[32px] px-3 md:px-0"}
       >
         <div className={"gal-api-keys-wrapper flex flex-col gap-4"}>
           <div className={"flex flex-row gap-12"}>
@@ -181,7 +184,7 @@ export function ApiKeys() {
             )
           })}
         </div>
-        <div className={"flex flex-row gap-[32px]"}>
+        <div className={"flex flex-col md:flex-row gap-[32px]"}>
           <button
             className={"gal-button gal-button-primary"}
             onClick={onCreateNewKey}
@@ -193,7 +196,7 @@ export function ApiKeys() {
             href={process.env.NEXT_PUBLIC_DOCS_URL}
             target="_blank"
           >
-            <button className={"gal-button"}>
+            <button className={"gal-button w-full"}>
               Go to API docs
             </button>
           </a>
