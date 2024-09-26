@@ -12,7 +12,7 @@ interface Props {
 export function Card({title, text, isLoading, subText, iconName}: Props) {
   return (
     <div
-      className={"w-1/3 py-6 px-8 flex flex-col gap-8 gal-card"}
+      className={"md:w-1/3 py-6 px-8 flex flex-col gap-8 gal-card"}
     >
       <div className={"gal-text flex flex-row justify-between"}>
         <div>

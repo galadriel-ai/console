@@ -99,9 +99,11 @@ export function NodeStats() {
 
   return (
     <DashboardContent>
-      <Title>Node stats</Title>
+      <div className={"flex flex-col px-3 md:px-0"}>
+        <Title>Node stats</Title>
+      </div>
       <div
-        className={"flex flex-row pt-[32px] gap-6"}
+        className={"flex flex-col md:flex-row pt-[32px] gap-6"}
       >
         <Card
           title="Your inferences last 24h"

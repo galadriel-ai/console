@@ -59,18 +59,21 @@ export function AddNode({gpuNodes, onAddGpuNode, onChangePage}: Props) {
   return (
     <>
       <div className={"flex flex-col gap-8"}>
-        <div className={"flex"}>
-          <button className={"gal-button gal-button-icon"} onClick={() => onChangePage("list")}>
-            {getIcon("arrow_left")}
-          </button>
+        <div className={"flex flex-col px-3 md:px-0"}>
+          <div className={"flex"}>
+            <button className={"gal-button gal-button-icon"} onClick={() => onChangePage("list")}>
+              {getIcon("arrow_left")}
+            </button>
+          </div>
         </div>
-
-        <Title>Create new node</Title>
-        <div className={"pt-10 gal-text-secondary max-w-4xl"}>
-          Fill out the fields below to get started.
+        <div className={"flex flex-col px-3 md:px-0"}>
+          <Title>Create new node</Title>
+          <div className={"pt-10 gal-text-secondary max-w-4xl"}>
+            Fill out the fields below to get started.
+          </div>
         </div>
         <div
-          className={"w-2/3 py-6 px-8 flex flex-col gap-8 gal-card max-w-[600px] min-w-[300px]"}
+          className={"w-full md:w-2/3 py-6 px-3 md:px-8 flex flex-col gap-8 gal-card max-w-[600px] min-w-[300px]"}
         >
           <form
             onSubmit={handleSubmit}

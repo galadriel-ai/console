@@ -30,7 +30,8 @@
     "react-select": "^5.8.0",
     "recharts": "^2.12.7",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "vaul": "^0.9.6"
   },
   "devDependencies": {
     "@types/cookie": "^0.6.0",

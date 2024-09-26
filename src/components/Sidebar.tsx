@@ -83,6 +83,11 @@ export default function Sidebar(
         </div>
       </div>
       <div className="flex flex-col gap-4">
+        <div className={"md:hidden flex flex-col pb-4 gap-2"}>
+          <div>{getUsername()}</div>
+          <div className={"font-normal"}>{getEmail()}</div>
+          <div className={"gal-link cursor-pointer"} onClick={onLogout}>Log out</div>
+        </div>
         <div className="gal-subtitle">Community & Support</div>
         <div className="flex flex-row gap-4">
           <a
@@ -135,9 +140,9 @@ function Settings({onLogout}: { onLogout: () => void }) {
     <>
       {isOpen && <div className="fixed inset-0 bg-black bg-opacity-20 z-10"/>}
       <DropdownMenu onOpenChange={onOpenChange}>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger asChild className={""}>
           <div
-            className={"gal-settings-wrapper absolute top-12 right-10 flex flex-row gap-2 items-center cursor-pointer gal-group"}>
+            className={"hidden gal-settings-wrapper md:absolute top-12 right-10 md:flex flex-row gap-2 items-center cursor-pointer gal-group"}>
             <div>{getIcon("gear")}</div>
             <div>{isOpen ? getIcon("arrow_up") : getIcon("arrow_down")}</div>
           </div>
