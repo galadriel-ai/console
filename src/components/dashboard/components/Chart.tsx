@@ -72,6 +72,7 @@ export function Chart({chartData}: { chartData: ChartData | undefined }) {
             />
           </AreaChart>
         </ChartContainer>
+        <div className={"gal-subtitle text-center mt-6 pt-3 gal-chart-footer"}>The chart can have a delay of up to 15min</div>
       </CardContent>
     </div>
   )

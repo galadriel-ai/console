@@ -183,9 +183,13 @@ input:focus {
   line-height: 20px;
 }
 
-
 .gal-text-warning {
   color: var(--Red);
+}
+
+.gal-chart-footer {
+  border-top: 1px solid var(--Light-grey-3);
+  font-size: 12px;
 }
 
 .gal-sidebar {
