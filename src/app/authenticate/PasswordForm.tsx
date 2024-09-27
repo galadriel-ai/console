@@ -34,7 +34,7 @@ export function PasswordForm({searchParams, onNotAuthenticated, onSuccess}: {
     }
     setIsLoading(true)
     const passwordInfo = zxcvbn(password)
-    if (passwordInfo.score < 3) {
+    if (passwordInfo.score < 3 || password.length < 10) {
       setErrorMessage("Password is not strong enough, use numbers and symbols")
       setIsLoading(false)
       return
