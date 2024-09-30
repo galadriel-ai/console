@@ -113,7 +113,7 @@ export function NetworkStats() {
           iconName={"count"}
         />
         <Card
-          title="Network throughput"
+          title="Max network throughput"
           isLoading={isLoading}
           text={networkStats ? formatNumber(networkStats.networkThroughput) : ""}
           subText={"tok/s"}
