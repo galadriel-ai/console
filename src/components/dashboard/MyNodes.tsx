@@ -73,9 +73,18 @@ export function MyNodes() {
     ])
   }
 
-  const onDisplayNode = (gpunode: GpuNode) => {
-    setDisplayedNode(gpunode)
+  const onDisplayNode = (gpuNode: GpuNode) => {
+    setDisplayedNode(gpuNode)
     setPage("display")
+  }
+
+  const onNameUpdated = (gpuNode: GpuNode) => {
+    setGpuNodes(gpuNodes.map(n => {
+      if (n.nodeId === gpuNode.nodeId) {
+        return gpuNode
+      }
+      return n
+    }))
   }
 
   return (
@@ -87,13 +96,18 @@ export function MyNodes() {
             isLoading={isLoading}
             onChangePage={onChangePage}
             onDisplayNode={onDisplayNode}
+            onNameUpdated={onNameUpdated}
           />
         }
         {page === "add" &&
           <AddNode gpuNodes={gpuNodes} onAddGpuNode={onAddGpuNode} onChangePage={onChangePage}/>
         }
         {page === "display" &&
-          <DisplayNode gpuNode={displayedNode} onChangePage={onChangePage}/>
+          <DisplayNode
+            gpuNode={displayedNode}
+            onChangePage={onChangePage}
+            onNameUpdated={onNameUpdated}
+          />
         }
       </>
     </DashboardContent>

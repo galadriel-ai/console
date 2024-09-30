@@ -104,6 +104,10 @@ body {
   }
 }
 
+.gal-blue {
+  color: var(--Blue);
+}
+
 input {
   border-radius: 0.5rem;
   border: 1px solid var(--Light-grey-3);
