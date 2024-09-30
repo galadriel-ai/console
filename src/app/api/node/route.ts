@@ -55,3 +55,33 @@ export async function POST(req: Request) {
 
   return NextResponse.json({isSuccess: true});
 }
+
+export async function PUT(req: Request) {
+  const {nodeId, nodeName} = await req.json();
+
+  const cookieHeader = req.headers.get('cookie');
+
+  const cookies = cookieHeader ? parse(cookieHeader) : {};
+  const token = cookies.accessToken;
+  if (!token) {
+    return NextResponse.json({error: 'Unauthorized: No token provided'}, {status: 401});
+  }
+
+  const apiResponse = await fetch(`${process.env.BACKEND_API_URL}/dashboard/node`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      node_id: nodeId,
+      node_name: nodeName,
+    })
+  })
+  if (apiResponse.status !== 200) {
+    console.log(await apiResponse.json())
+    return NextResponse.json({isSuccess: false});
+  }
+
+  return NextResponse.json({isSuccess: true});
+}

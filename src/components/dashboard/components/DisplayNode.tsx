@@ -1,17 +1,18 @@
 import {getIcon, IconName} from "@/components/Icons";
-import {Title} from "@/components/Text";
 import {GpuNode, PageName} from "@/types/gpuNode";
 import {formatNumber, formatTimestampToDate, formatTimestampToTime} from "@/utils/helpers";
 import {useEffect, useState} from "react";
 import {ChartData, DataPoint} from "@/types/chart";
 import {Chart} from "@/components/dashboard/components/Chart";
+import {UpdateNodeName} from "@/components/dashboard/components/UpdateNodeName";
 
 interface Props {
   gpuNode: GpuNode | null
   onChangePage: (pageName: PageName) => void
+  onNameUpdated: (gpuNode: GpuNode) => void
 }
 
-export function DisplayNode({gpuNode, onChangePage}: Props) {
+export function DisplayNode({gpuNode, onChangePage, onNameUpdated}: Props) {
 
   const [isCopyActive, setIsCopyActive] = useState<boolean>(false)
 
@@ -98,7 +99,7 @@ export function DisplayNode({gpuNode, onChangePage}: Props) {
         </div>
 
         <div className={"flex flex-col px-3 md:px-0"}>
-          <Title>{gpuNode.nameAlias}</Title>
+          <UpdateNodeName node={gpuNode} type={"title"} onNameUpdated={onNameUpdated}/>
           <div className={"flex flex-col md:flex-row gap-12 pt-6"}>
             <div className={"flex flex-row md:flex-col gap-6"}>
               <div className={"gal-subtitle"}>

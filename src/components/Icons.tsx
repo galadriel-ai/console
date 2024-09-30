@@ -1,5 +1,6 @@
 export type IconName =
   "spinner" |
+  "spinner_blue" |
   "online_nodes" |
   "count" |
   "network_throughput" |
@@ -17,14 +18,17 @@ export type IconName =
   "menu_docs" |
   "copy" |
   "check" |
+  "cross" |
   "plus" |
   "gear" |
   "submit" |
   "delete" |
-  "burger"
+  "burger" |
+  "edit"
 
 export function getIcon(iconName: IconName) {
   if (iconName === "spinner") return <IconSpinner/>
+  if (iconName === "spinner_blue") return <IconSpinnerBlue/>
   if (iconName === "online_nodes") return <IconOnlineNodes/>
   if (iconName === "count") return <IconCount/>
   if (iconName === "network_throughput") return <IconNetworkThroughput/>
@@ -42,11 +46,13 @@ export function getIcon(iconName: IconName) {
   if (iconName === "menu_docs") return <IconMenuDocs/>
   if (iconName === "copy") return <IconCopy/>
   if (iconName === "check") return <IconCheck/>
+  if (iconName === "cross") return <IconCross/>
   if (iconName === "plus") return <IconPlus/>
   if (iconName === "gear") return <IconGear/>
   if (iconName === "submit") return <IconSubmit/>
   if (iconName === "delete") return <IconDelete/>
   if (iconName === "burger") return <IconBurger/>
+  if (iconName === "edit") return <IconEdit/>
   return <></>
 }
 
@@ -54,6 +60,17 @@ function IconSpinner() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+      <path className="opacity-75" fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+  )
+}
+
+function IconSpinnerBlue() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+         className="animate-spin -ml-1 mr-3 h-5 w-5 gal-blue">
       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
       <path className="opacity-75" fill="currentColor"
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -327,6 +344,16 @@ function IconCheck() {
   )
 }
 
+function IconCross() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M3.62455 16.3505C2.76496 15.5203 2.07932 14.5272 1.60763 13.4292C1.13595 12.3312 0.887677 11.1502 0.877293 9.95516C0.866909 8.76014 1.09462 7.57503 1.54715 6.46896C1.99968 5.36289 2.66796 4.35803 3.51299 3.51299C4.35803 2.66796 5.36289 1.99968 6.46896 1.54715C7.57503 1.09462 8.76014 0.866909 9.95516 0.877293C11.1502 0.887677 12.3312 1.13595 13.4292 1.60763C14.5272 2.07932 15.5203 2.76496 16.3505 3.62455C17.99 5.32197 18.8971 7.59539 18.8766 9.95516C18.8561 12.3149 17.9096 14.5722 16.2409 16.2409C14.5722 17.9096 12.3149 18.8561 9.95516 18.8766C7.59539 18.8971 5.32197 17.99 3.62455 16.3505ZM11.2475 9.98755L13.7945 7.44055L12.5255 6.17155L9.98755 8.71855L7.44055 6.17155L6.17155 7.44055L8.71855 9.98755L6.17155 12.5345L7.44055 13.8035L9.98755 11.2565L12.5345 13.8035L13.8035 12.5345L11.2565 9.98755H11.2475Z"
+        fill="#0657E0"/>
+    </svg>
+  )
+}
+
 function IconPlus() {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -388,6 +415,17 @@ function IconBurger() {
       <path
         d="M2 3h12a1 1 0 0 1 0 2H2a1 1 0 1 1 0-2zm0 4h12a1 1 0 0 1 0 2H2a1 1 0 1 1 0-2zm0 4h12a1 1 0 0 1 0 2H2a1 1 0 0 1 0-2z"
         id="a"/>
+    </svg>
+  )
+}
+
+function IconEdit() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"
+         className={"gal-svg-hover"}>
+      <path
+        d="M1 15.7692H17V17H1V15.7692ZM14.3714 5.30769C14.8286 4.81538 14.8286 4.07692 14.3714 3.58462L12.3143 1.36923C11.8571 0.876923 11.1714 0.876923 10.7143 1.36923L2.14286 10.6V14.5385H5.8L14.3714 5.30769ZM11.5143 2.23077L13.5714 4.44615L11.8571 6.29231L9.8 4.07692L11.5143 2.23077ZM3.28571 13.3077V11.0923L9 4.93846L11.0571 7.15385L5.34286 13.3077H3.28571Z"
+        fill="#828288"/>
     </svg>
   )
 }

@@ -2,6 +2,7 @@ import {Title} from "@/components/Text";
 import {getIcon} from "@/components/Icons";
 import {useState} from "react";
 import {GpuNode, PageName} from "@/types/gpuNode";
+import {UpdateNodeName} from "@/components/dashboard/components/UpdateNodeName";
 
 
 interface Props {
@@ -9,9 +10,10 @@ interface Props {
   isLoading: boolean
   onChangePage: (pageName: PageName) => void
   onDisplayNode: (gpuNode: GpuNode) => void
+  onNameUpdated: (gpuNode: GpuNode) => void
 }
 
-export function ListNodes({gpuNodes, isLoading, onChangePage, onDisplayNode}: Props) {
+export function ListNodes({gpuNodes, isLoading, onChangePage, onDisplayNode, onNameUpdated}: Props) {
 
   return (
     <>
@@ -45,7 +47,7 @@ export function ListNodes({gpuNodes, isLoading, onChangePage, onDisplayNode}: Pr
                 key={`gpuNode-${i}`}
                 className={"w-full md:w-1/3 py-6 px-8 flex flex-col gap-8 gal-card md:max-w-[600px] min-w-[300px]"}
               >
-                <NodeCard node={node} onDisplayNode={onDisplayNode}/>
+                <NodeCard node={node} onDisplayNode={onDisplayNode} onNameUpdated={onNameUpdated}/>
               </div>
             )
           })}
@@ -56,7 +58,13 @@ export function ListNodes({gpuNodes, isLoading, onChangePage, onDisplayNode}: Pr
   )
 }
 
-function NodeCard({node, onDisplayNode}: { node: GpuNode, onDisplayNode: (gpuNode: GpuNode) => void }) {
+function NodeCard(
+  {node, onDisplayNode, onNameUpdated}: {
+    node: GpuNode,
+    onDisplayNode: (gpuNode: GpuNode) => void,
+    onNameUpdated: (gpuNode: GpuNode) => void,
+  }
+) {
 
   const [isCopyActive, setIsCopyActive] = useState<boolean>(false)
 
@@ -74,9 +82,7 @@ function NodeCard({node, onDisplayNode}: { node: GpuNode, onDisplayNode: (gpuNod
   return (
     <div className={"flex flex-col gap-8 w-full h-full"}>
       <div className={"flex flex-col gap-8 w-full h-full"}>
-        <div className="gal-title-secondary">
-          {node.nameAlias}
-        </div>
+        <UpdateNodeName node={node} type={"text"} onNameUpdated={onNameUpdated}/>
 
         <div className={"flex flex-col gap-2"}>
           <div className={"gal-subtitle"}>
