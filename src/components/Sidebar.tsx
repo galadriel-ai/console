@@ -5,6 +5,11 @@ import {getEmail, getUsername, removeUserData} from "@/utils/user";
 import {useState} from "react";
 
 export type MenuItemType = "chat" | "network_stats" | "node_stats" | "my_nodes" | "api_keys"
+const validMenuItems: MenuItemType[] = ["chat", "network_stats", "node_stats", "my_nodes", "api_keys"];
+
+export function isMenuItemType(value: string): value is MenuItemType {
+  return validMenuItems.includes(value as MenuItemType);
+}
 
 export default function Sidebar(
   {
