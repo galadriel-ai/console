@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {getIcon} from "@/components/Icons";
 import {ApiKeyModal} from "@/components/dashboard/components/ApiKeyModal";
 import {ApiKeyDeletionModal} from "@/components/dashboard/components/ApiKeyDeletionModal";
+import {useRouter} from "next/navigation";
 
 interface ApiKey {
   apiKeyId: string
@@ -13,6 +14,7 @@ interface ApiKey {
 }
 
 export function ApiKeys() {
+  const router = useRouter()
 
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -40,7 +42,9 @@ export function ApiKeys() {
       });
 
       if (!response.ok) {
-        throw new Error('Network stats call failed');
+        if (response.status === 401) {
+          router.push("/login")
+        }
       }
       const responseJson = await response.json()
       setApiKeys(responseJson.api_keys.map((r: any) => ({
@@ -67,7 +71,9 @@ export function ApiKeys() {
       });
 
       if (!response.ok) {
-        // TODO: error?
+        if (response.status === 401) {
+          router.push("/login")
+        }
         return
       }
       const responseJson = await response.json()

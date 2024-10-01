@@ -5,6 +5,7 @@ import {formatNumber} from "@/utils/helpers";
 import {Card} from "@/components/dashboard/components/Card";
 import {Chart} from "@/components/dashboard/components/Chart";
 import {ChartData, DataPoint} from "@/types/chart";
+import {useRouter} from "next/navigation";
 
 interface NetworkStats {
   nodesOnline: number
@@ -14,6 +15,8 @@ interface NetworkStats {
 }
 
 export function NetworkStats() {
+  const router = useRouter()
+
   const [networkStats, setNetworkStats] = useState<NetworkStats | undefined>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -36,9 +39,10 @@ export function NetworkStats() {
           "Content-Type": "application/json",
         },
       });
-
       if (!response.ok) {
-        throw new Error("Network stats call failed");
+        if (response.status === 401) {
+          router.push("/login")
+        }
       }
       const responseJson = await response.json()
       setNetworkStats({
