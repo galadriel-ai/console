@@ -2,7 +2,7 @@
 
 import {Drawer, DrawerContent, DrawerTrigger} from "@/components/ui/drawer"
 import {useEffect, useState} from "react";
-import Sidebar, {MenuItemType} from "@/components/Sidebar";
+import Sidebar, {isMenuItemType, MenuItemType, validMenuItems} from "@/components/Sidebar";
 import {NetworkStats} from "@/components/dashboard/NetworkStats";
 import {NodeStats} from "@/components/dashboard/NodeStats";
 import {ApiKeys} from "@/components/dashboard/ApiKeys";
@@ -11,9 +11,20 @@ import {usePostHog} from "posthog-js/react";
 import {getUserId} from "@/utils/user";
 import {Chat} from "@/components/dashboard/Chat";
 import {getIcon} from "@/components/Icons";
+import {useParams, useRouter} from "next/navigation";
 
 export default function DashboardPage() {
   const posthog = usePostHog()
+  const pathname = useParams()
+  const router = useRouter();
+
+  useEffect(() => {
+    if (pathname && pathname.slug && pathname.slug.length) {
+      if (isMenuItemType(pathname.slug[0]))
+        setSelectedMenu(pathname.slug[0]);
+    }
+  }, [pathname]);
+
 
   const [isIdentified, setIsIdentified] = useState<boolean>(false)
 
@@ -30,6 +41,7 @@ export default function DashboardPage() {
 
   const onMenuItemChange = (name: MenuItemType) => {
     setSelectedMenu(name)
+    router.push(`/dashboard/${name}`)
   }
 
   const onRunNode = () => {
