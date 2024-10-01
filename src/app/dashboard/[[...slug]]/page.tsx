@@ -2,7 +2,7 @@
 
 import {Drawer, DrawerContent, DrawerTrigger} from "@/components/ui/drawer"
 import {useEffect, useState} from "react";
-import Sidebar, {isMenuItemType, MenuItemType, validMenuItems} from "@/components/Sidebar";
+import Sidebar, {isMenuItemType, MenuItemType} from "@/components/Sidebar";
 import {NetworkStats} from "@/components/dashboard/NetworkStats";
 import {NodeStats} from "@/components/dashboard/NodeStats";
 import {ApiKeys} from "@/components/dashboard/ApiKeys";
