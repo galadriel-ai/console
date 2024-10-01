@@ -4,9 +4,11 @@ import {GpuNode, PageName} from "@/types/gpuNode";
 import {ListNodes} from "@/components/dashboard/components/ListNodes";
 import {AddNode} from "@/components/dashboard/components/AddNode";
 import {DisplayNode} from "@/components/dashboard/components/DisplayNode";
+import {useRouter} from "next/navigation";
 
 
 export function MyNodes() {
+  const router = useRouter()
 
   const [page, setPage] = useState<PageName>("list")
 
@@ -30,7 +32,9 @@ export function MyNodes() {
       });
 
       if (!response.ok) {
-        throw new Error("Network call failed");
+        if (response.status === 401) {
+          router.push("/login")
+        }
       }
       const responseJson = await response.json()
       const newGpuNodes: GpuNode[] = responseJson.nodes.map((r: any) => ({

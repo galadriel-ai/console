@@ -5,6 +5,7 @@ import {formatNumber} from "@/utils/helpers";
 import {Card} from "@/components/dashboard/components/Card";
 import {ChartData, DataPoint} from "@/types/chart";
 import {Chart} from "@/components/dashboard/components/Chart";
+import {useRouter} from "next/navigation";
 
 interface NodeStats {
   inferencesCountDay: number
@@ -14,6 +15,8 @@ interface NodeStats {
 }
 
 export function NodeStats() {
+  const router = useRouter()
+
   const [nodeStats, setNodeStats] = useState<NodeStats | undefined>()
   const [isLoading, setIsLoading] = useState(true);
   // const [error, setError] = useState(null);
@@ -37,7 +40,9 @@ export function NodeStats() {
       });
 
       if (!response.ok) {
-        console.log("Not ok")
+        if (response.status === 401) {
+          router.push("/login")
+        }
         setNodeStats({
           inferencesCountDay: 0,
           inferencesCount: 0,
