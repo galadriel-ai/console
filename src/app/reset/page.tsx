@@ -3,8 +3,17 @@
 
 import {ResetPasswordForm} from "@/app/reset/PasswordForm";
 import {useRouter, useSearchParams} from "next/navigation";
+import {Suspense} from "react";
 
 export default function ResetPage() {
+  return (
+    <Suspense>
+      <Reset/>
+    </Suspense>
+  )
+}
+
+function Reset() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
