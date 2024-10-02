@@ -67,6 +67,7 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
         },
         body: JSON.stringify({
           email: inputEmail,
+          isReset: false,
         }),
       });
 
