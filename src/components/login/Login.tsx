@@ -4,7 +4,12 @@ import {getIcon} from "@/components/Icons";
 import {Title} from "@/components/Text";
 import {saveUserData} from "@/utils/user";
 
-export default function Login({onSignup}: { onSignup: () => void }) {
+interface Props {
+  onSignup: () => void
+  onReset: () => void
+}
+
+export default function Login({onSignup, onReset}: Props) {
   const router = useRouter();
 
   const [username, setUsername] = useState<string>("");
@@ -43,7 +48,10 @@ export default function Login({onSignup}: { onSignup: () => void }) {
         router.push("/dashboard")
         return
       } else {
-        if (responseJson.status === 401) {
+        if (responseJson.status === 400) {
+          const errorMessage = responseJson.error?.message || "Invalid username or password"
+          setErrorMessage(errorMessage[0].toUpperCase() + errorMessage.slice(1))
+        } else if (responseJson.status == 401) {
           setErrorMessage("Invalid username or password")
         } else {
           setErrorMessage("An unexpected error has occurred, please try again!")
@@ -90,6 +98,15 @@ export default function Login({onSignup}: { onSignup: () => void }) {
               onChange={(e) => setPassword(e.target.value)}
               className="border px-4 py-2 text-black"
             />
+            <div className={"pb-10"}
+            >
+              <div
+                className="gal-link flex"
+                onClick={onReset}
+              >
+                Forgot password? Reset it here
+              </div>
+            </div>
             <button
               type="submit"
               className={"gal-button gal-button-primary"}>
