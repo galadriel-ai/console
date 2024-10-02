@@ -14,6 +14,12 @@ export async function POST(req: Request) {
     })
   })
   if (apiResponse.status !== 200) {
+    try {
+      const responseJson = await apiResponse.json()
+      return NextResponse.json({status: apiResponse.status, isSuccess: false, ...responseJson});
+    } catch (e) {
+      console.log(e)
+    }
     return NextResponse.json({status: apiResponse.status, isSuccess: false});
   }
 
