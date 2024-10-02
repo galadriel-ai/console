@@ -29,6 +29,7 @@ export default function ResetEmail({onLogin}: { onLogin: () => void }) {
         },
         body: JSON.stringify({
           email: inputEmail,
+          isReset: true,
         }),
       });
 
@@ -36,7 +37,11 @@ export default function ResetEmail({onLogin}: { onLogin: () => void }) {
       if (responseJson.isSuccess) {
         setIsEmailSent(true)
       } else {
-        setErrorMessage("An unexpected error occurred, please try again.");
+        if (responseJson.error?.status_code === 404) {
+          setErrorMessage("Email not found.")
+        } else {
+          setErrorMessage("An unexpected error occurred, please try again.")
+        }
       }
     } catch (error: any) {
       setErrorMessage((error && error.message) || "An error occurred during login.");
