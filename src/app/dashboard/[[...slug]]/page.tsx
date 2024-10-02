@@ -40,7 +40,7 @@ export default function DashboardPage() {
   const [selectedMenu, setSelectedMenu] = useState<MenuItemType>("chat")
 
   const onMenuItemChange = (name: MenuItemType) => {
-    setSelectedMenu(name)
+    // setSelectedMenu(name)
     router.push(`/dashboard/${name}`)
   }
 
