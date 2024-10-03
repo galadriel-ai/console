@@ -65,12 +65,12 @@ function InputForm() {
     <>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-4 relative"
+        className="flex flex-col gap-4"
         data-ph-capture-attribute-form-name="login"
         data-ph-capture-attribute-login-username={input}
       >
-        <div className={"gal-subtitle"}>Try it out!</div>
-        <div className={"relative w-full"}>
+        <div className={"gal-text-secondary"}>Try it out!</div>
+        <div className={"w-full relative"}>
           <input
             type="text"
             placeholder="Message"
@@ -78,14 +78,14 @@ function InputForm() {
             onChange={(e) => setInput(e.target.value)}
             className="border px-4 py-2 w-full text-black"
           />
-          <div className={"absolute p-2 top-1/2 right-2 transform -translate-y-1/2 z-2 cursor-pointer gal-group"}>
+          <div className={"absolute p-2 top-1/2 right-2 transform -translate-y-1/2 z-2 cursor-pointer gal-group flex items-center"}>
             <button type="submit">
               {getIcon("submit")}
             </button>
           </div>
         </div>
       </form>
-      <div className={"pt-4 flex flex-col gap-4"}>
+      <div className={"mt-4 flex flex-col gap-4 md:max-h-[500px] md:overflow-y-auto"}>
         {messages
           .reduce((result: Message[][], message: Message, index: number) => {
             if (index % 2 === 0) {
@@ -110,12 +110,12 @@ function InputForm() {
               }
             </div>
           ))}
-        <div
-          className={"gal-link pt-2 flex self-end"}
-          onClick={onClearChat}
-        >
-          Clear chat
-        </div>
+      </div>
+      <div
+        className={"gal-link pt-2 flex self-end"}
+        onClick={onClearChat}
+      >
+        Clear chat
       </div>
     </>
   )
