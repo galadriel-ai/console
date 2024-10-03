@@ -27,6 +27,7 @@ export default function DashboardPage() {
 
 
   const [isIdentified, setIsIdentified] = useState<boolean>(false)
+  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false)
 
   useEffect(() => {
     if (isIdentified) return
@@ -57,7 +58,20 @@ export default function DashboardPage() {
         onMenuItemChange={(menuItem: MenuItemType) => onMenuItemChange(menuItem)}
       />
       <div className="hidden md:flex md:w-1/5 min-w-[260px] flex-col justify-between gal-sidebar p-[10px]">
-        <Sidebar selectedMenu={selectedMenu} onMenuItemChange={(menuItem: MenuItemType) => onMenuItemChange(menuItem)}/>
+        {isSettingsOpen &&
+          <div className="fixed inset-0 bg-black bg-opacity-20 z-10"/>
+        }
+        <div
+          className={"flex flex-col fixed justify-between min-h-[calc(100vh-100px)] w-[calc(20%-50px)] min-w-[240px]"}
+        >
+          <Sidebar
+            selectedMenu={selectedMenu}
+            onMenuItemChange={(menuItem: MenuItemType) => onMenuItemChange(menuItem)}
+            onMenuOpenChange={(open: boolean) => {
+              setIsSettingsOpen(open)
+            }}
+          />
+        </div>
       </div>
       <div className="w-full md:w-4/5 h-full">
         {selectedMenu === "chat" &&
@@ -108,6 +122,9 @@ function SidebarMobileWrapper(
           <Sidebar
             selectedMenu={selectedMenu}
             onMenuItemChange={onMenuItemChangeClose}
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            onMenuOpenChange={(open: boolean) => {
+            }}
           />
         </DrawerContent>
       </Drawer>

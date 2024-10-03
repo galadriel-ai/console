@@ -185,6 +185,8 @@ input:focus {
 .gal-text-secondary {
   font-size: 16px;
   line-height: 20px;
+  color: var(--Grey-2);
+  font-weight: 500;
 }
 
 .gal-text-warning {

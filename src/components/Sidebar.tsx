@@ -13,10 +13,11 @@ export function isMenuItemType(value: string): value is MenuItemType {
 
 export default function Sidebar(
   {
-    selectedMenu, onMenuItemChange
+    selectedMenu, onMenuItemChange, onMenuOpenChange
   }: {
     selectedMenu: MenuItemType,
-    onMenuItemChange: (menuItem: MenuItemType) => void
+    onMenuItemChange: (menuItem: MenuItemType) => void,
+    onMenuOpenChange: (open: boolean) => void,
   }
 ) {
   const router = useRouter();
@@ -37,10 +38,10 @@ export default function Sidebar(
 
   return (
     <>
-      <Settings onLogout={onLogout}/>
+      <Settings onLogout={onLogout} onMenuOpenChange={onMenuOpenChange}/>
       <div className="flex flex-col gap-4">
         <div className="gal-subtitle">Menu</div>
-        <div className="col gap-[10px]">
+        <div className="flex flex-col gap-[10px]">
           <MenuItem
             name={"Chat"}
             isActive={selectedMenu === "chat"}
@@ -133,21 +134,24 @@ function MenuItem({name, isActive, iconName, onClick}: {
   )
 }
 
-function Settings({onLogout}: { onLogout: () => void }) {
+function Settings(
+  {onLogout, onMenuOpenChange}:
+    { onLogout: () => void, onMenuOpenChange: (open: boolean) => void }
+) {
 
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const onOpenChange = (open: boolean) => {
     setIsOpen(open)
+    onMenuOpenChange(open)
   }
 
   return (
     <>
-      {isOpen && <div className="fixed inset-0 bg-black bg-opacity-20 z-10"/>}
       <DropdownMenu onOpenChange={onOpenChange}>
         <DropdownMenuTrigger asChild className={""}>
           <div
-            className={"hidden gal-settings-wrapper md:absolute top-12 right-10 md:flex flex-row gap-2 items-center cursor-pointer gal-group"}>
+            className={"hidden gal-settings-wrapper md:fixed top-12 right-10 md:flex flex-row gap-2 items-center cursor-pointer gal-group"}>
             <div>{getIcon("gear")}</div>
             <div>{isOpen ? getIcon("arrow_up") : getIcon("arrow_down")}</div>
           </div>
