@@ -83,7 +83,7 @@ export function UpdateNodeName({node, type, onNameUpdated}: Props) {
   return (
     <>
       {!isUpdating ?
-        <div className="gal-title-secondary flex flex-row gap-2 items-end">
+        <div className="gal-title-secondary flex flex-row gap-2 items-center">
           {type === "title" ?
             <Title>
               {name}
@@ -94,7 +94,7 @@ export function UpdateNodeName({node, type, onNameUpdated}: Props) {
             </>
           }
           <div
-            className={"gal-group cursor-pointer"}
+            className={"gal-group cursor-pointer " + (type === "title" ? "pl-6" : "pl-4")}
             onClick={onUpdateNodeName}
           >
             {getIcon("edit")}

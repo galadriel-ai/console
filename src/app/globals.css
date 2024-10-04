@@ -4,7 +4,9 @@
 
 :root {
   --Black: #232324;
+
   --Blue: #0657E0;
+  --Blue-2: #044CC6;
 
   --Green: #27E262;
 
@@ -13,6 +15,7 @@
 
   --Light-grey-1: #F3F4F6;
   --Light-grey-3: #E3E6EB;
+  --Light-grey-4: #C3C6CB;
   --Light-grey-5: #ADB0B4;
 
   --Red: #FC5A8D;
@@ -247,19 +250,22 @@ input:focus {
   gap: 10px;
 
   border-radius: 0.5rem;
-  color: var(--White);
-  background: var(--Light-grey-5);
+  color: var(--Black);
+  background: var(--Light-grey-3);
 
   transition-duration: 0.3s;
 }
 
 .gal-button:hover {
-  background: var(--Black);
-  color: var(--White);
+  background: var(--Light-grey-4);
+}
+
+.gal-button-icon {
+  background: var(--Light-grey-3);
 }
 
 .gal-button-icon:hover {
-  background: var(--Light-grey-1);
+  background: var(--Light-grey-4);
 }
 
 .gal-button-disabled {
@@ -277,6 +283,11 @@ input:focus {
   color: var(--White);
   background: var(--Blue);
 }
+
+.gal-button-primary:hover {
+  background: var(--Blue-2);
+}
+
 
 .gal-button-warning {
   color: var(--White);
@@ -342,13 +353,14 @@ input:focus {
 .gal-link {
   cursor: pointer;
   font-size: 16px;
+  font-weight: 400;
   color: var(--Grey-2);
   text-decoration: underline;
   width: fit-content;
 }
 
 .gal-link:hover {
-  text-decoration: none;
+  color: var(--Black);
 }
 
 .gal-settings-wrapper {
@@ -356,4 +368,14 @@ input:focus {
   background: var(--White);
 
   padding: 10px 12px;
+}
+
+tspan {
+  fill: var(--Grey);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.recharts-responsive-container {
+  margin-left: -40px;
 }
