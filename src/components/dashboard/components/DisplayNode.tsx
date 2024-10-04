@@ -92,7 +92,7 @@ export function DisplayNode({gpuNode, onChangePage, onNameUpdated}: Props) {
       <div className={"flex flex-col gap-8"}>
         <div className={"flex flex-col px-3 md:px-0"}>
           <div className={"flex"}>
-            <button className={"gal-button gal-button-icon"} onClick={() => onChangePage("list")}>
+            <button className={"gal-button gal-button-icon cursor-pointer"} onClick={() => onChangePage("list")}>
               {getIcon("arrow_left")}
             </button>
           </div>

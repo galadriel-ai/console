@@ -34,7 +34,7 @@ export function Chart({chartData}: { chartData: ChartData | undefined }) {
         <div className={"gal-text"}>{chartData.title}</div>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className={"w-full max-h-[400px]"}>
+        <ChartContainer config={chartConfig} className={"w-full max-h-[492px] pt-[60px] pb-[32px]"}>
           <AreaChart
             accessibilityLayer
             data={chartData.dataPoints}
@@ -42,6 +42,7 @@ export function Chart({chartData}: { chartData: ChartData | undefined }) {
               left: 12,
               right: 12,
             }}
+            style={{color: "var(--Black)"}}
           >
             <defs>
               <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -72,7 +73,9 @@ export function Chart({chartData}: { chartData: ChartData | undefined }) {
             />
           </AreaChart>
         </ChartContainer>
-        <div className={"gal-subtitle text-center mt-6 pt-3 gal-chart-footer"}>The chart can have a delay of up to 15min</div>
+        <div className={"gal-subtitle text-center mt-6 pt-3 gal-chart-footer"}>The chart can have a delay of up to
+          15min
+        </div>
       </CardContent>
     </div>
   )
