@@ -1,14 +1,22 @@
 import {useState} from "react";
 import {getIcon} from "@/components/Icons";
 import {Title} from "@/components/Text";
+import {zxcvbn} from "@zxcvbn-ts/core";
+import {ExtraDataForm} from "@/app/authenticate/ExtraDataForm";
+import {useRouter} from "next/navigation";
+import {saveUserData} from "@/utils/user";
 
 export default function Signup({onLogin}: { onLogin: () => void }) {
 
-  const [page, setPage] = useState<"password" | "email">("password")
+  const router = useRouter()
 
-  const [isEmailSent, setIsEmailSent] = useState<boolean>(false);
+  const [page, setPage] = useState<"password" | "signup" | "extra">("signup")
+
   const [password, setPassword] = useState<string>("");
+
+  // Signup form
   const [email, setEmail] = useState<string>("");
+  const [signupPassword, setSignupPassword] = useState<string>("");
 
 
   const [errorMessage, setErrorMessage] = useState<string>("")
@@ -39,7 +47,7 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
       }
       const responseJson = await response.json()
       if (responseJson.isSuccess) {
-        setPage("email")
+        setPage("signup")
       } else {
         setErrorMessage("Invalid password!")
       }
@@ -52,11 +60,28 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     // Call the onLogin function passed as a prop with the username and password
-    onSignup(email);
+    onSignup(email, signupPassword)
   };
 
-  const onSignup = async (inputEmail: string) => {
+  const onSignup = async (
+    inputEmail: string,
+    inputPassword: string,
+  ) => {
     if (isLoading) return
+    if (!email) {
+      setErrorMessage("Email is required")
+      return
+    }
+    if (!inputPassword) {
+      setErrorMessage("Password is required")
+      return
+    }
+    const passwordInfo = zxcvbn(inputPassword)
+    if (passwordInfo.score < 3 || inputPassword.length < 10) {
+      setErrorMessage("Password is not strong enough, use numbers and symbols")
+      return
+    }
+
     setErrorMessage("")
     setIsLoading(true)
     try {
@@ -67,13 +92,21 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
         },
         body: JSON.stringify({
           email: inputEmail,
+          password: inputPassword,
           isReset: false,
         }),
       });
 
       const responseJson = await response.json()
       if (responseJson.isSuccess) {
-        setIsEmailSent(true)
+        // Skip extra data form for now
+        // setPage("extra")
+        saveUserData({
+          userId: responseJson.userId,
+          username: "",
+          email: responseJson.email,
+        })
+        router.push("/dashboard")
       } else {
         if (responseJson.error && responseJson.error === "invalid_password") {
           setErrorMessage("Invalid password.");
@@ -86,6 +119,10 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
     }
     setIsLoading(false)
   }
+
+  const onExtraDataSubmitted = () => {
+    router.push("/dashboard")
+  };
 
   return (
     <div
@@ -137,57 +174,67 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
 
             </>
           }
-          {page === "email" &&
+          {page === "signup" &&
             <>
               <Title>Sign up!</Title>
-              <div className={"gal-text"}>Enter your email address to get started.</div>
+              <div className={"gal-text"}>Enter your signup info to get started.</div>
               <div className={"gal-error"}>{errorMessage}</div>
-              {!isEmailSent ?
-                <form
-                  onSubmit={handleSubmit}
-                  className="flex flex-col gap-4"
-                  data-ph-capture-attribute-form-name="signup"
-                >
-                  <div className={"flex flex-col gap-2"}>
-                    <label className={"gal-text"}>Email</label>
-                    <input
-                      type="email"
-                      placeholder="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="border px-4 py-2 text-black"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className={"gal-button gal-button-primary"}>
-                    {isLoading && <>
-                      {getIcon("spinner")}
-                    </>
-                    }
-                    Sign up
-                  </button>
-                </form>
-                :
-                <div>Check your email for the magic link!</div>
-              }
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-4"
+                data-ph-capture-attribute-form-name="signup"
+              >
+                <div className={"flex flex-col gap-2"}>
+                  <label className={"gal-text"}>Email</label>
+                  <input
+                    type="email"
+                    placeholder="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="border px-4 py-2 text-black"
+                  />
+                </div>
+                <div className={"flex flex-col gap-2"}>
+                  <label className={"gal-text"}>Password</label>
+                  <input
+                    type="password"
+                    placeholder="password"
+                    value={signupPassword}
+                    onChange={(e) => setSignupPassword(e.target.value)}
+                    className="border px-4 py-2 text-black"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className={"gal-button gal-button-primary"}>
+                  {isLoading && <>
+                    {getIcon("spinner")}
+                  </>
+                  }
+                  Sign up
+                </button>
+              </form>
             </>
           }
+          {page === "extra" &&
+            <ExtraDataForm onSuccess={onExtraDataSubmitted}/>
+          }
 
-
-          <div
-            className={"flex flex-col gap-4 mt-12 gal-border-top pt-6"}
-          >
-            <div className={"font-normal"}>
-              {"Already have an account?"}
-            </div>
+          {page !== "extra" &&
             <div
-              className="gal-link flex"
-              onClick={onLogin}
+              className={"flex flex-col gap-4 mt-12 gal-border-top pt-6"}
             >
-              Back to login
+              <div className={"font-normal"}>
+                {"Already have an account?"}
+              </div>
+              <div
+                className="gal-link flex"
+                onClick={onLogin}
+              >
+                Back to login
+              </div>
             </div>
-          </div>
+          }
 
         </div>
       </div>

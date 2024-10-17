@@ -28,7 +28,11 @@ export async function POST(req: Request) {
     path: '/',
   });
 
-  const response = NextResponse.json({isSuccess: true});
+  const response = NextResponse.json({
+    isSuccess: true,
+    email: responseJson.email,
+    userId: responseJson.user_uid,
+  });
   response.headers.set('Set-Cookie', cookie);
 
   return response;
