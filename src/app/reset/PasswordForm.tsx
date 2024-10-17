@@ -3,6 +3,7 @@ import {useState} from "react";
 import {zxcvbn} from "@zxcvbn-ts/core";
 import {Title} from "@/components/Text";
 import {getIcon} from "@/components/Icons";
+import {saveUserData} from "@/utils/user";
 
 
 export function ResetPasswordForm({searchParams, onNotAuthenticated, onSuccess}: {
@@ -60,6 +61,11 @@ export function ResetPasswordForm({searchParams, onNotAuthenticated, onSuccess}:
       if (responseJson.isSuccess) {
         // router.push("/dashboard")
         await setErrorMessage("")
+        saveUserData({
+          userId: responseJson.userId,
+          username: "",
+          email: responseJson.email,
+        })
         onSuccess()
         return
       } else {

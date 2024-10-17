@@ -55,7 +55,7 @@ export function MyNodes() {
           totalUptimeSeconds: r.total_uptime_seconds || 0,
           requestsServed: r.requests_served,
           requestsServedDay: r.requests_served_day,
-          tokensPerSecond: r.tokens_per_second,
+          tokensPerSecond: r.benchmark_tokens_per_second,
           nodeCreatedAt: r.node_created_at,
         })
       );

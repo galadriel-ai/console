@@ -12,7 +12,7 @@ interface Props {
 export default function Login({onSignup, onReset}: Props) {
   const router = useRouter();
 
-  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const [errorMessage, setErrorMessage] = useState<string>("")
@@ -20,10 +20,10 @@ export default function Login({onSignup, onReset}: Props) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    onLogin(username, password);
+    onLogin(email, password);
   };
 
-  const onLogin = async (inputUsername: string, inputPassword: string) => {
+  const onLogin = async (inputEmail: string, inputPassword: string) => {
     if (isLoading) return
     setErrorMessage("")
     setIsLoading(true)
@@ -34,25 +34,32 @@ export default function Login({onSignup, onReset}: Props) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "username": inputUsername,
+          "email": inputEmail,
           "password": inputPassword,
         }),
       });
       const responseJson = await response.json()
       if (responseJson.isSuccess) {
+        console.log("Save user data")
+        console.log({
+          userId: responseJson.userId,
+          // No username anymore
+          username: "",
+          email: responseJson.email,
+        })
         saveUserData({
           userId: responseJson.userId,
-          username: inputUsername,
+          username: inputEmail,
           email: responseJson.email,
         })
         router.push("/dashboard")
         return
       } else {
         if (responseJson.status === 400) {
-          const errorMessage = responseJson.error?.message || "Invalid username or password"
+          const errorMessage = responseJson.error?.message || "Invalid email or password"
           setErrorMessage(errorMessage[0].toUpperCase() + errorMessage.slice(1))
         } else if (responseJson.status == 401) {
-          setErrorMessage("Invalid username or password")
+          setErrorMessage("Invalid email or password")
         } else {
           setErrorMessage("An unexpected error has occurred, please try again!")
         }
@@ -79,15 +86,15 @@ export default function Login({onSignup, onReset}: Props) {
             onSubmit={handleSubmit}
             className="flex flex-col gap-4"
             data-ph-capture-attribute-form-name="login"
-            data-ph-capture-attribute-login-username={username}
+            data-ph-capture-attribute-login-username={email}
           >
             <div className={"flex flex-col gap-2"}>
-              <label className={"gal-text"}>Username</label>
+              <label className={"gal-text"}>Email</label>
               <input
-                type="text"
-                placeholder="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="border px-4 py-2 text-black"
               />
             </div>

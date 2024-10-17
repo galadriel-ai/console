@@ -9,7 +9,7 @@ enum UserKeys {
 export function saveUserData(user: User) {
   if (typeof window !== "undefined") {
     localStorage.setItem(UserKeys.ID, user.userId)
-    localStorage.setItem(UserKeys.EMAIL, user.username)
+    localStorage.setItem(UserKeys.USERNAME, user.username)
     localStorage.setItem(UserKeys.EMAIL, user.email)
   }
 }
@@ -18,7 +18,7 @@ export function removeUserData() {
   try {
     if (typeof window !== "undefined") {
       localStorage.removeItem(UserKeys.ID)
-      localStorage.removeItem(UserKeys.EMAIL)
+      localStorage.removeItem(UserKeys.USERNAME)
       localStorage.removeItem(UserKeys.EMAIL)
     }
   } catch {

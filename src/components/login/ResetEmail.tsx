@@ -22,14 +22,13 @@ export default function ResetEmail({onLogin}: { onLogin: () => void }) {
     setErrorMessage("")
     setIsLoading(true)
     try {
-      const response = await fetch("/api/signup", {
+      const response = await fetch("/api/validate_email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: inputEmail,
-          isReset: true,
         }),
       });
 

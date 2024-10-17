@@ -2,7 +2,7 @@ import {serialize} from 'cookie';
 import {NextResponse} from "next/server";
 
 export async function POST(req: Request) {
-  const {username, password} = await req.json();
+  const {email, password} = await req.json();
 
   const apiResponse = await fetch(`${process.env.BACKEND_API_URL}/auth/login`, {
     method: "POST",
@@ -10,7 +10,7 @@ export async function POST(req: Request) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      username, password
+      email, password
     })
   })
   if (apiResponse.status !== 200) {
@@ -42,5 +42,4 @@ export async function POST(req: Request) {
   response.headers.set("Set-Cookie", cookie);
 
   return response;
-
 }
