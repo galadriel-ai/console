@@ -2,7 +2,7 @@ import {getIcon, IconName} from "@/components/Icons";
 import {useRouter} from "next/navigation";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import {getEmail, getUsername, removeUserData} from "@/utils/user";
-import {useState} from "react";
+import {Suspense, useEffect, useState} from "react";
 
 export type MenuItemType = "chat" | "network_stats" | "node_stats" | "my_nodes" | "api_keys"
 const validMenuItems: MenuItemType[] = ["chat", "network_stats", "node_stats", "my_nodes", "api_keys"];
@@ -81,7 +81,7 @@ export default function Sidebar(
             >
               {getIcon("menu_docs")}
               <div className={"flex flex-row gap-2 items-center"}>
-                Docs
+                Node docs
                 {getIcon("arrow")}
               </div>
             </div>
@@ -89,11 +89,13 @@ export default function Sidebar(
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <div className={"md:hidden flex flex-col pb-4 gap-2"}>
-          <div>{getUsername()}</div>
-          <div className={"font-normal"}>{getEmail()}</div>
-          <div className={"gal-link cursor-pointer"} onClick={onLogout}>Log out</div>
-        </div>
+        <Suspense>
+          <div className={"md:hidden flex flex-col pb-4 gap-2"}>
+            <div>{getUsername()}</div>
+            <div className={"font-normal"}>{getEmail()}</div>
+            <div className={"gal-link cursor-pointer"} onClick={onLogout}>Log out</div>
+          </div>
+        </Suspense>
         <div className="gal-subtitle">Community & Support</div>
         <div className="flex flex-row gap-4">
           <a
@@ -157,11 +159,14 @@ function Settings(
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-auto py-8 px-6 flex flex-col gap-6" align={"end"} sideOffset={10}>
-          <div className={"flex flex-col gap-2"}>
-            <div>{getUsername()}</div>
-            <div className={"font-normal"}>{getEmail()}</div>
-          </div>
-          <div className={"gal-link cursor-pointer"} onClick={onLogout}>Log out</div>
+          <Suspense>
+
+            <div className={"flex flex-col gap-2"}>
+              <div>{getUsername()}</div>
+              <div className={"font-normal"}>{getEmail()}</div>
+            </div>
+            <div className={"gal-link cursor-pointer"} onClick={onLogout}>Log out</div>
+          </Suspense>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

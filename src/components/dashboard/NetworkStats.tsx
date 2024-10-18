@@ -31,7 +31,6 @@ export function NetworkStats() {
   const getNetworkStats = async () => {
     if (isLoading) return
     setIsLoading(true)
-    console.log("getNetworkStats")
     try {
       const response = await fetch("/api/network", {
         method: "GET",
