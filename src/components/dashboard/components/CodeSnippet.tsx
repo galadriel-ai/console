@@ -20,7 +20,7 @@ client = OpenAI(
 )
 
 completion = client.chat.completions.create(
-    model="neuralmagic/Meta-Llama-3.1-8B-Instruct-FP8",
+    model="llama3.1",
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "Hello!"},
@@ -38,7 +38,7 @@ const openai = new OpenAI({
 });
 
 const completion = await openai.chat.completions.create({
-  model: "neuralmagic/Meta-Llama-3.1-8B-Instruct-FP8",
+  model: "llama3.1",
   messages: [
     {role: "system", content: "You are a helpful assistant."},
     {
@@ -56,7 +56,7 @@ console.log(completion.choices[0].message);`
   -H 'Authorization: Bearer ${apiKey || "<GALADRIEL_API_KEY>"}' \\
   -H 'Content-Type: application/json' \\
   -d '{
-  "model": "neuralmagic/Meta-Llama-3.1-8B-Instruct-FP8",
+  "model": "llama3.1",
   "messages": [
     {
       "content": "You are a helpful assistant.",
@@ -158,7 +158,7 @@ console.log(completion.choices[0].message);`
                 </div>
               </TabsContent>
               <TabsContent value="curl">
-                <div className={"gal-code"}>
+                <div className={"gal-code"} style={{fontSize: "13px"}}>
                   <SyntaxHighlighter
                     language="bash"
                     style={idea}
