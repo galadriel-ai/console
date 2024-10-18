@@ -14,6 +14,7 @@
   --Grey-2: #59595E;
 
   --Light-grey-1: #F3F4F6;
+  --Light-grey-2: #EAECEF;
   --Light-grey-3: #E3E6EB;
   --Light-grey-4: #C3C6CB;
   --Light-grey-5: #ADB0B4;
@@ -378,4 +379,25 @@ tspan {
 
 .recharts-responsive-container {
   margin-left: -40px;
+}
+
+.gal-code-wrapper {
+  overflow-x: auto;
+  padding: 0 0 10px 0;
+  border-radius: 8px;
+  border: 1px solid var(--Light-grey-4, #C3C6CB);
+  background: var(--Light-grey-2);
+}
+
+.gal-code-header {
+  background: var(--Light-grey-1);
+  font-size: 14px;
+}
+
+
+.gal-code {
+  white-space: pre;
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
 }
