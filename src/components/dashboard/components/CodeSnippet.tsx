@@ -1,6 +1,8 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import {idea} from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import {useState} from "react";
+import {getIcon} from "@/components/Icons";
 
 interface Props {
   isLoading: boolean
@@ -47,22 +49,63 @@ print(completion.choices[0].message)
   ]
 }'
 `
+  const [selectedTab, setSelectedTab] = useState<"python" | "curl">("python")
+  const [isCopyActive, setIsCopyActive] = useState<boolean>(false)
 
+  const onCopy = async () => {
+    if (selectedTab === "python") await navigator.clipboard.writeText(PYTHON)
+    else if (selectedTab === "curl") await navigator.clipboard.writeText(CURL)
+    setIsCopyActive(true)
+    try {
+      setTimeout(() => {
+        setIsCopyActive(false);
+      }, 3000);
+    } catch {
+    }
+  }
 
   return (
     <div>
-      <div className={"pt-10 gal-text-secondary"}>
-        Or use the code examples!
+      <div className={"pt-10 pb-4 gal-text"}>
+        Try the code examples!
       </div>
       <div>
         {isLoading ?
           <div>Loading...</div>
           :
-          <div className={"gal-code-wrapper max-w-[700px] min-w-[300px]"}>
+          <div className={"gal-code-wrapper max-w-[700px]"}>
             <Tabs defaultValue="python">
-              <TabsList className="gal-code-header grid grid-cols-6 bg-transparent py-3 px-6">
-                <TabsTrigger value="python">Python</TabsTrigger>
-                <TabsTrigger value="curl">cURL</TabsTrigger>
+              <TabsList className="gal-code-header bg-transparent py-3 px-6">
+                <div className={"flex w-full justify-between"}>
+                  <div className={"flex"}>
+                    <TabsTrigger
+                      value="python"
+                      onClick={() => setSelectedTab("python")}
+                    >
+                      Python
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="curl"
+                      onClick={() => setSelectedTab("curl")}
+                    >
+                      cURL
+                    </TabsTrigger>
+                  </div>
+                  <div className={"flex flex-row gap-2 items-center break-all cursor-pointer"}
+                       onClick={onCopy}
+                  >
+                    {isCopyActive ?
+                      <div>
+                        {getIcon("check")}
+                      </div>
+                      :
+                      <div>
+                        {getIcon("copy")}
+                      </div>
+                    }
+                  </div>
+                </div>
+
               </TabsList>
               <TabsContent value="python">
                 <div className={"gal-code"}>
