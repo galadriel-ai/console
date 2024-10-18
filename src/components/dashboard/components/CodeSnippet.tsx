@@ -30,6 +30,26 @@ completion = client.chat.completions.create(
 print(completion.choices[0].message)
 `
 
+  const JAVASCRIPT: string = `import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: "${apiKey || "<GALADRIEL_API_KEY>"}",
+  baseURL: "https://api.galadriel.com/v1"
+});
+
+const completion = await openai.chat.completions.create({
+  model: "neuralmagic/Meta-Llama-3.1-8B-Instruct-FP8",
+  messages: [
+    {role: "system", content: "You are a helpful assistant."},
+    {
+      role: "user",
+      content: "Hello!",
+    },
+  ],
+});
+
+console.log(completion.choices[0].message);`
+
   const CURL: string = `curl -X 'POST' \\
   'https://api.galadriel.com/v1/chat/completions' \\
   -H 'accept: application/json' \\
@@ -49,11 +69,12 @@ print(completion.choices[0].message)
   ]
 }'
 `
-  const [selectedTab, setSelectedTab] = useState<"python" | "curl">("python")
+  const [selectedTab, setSelectedTab] = useState<"python" | "javascript" | "curl">("python")
   const [isCopyActive, setIsCopyActive] = useState<boolean>(false)
 
   const onCopy = async () => {
     if (selectedTab === "python") await navigator.clipboard.writeText(PYTHON)
+    else if (selectedTab === "javascript") await navigator.clipboard.writeText(JAVASCRIPT)
     else if (selectedTab === "curl") await navigator.clipboard.writeText(CURL)
     setIsCopyActive(true)
     try {
@@ -83,6 +104,12 @@ print(completion.choices[0].message)
                       onClick={() => setSelectedTab("python")}
                     >
                       Python
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="javascript"
+                      onClick={() => setSelectedTab("javascript")}
+                    >
+                      Javascript
                     </TabsTrigger>
                     <TabsTrigger
                       value="curl"
@@ -116,6 +143,17 @@ print(completion.choices[0].message)
                     customStyle={{background: "transparent"}}
                   >
                     {PYTHON}
+                  </SyntaxHighlighter>
+                </div>
+              </TabsContent>
+              <TabsContent value="javascript">
+                <div className={"gal-code"}>
+                  <SyntaxHighlighter
+                    language="javascript"
+                    style={idea}
+                    customStyle={{background: "transparent"}}
+                  >
+                    {JAVASCRIPT}
                   </SyntaxHighlighter>
                 </div>
               </TabsContent>
