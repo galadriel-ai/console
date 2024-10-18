@@ -2,7 +2,7 @@ import {getIcon, IconName} from "@/components/Icons";
 import {useRouter} from "next/navigation";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import {getEmail, getUsername, removeUserData} from "@/utils/user";
-import {Suspense, useEffect, useState} from "react";
+import {Suspense, useState} from "react";
 
 export type MenuItemType = "chat" | "network_stats" | "node_stats" | "my_nodes" | "api_keys"
 const validMenuItems: MenuItemType[] = ["chat", "network_stats", "node_stats", "my_nodes", "api_keys"];
