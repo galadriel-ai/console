@@ -81,7 +81,7 @@ export default function Sidebar(
             >
               {getIcon("menu_docs")}
               <div className={"flex flex-row gap-2 items-center"}>
-                Node docs
+                Docs
                 {getIcon("arrow")}
               </div>
             </div>
