@@ -12,6 +12,7 @@ import {getUserId} from "@/utils/user";
 import {Chat} from "@/components/dashboard/Chat";
 import {getIcon} from "@/components/Icons";
 import {useParams, useRouter} from "next/navigation";
+import {Limits} from "@/components/dashboard/Limits";
 
 export default function DashboardPage() {
   const posthog = usePostHog()
@@ -22,6 +23,8 @@ export default function DashboardPage() {
     if (pathname && pathname.slug && pathname.slug.length) {
       if (isMenuItemType(pathname.slug[0]))
         setSelectedMenu(pathname.slug[0]);
+    } else if (selectedMenu === "") {
+      setSelectedMenu("chat")
     }
   }, [pathname]);
 
@@ -38,7 +41,7 @@ export default function DashboardPage() {
     }
   }, [posthog])
 
-  const [selectedMenu, setSelectedMenu] = useState<MenuItemType>("chat")
+  const [selectedMenu, setSelectedMenu] = useState<MenuItemType>("")
 
   const onMenuItemChange = (name: MenuItemType) => {
     // setSelectedMenu(name)
@@ -76,6 +79,9 @@ export default function DashboardPage() {
       <div className="w-full md:w-4/5 h-full">
         {selectedMenu === "chat" &&
           <Chat onRunNode={onRunNode}/>
+        }
+        {selectedMenu === "limits" &&
+          <Limits/>
         }
         {selectedMenu === "network_stats" &&
           <NetworkStats/>

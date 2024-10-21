@@ -6,7 +6,7 @@ interface Props {
   isLoading: boolean
   text: string | undefined
   subText?: string | undefined
-  iconName: IconName
+  iconName?: IconName
 }
 
 export function Card({title, text, isLoading, subText, iconName}: Props) {
@@ -18,7 +18,11 @@ export function Card({title, text, isLoading, subText, iconName}: Props) {
         <div>
           {title}
         </div>
-        {getIcon(iconName)}
+        {iconName &&
+          <>
+            {getIcon(iconName)}
+          </>
+        }
       </div>
       {(isLoading || !text) ?
         <div>Loading...</div>
@@ -34,5 +38,4 @@ export function Card({title, text, isLoading, subText, iconName}: Props) {
       }
     </div>
   )
-
 }

@@ -4,8 +4,8 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,} from "@/compone
 import {getEmail, getUsername, removeUserData} from "@/utils/user";
 import {Suspense, useState} from "react";
 
-export type MenuItemType = "chat" | "network_stats" | "node_stats" | "my_nodes" | "api_keys"
-const validMenuItems: MenuItemType[] = ["chat", "network_stats", "node_stats", "my_nodes", "api_keys"];
+export type MenuItemType = "" | "chat" | "limits" | "network_stats" | "node_stats" | "my_nodes" | "api_keys"
+const validMenuItems: MenuItemType[] = ["chat", "limits", "network_stats", "node_stats", "my_nodes", "api_keys"];
 
 export function isMenuItemType(value: string): value is MenuItemType {
   return validMenuItems.includes(value as MenuItemType);
@@ -40,7 +40,7 @@ export default function Sidebar(
     <>
       <Settings onLogout={onLogout} onMenuOpenChange={onMenuOpenChange}/>
       <div className="flex flex-col gap-4">
-        <div className="gal-subtitle">Menu</div>
+        <div className="gal-subtitle">For developers</div>
         <div className="flex flex-col gap-[10px]">
           <MenuItem
             name={"Chat"}
@@ -49,13 +49,35 @@ export default function Sidebar(
             onClick={() => onMenuItemChange("chat")}
           />
           <MenuItem
+            name={"API Usage"}
+            isActive={selectedMenu === "limits"}
+            iconName={"menu_stopwatch"}
+            onClick={() => onMenuItemChange("limits")}
+          />
+          <a
+            href={process.env.NEXT_PUBLIC_DOCS_URL + "api-reference/quickstart"}
+            target="_blank"
+          >
+            <div
+              className={`flex flex-row gap-4 min-h-[40px] py-[10px] px-[12px] items-center cursor-pointer gal-sidebar-menu-item gal-group`}
+            >
+              {getIcon("menu_docs")}
+              <div className={"flex flex-row gap-2 items-center"}>
+                API Docs
+                {getIcon("arrow")}
+              </div>
+            </div>
+          </a>
+          <div className="gal-subtitle pt-8">For nodes</div>
+
+          <MenuItem
             name={"Network stats"}
             isActive={selectedMenu === "network_stats"}
             iconName={"menu_network"}
             onClick={() => onMenuItemChange("network_stats")}
           />
           <MenuItem
-            name={"My stats"}
+            name={"Node stats"}
             isActive={selectedMenu === "node_stats"}
             iconName={"menu_mystats"}
             onClick={() => onMenuItemChange("node_stats")}
@@ -73,7 +95,7 @@ export default function Sidebar(
             onClick={() => onMenuItemChange("api_keys")}
           />
           <a
-            href={process.env.NEXT_PUBLIC_DOCS_URL}
+            href={process.env.NEXT_PUBLIC_DOCS_URL + "nodes/quickstart"}
             target="_blank"
           >
             <div
@@ -81,7 +103,7 @@ export default function Sidebar(
             >
               {getIcon("menu_docs")}
               <div className={"flex flex-row gap-2 items-center"}>
-                Docs
+                Node Docs
                 {getIcon("arrow")}
               </div>
             </div>
@@ -160,7 +182,6 @@ function Settings(
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-auto py-8 px-6 flex flex-col gap-6" align={"end"} sideOffset={10}>
           <Suspense>
-
             <div className={"flex flex-col gap-2"}>
               <div>{getUsername()}</div>
               <div className={"font-normal"}>{getEmail()}</div>
