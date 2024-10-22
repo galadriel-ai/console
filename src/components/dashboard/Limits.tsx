@@ -69,6 +69,11 @@ export function Limits() {
                   isLoading={isLoading}
                   text={rateLimits.usage_tier_name ? rateLimits.usage_tier_name : ""}
                 />
+              </div>
+              <div className={"pt-10 gal-text-secondary max-w-4xl"}>
+                Rate limits
+              </div>
+              <div className={"flex flex-col md:flex-row gap-6"}>
                 <LimitsCard
                   title="Max requests"
                   isLoading={isLoading}
@@ -82,6 +87,21 @@ export function Limits() {
                   subText={"tok/min"}
                 />
               </div>
+              <div className={"flex flex-col md:flex-row gap-6"}>
+                <LimitsCard
+                  title="Max requests"
+                  isLoading={isLoading}
+                  text={rateLimits.rate_limit_day.max_requests}
+                  subText={"req/day"}
+                />
+                <LimitsCard
+                  title="Max tokens"
+                  isLoading={isLoading}
+                  text={rateLimits.rate_limit_day.max_tokens}
+                  subText={"tok/day"}
+                />
+              </div>
+
               <div
                 className={"py-8 px-3 md:px-8 flex flex-col gap-8 gal-card"}
               >
