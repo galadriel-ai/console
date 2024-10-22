@@ -70,7 +70,7 @@ export function Limits() {
                   text={rateLimits.usage_tier_name ? rateLimits.usage_tier_name : ""}
                 />
               </div>
-              <div className={"pt-10 gal-text-secondary max-w-4xl"}>
+              <div className={"px-3 pt-10 gal-text-secondary max-w-4xl"}>
                 Rate limits
               </div>
               <div className={"flex flex-col md:flex-row gap-6"}>
