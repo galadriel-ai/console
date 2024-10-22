@@ -73,13 +73,13 @@ export function Limits() {
                   title="Max requests"
                   isLoading={isLoading}
                   text={rateLimits.rate_limit_minute.max_requests}
-                  subText={"req/sec"}
+                  subText={"req/min"}
                 />
                 <LimitsCard
                   title="Max tokens"
                   isLoading={isLoading}
                   text={rateLimits.rate_limit_minute.max_tokens}
-                  subText={"tok/sec"}
+                  subText={"tok/min"}
                 />
               </div>
               <div
