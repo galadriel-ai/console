@@ -63,7 +63,7 @@ export function Limits() {
             <div
               className={"flex flex-col pt-[32px] gap-6"}
             >
-              <div className={"flex flex-row gap-6"}>
+              <div className={"flex flex-col md:flex-row gap-6"}>
                 <LimitsCard
                   title="Usage tier"
                   isLoading={isLoading}
