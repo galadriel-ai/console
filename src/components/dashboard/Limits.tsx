@@ -72,7 +72,7 @@ export function Limits() {
               className={"py-8 px-3 md:px-8 flex flex-col gap-8 gal-card"}
             >
               <div>Daily API usage</div>
-              {rateLimits.usages.map((usage, index) => {
+              {rateLimits.usages.map((usage: any, index: number) => {
                 return <div key={index}>
                   <div className={"gal-title-secondary pb-4"}>
                     {usage.model}
