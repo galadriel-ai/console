@@ -35,8 +35,6 @@ export function Limits() {
         }
       }
       const responseJson = await response.json()
-      console.log("responseJson")
-      console.log(responseJson)
       if (responseJson.usage_tier_name && responseJson.usages !== null) {
         setRateLimits(responseJson)
       }
@@ -45,6 +43,21 @@ export function Limits() {
       // setError(error.message || 'An error occurred during login.');
     }
     setIsLoading(false)
+  }
+
+  function formatCredits(credits: string) {
+    if (!credits) {
+      return "0$"
+    }
+    try {
+      return `${parseFloat(credits).toFixed(2)}$`
+    } catch {
+      try {
+        return `${credits.split(".")[0]}${credits.split(".")[1].substring(0, 2)}$`
+      } catch {
+        return "0$"
+      }
+    }
   }
 
   return (
@@ -61,12 +74,20 @@ export function Limits() {
         }
         {rateLimits &&
           <>
-            <div className={"flex flex-col md:flex-row pb-8"}>
+            <div className={"flex flex-col md:flex-row gap-4 pb-8"}>
               <LimitsCard
                 title="Usage tier"
                 isLoading={isLoading}
                 text={rateLimits.usage_tier_name ? rateLimits.usage_tier_name : ""}
               />
+              {rateLimits.credits_balance !== null &&
+                <LimitsCard
+                  title="Credits"
+                  isLoading={isLoading}
+                  text={formatCredits(rateLimits.credits_balance)}
+                />
+              }
+
             </div>
             <div
               className={"py-8 px-3 md:px-8 flex flex-col gap-8 gal-card"}
@@ -207,10 +228,10 @@ function LimitsTable({limits}: { limits: any[] }) {
         </TableBody>
       </Table>
       <div className={"gal-subtitle flex flex-col pt-4 gap-1"}>
-          <div>(1) Requests Per Minute</div>
-          <div>(2) Requests Per Day</div>
-          <div>(3) Tokens Per Minute</div>
-          <div>(4) Tokens Per Day</div>
+        <div>(1) Requests Per Minute</div>
+        <div>(2) Requests Per Day</div>
+        <div>(3) Tokens Per Minute</div>
+        <div>(4) Tokens Per Day</div>
       </div>
     </div>
   )
