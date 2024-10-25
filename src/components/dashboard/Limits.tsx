@@ -8,6 +8,21 @@ import {Progress} from "@/components/ui/progress";
 import {getIcon, IconName} from "@/components/Icons";
 import {ppNeueBit} from "@/app/fonts/fonts";
 
+function formatCredits(credits: string) {
+  if (!credits) {
+    return "0$"
+  }
+  try {
+    return `${parseFloat(credits).toFixed(2)}$`
+  } catch {
+    try {
+      return `${credits.split(".")[0]}${credits.split(".")[1].substring(0, 2)}$`
+    } catch {
+      return "0$"
+    }
+  }
+}
+
 export function Limits() {
 
   const router = useRouter()
@@ -43,21 +58,6 @@ export function Limits() {
       // setError(error.message || 'An error occurred during login.');
     }
     setIsLoading(false)
-  }
-
-  function formatCredits(credits: string) {
-    if (!credits) {
-      return "0$"
-    }
-    try {
-      return `${parseFloat(credits).toFixed(2)}$`
-    } catch {
-      try {
-        return `${credits.split(".")[0]}${credits.split(".")[1].substring(0, 2)}$`
-      } catch {
-        return "0$"
-      }
-    }
   }
 
   return (
@@ -199,6 +199,9 @@ function UsageBar(
 }
 
 function LimitsTable({limits}: { limits: any[] }) {
+
+  const isPriceColumnNeeded: boolean = limits.filter(l => l.price_per_million_tokens).length > 0
+
   return (
     <div>
       <Table>
@@ -206,7 +209,9 @@ function LimitsTable({limits}: { limits: any[] }) {
           <TableRow>
             <TableHead>Model</TableHead>
             {/*<TableHead>Tier</TableHead>*/}
-            {/*<TableHead>Price per 1M token</TableHead>*/}
+            {isPriceColumnNeeded &&
+              <TableHead>Price per 1M token</TableHead>
+            }
             <TableHead>RPM ¹</TableHead>
             <TableHead>RPD ²</TableHead>
             <TableHead>TPM ³</TableHead>
@@ -218,7 +223,13 @@ function LimitsTable({limits}: { limits: any[] }) {
             <TableRow key={limit.model}>
               <TableCell className="font-medium">{limit.model}</TableCell>
               {/*<TableCell>{"TODO"}</TableCell>*/}
-              {/*<TableCell>-</TableCell>*/}
+              {isPriceColumnNeeded &&
+                <TableCell>{limit.price_per_million_tokens !== null ?
+                  <>{formatCredits(limit.price_per_million_tokens)}</>
+                  :
+                  <>-</>
+                }</TableCell>
+              }
               <TableCell>{limit.max_requests_per_minute ? formatNumber(limit.max_requests_per_minute) : "∞"}</TableCell>
               <TableCell>{limit.max_requests_per_day ? formatNumber(limit.max_requests_per_day) : "∞"}</TableCell>
               <TableCell>{limit.max_tokens_per_minute ? formatNumber(limit.max_tokens_per_minute) : "∞"}</TableCell>
