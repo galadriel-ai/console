@@ -33,10 +33,12 @@ export function getUserId(): string {
 }
 
 export function getUsername(): string {
-  if (typeof window !== "undefined") {
-    return localStorage.getItem(UserKeys.USERNAME) || ""
-  }
+  // Hack
   return ""
+  // if (typeof window !== "undefined") {
+  //   return localStorage.getItem(UserKeys.USERNAME) || ""
+  // }
+  // return ""
 }
 
 export function getEmail(): string {
