@@ -136,7 +136,7 @@ export function Limits() {
                 <div className={"pb-4"}>
                   Rate limits
                 </div>
-                <LimitsTable limits={rateLimits.usages || []} isPriceColumnNeeded={isPaidTier}/>
+                <LimitsTable limits={rateLimits.usages || []} isPriceColumnNeeded={isPaidTier || false}/>
               </div>
             </div>
 
