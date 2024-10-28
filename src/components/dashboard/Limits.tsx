@@ -8,11 +8,27 @@ import {Progress} from "@/components/ui/progress";
 import {getIcon, IconName} from "@/components/Icons";
 import {ppNeueBit} from "@/app/fonts/fonts";
 
+function formatCredits(credits: string) {
+  if (!credits) {
+    return "0$"
+  }
+  try {
+    return `${parseFloat(credits).toFixed(2)}$`
+  } catch {
+    try {
+      return `${credits.split(".")[0]}${credits.split(".")[1].substring(0, 2)}$`
+    } catch {
+      return "0$"
+    }
+  }
+}
+
 export function Limits() {
 
   const router = useRouter()
 
   const [rateLimits, setRateLimits] = useState<any>(undefined)
+  const [isPaidTier, setIsPaidTier] = useState<boolean | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
@@ -37,27 +53,16 @@ export function Limits() {
       const responseJson = await response.json()
       if (responseJson.usage_tier_name && responseJson.usages !== null) {
         setRateLimits(responseJson)
+        if (responseJson.usages) {
+          const isPaid: boolean = responseJson.usages.filter((l: any) => l.price_per_million_tokens).length > 0
+          setIsPaidTier(isPaid)
+        }
       }
       // if (responseJson.api_key) setApiKey(responseJson.api_key)
     } catch {
       // setError(error.message || 'An error occurred during login.');
     }
     setIsLoading(false)
-  }
-
-  function formatCredits(credits: string) {
-    if (!credits) {
-      return "0$"
-    }
-    try {
-      return `${parseFloat(credits).toFixed(2)}$`
-    } catch {
-      try {
-        return `${credits.split(".")[0]}${credits.split(".")[1].substring(0, 2)}$`
-      } catch {
-        return "0$"
-      }
-    }
   }
 
   return (
@@ -67,6 +72,17 @@ export function Limits() {
         <div className={"pt-10 gal-text-secondary max-w-4xl"}>
           API usage stats & limits
         </div>
+        {(isPaidTier !== null && !isPaidTier) &&
+          <div className={"pt-3 gal-text-secondary max-w-4xl"}>
+            Hitting limits? <a
+            href={"https://galadriel.com/pricing"}
+            target={"_blank"}
+            className={"gal-link-text"}
+          >
+            See pricing here
+          </a> and access infinite limits.
+          </div>
+        }
       </div>
       <div className={"py-8"}>
         {(isLoading && !rateLimits) &&
@@ -120,7 +136,7 @@ export function Limits() {
                 <div className={"pb-4"}>
                   Rate limits
                 </div>
-                <LimitsTable limits={rateLimits.usages || []}/>
+                <LimitsTable limits={rateLimits.usages || []} isPriceColumnNeeded={isPaidTier || false}/>
               </div>
             </div>
 
@@ -198,7 +214,8 @@ function UsageBar(
   )
 }
 
-function LimitsTable({limits}: { limits: any[] }) {
+function LimitsTable({limits, isPriceColumnNeeded}: { limits: any[], isPriceColumnNeeded: boolean }) {
+
   return (
     <div>
       <Table>
@@ -206,7 +223,9 @@ function LimitsTable({limits}: { limits: any[] }) {
           <TableRow>
             <TableHead>Model</TableHead>
             {/*<TableHead>Tier</TableHead>*/}
-            {/*<TableHead>Price per 1M token</TableHead>*/}
+            {isPriceColumnNeeded &&
+              <TableHead>Price per 1M tokens</TableHead>
+            }
             <TableHead>RPM ¹</TableHead>
             <TableHead>RPD ²</TableHead>
             <TableHead>TPM ³</TableHead>
@@ -218,7 +237,13 @@ function LimitsTable({limits}: { limits: any[] }) {
             <TableRow key={limit.model}>
               <TableCell className="font-medium">{limit.model}</TableCell>
               {/*<TableCell>{"TODO"}</TableCell>*/}
-              {/*<TableCell>-</TableCell>*/}
+              {isPriceColumnNeeded &&
+                <TableCell>{limit.price_per_million_tokens !== null ?
+                  <>{formatCredits(limit.price_per_million_tokens)}</>
+                  :
+                  <>-</>
+                }</TableCell>
+              }
               <TableCell>{limit.max_requests_per_minute ? formatNumber(limit.max_requests_per_minute) : "∞"}</TableCell>
               <TableCell>{limit.max_requests_per_day ? formatNumber(limit.max_requests_per_day) : "∞"}</TableCell>
               <TableCell>{limit.max_tokens_per_minute ? formatNumber(limit.max_tokens_per_minute) : "∞"}</TableCell>
