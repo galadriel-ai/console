@@ -210,7 +210,7 @@ function LimitsTable({limits}: { limits: any[] }) {
             <TableHead>Model</TableHead>
             {/*<TableHead>Tier</TableHead>*/}
             {isPriceColumnNeeded &&
-              <TableHead>Price per 1M token</TableHead>
+              <TableHead>Price per 1M tokens</TableHead>
             }
             <TableHead>RPM ¹</TableHead>
             <TableHead>RPD ²</TableHead>
