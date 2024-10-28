@@ -54,7 +54,7 @@ export function Limits() {
       if (responseJson.usage_tier_name && responseJson.usages !== null) {
         setRateLimits(responseJson)
         if (responseJson.usages) {
-          const isPaid: boolean = responseJson.usages.filter(l => l.price_per_million_tokens).length > 0
+          const isPaid: boolean = responseJson.usages.filter((l: any) => l.price_per_million_tokens).length > 0
           setIsPaidTier(isPaid)
         }
       }
