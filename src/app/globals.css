@@ -364,6 +364,14 @@ input:focus {
   color: var(--Black);
 }
 
+.gal-link-text {
+  text-decoration: underline;
+}
+
+.gal-link-text:hover {
+  text-decoration: none;
+}
+
 .gal-settings-wrapper {
   border-radius: 0.5rem;
   background: var(--White);

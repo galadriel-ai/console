@@ -28,6 +28,7 @@ export function Limits() {
   const router = useRouter()
 
   const [rateLimits, setRateLimits] = useState<any>(undefined)
+  const [isPaidTier, setIsPaidTier] = useState<boolean | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
@@ -52,6 +53,10 @@ export function Limits() {
       const responseJson = await response.json()
       if (responseJson.usage_tier_name && responseJson.usages !== null) {
         setRateLimits(responseJson)
+        if (responseJson.usages) {
+          const isPaid: boolean = responseJson.usages.filter(l => l.price_per_million_tokens).length > 0
+          setIsPaidTier(isPaid)
+        }
       }
       // if (responseJson.api_key) setApiKey(responseJson.api_key)
     } catch {
@@ -67,6 +72,17 @@ export function Limits() {
         <div className={"pt-10 gal-text-secondary max-w-4xl"}>
           API usage stats & limits
         </div>
+        {(isPaidTier !== null && !isPaidTier) &&
+          <div className={"pt-3 gal-text-secondary max-w-4xl"}>
+            Hitting limits? <a
+            href={"https://galadriel.com/pricing"}
+            target={"_blank"}
+            className={"gal-link-text"}
+          >
+            See pricing here
+          </a> and access infinite limits.
+          </div>
+        }
       </div>
       <div className={"py-8"}>
         {(isLoading && !rateLimits) &&
@@ -120,7 +136,7 @@ export function Limits() {
                 <div className={"pb-4"}>
                   Rate limits
                 </div>
-                <LimitsTable limits={rateLimits.usages || []}/>
+                <LimitsTable limits={rateLimits.usages || []} isPriceColumnNeeded={isPaidTier}/>
               </div>
             </div>
 
@@ -198,9 +214,7 @@ function UsageBar(
   )
 }
 
-function LimitsTable({limits}: { limits: any[] }) {
-
-  const isPriceColumnNeeded: boolean = limits.filter(l => l.price_per_million_tokens).length > 0
+function LimitsTable({limits, isPriceColumnNeeded}: { limits: any[], isPriceColumnNeeded: boolean }) {
 
   return (
     <div>
