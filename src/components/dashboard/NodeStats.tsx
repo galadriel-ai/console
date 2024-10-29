@@ -55,7 +55,7 @@ export function NodeStats() {
         inferencesCountDay: responseJson.requests_served_day || 0,
         inferencesCount: responseJson.total_requests_served || 0,
         averageTimeToFirstToken: responseJson.average_time_to_first_token || 0,
-        totalTokensPerSecond: responseJson.total_tokens_per_second || 0,
+        totalTokensPerSecond: responseJson.benchmark_total_tokens_per_second || 0,
       })
     } catch {
       // setError(error.message || 'An error occurred during login.');
