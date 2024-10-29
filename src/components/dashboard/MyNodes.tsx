@@ -57,6 +57,8 @@ export function MyNodes() {
           requestsServedDay: r.requests_served_day,
           tokensPerSecond: r.benchmark_tokens_per_second,
           nodeCreatedAt: r.node_created_at,
+
+          isArchived: r.is_archived || false,
         })
       );
       setGpuNodes(newGpuNodes)
@@ -91,6 +93,15 @@ export function MyNodes() {
     }))
   }
 
+  const onArchiveStatusUpdated = (gpuNode: GpuNode) => {
+    setGpuNodes(gpuNodes.map(n => {
+      if (n.nodeId === gpuNode.nodeId) {
+        return gpuNode
+      }
+      return n
+    }))
+  }
+
   return (
     <DashboardContent>
       <>
@@ -106,11 +117,12 @@ export function MyNodes() {
         {page === "add" &&
           <AddNode gpuNodes={gpuNodes} onAddGpuNode={onAddGpuNode} onChangePage={onChangePage}/>
         }
-        {page === "display" &&
+        {(page === "display" && displayedNode) &&
           <DisplayNode
             gpuNode={displayedNode}
             onChangePage={onChangePage}
             onNameUpdated={onNameUpdated}
+            onArchiveStatusUpdated={onArchiveStatusUpdated}
           />
         }
       </>

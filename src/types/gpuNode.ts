@@ -20,6 +20,8 @@ export interface GpuNode {
   requestsServedDay: number
   tokensPerSecond: number
   nodeCreatedAt: number
+
+  isArchived: boolean
 }
 
 export function createGpuNode(nodeId: string, nameAlias: string): GpuNode {
@@ -43,5 +45,6 @@ export function createGpuNode(nodeId: string, nameAlias: string): GpuNode {
     requestsServedDay: 0,
     tokensPerSecond: 0,
     nodeCreatedAt: Math.floor((new Date()).getTime() / 1000),
+    isArchived: false,
   }
 }

@@ -57,7 +57,7 @@ export async function POST(req: Request) {
 }
 
 export async function PUT(req: Request) {
-  const {nodeId, nodeName} = await req.json();
+  const {nodeId, nodeName, isArchived} = await req.json();
 
   const cookieHeader = req.headers.get('cookie');
 
@@ -76,6 +76,7 @@ export async function PUT(req: Request) {
     body: JSON.stringify({
       node_id: nodeId,
       node_name: nodeName,
+      is_archived: isArchived,
     })
   })
   if (apiResponse.status !== 200) {
@@ -83,5 +84,6 @@ export async function PUT(req: Request) {
     return NextResponse.json({isSuccess: false});
   }
 
-  return NextResponse.json({isSuccess: true});
+  const responseJson = await apiResponse.json()
+  return NextResponse.json({isSuccess: true, ...responseJson});
 }

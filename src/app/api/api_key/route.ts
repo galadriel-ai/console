@@ -50,7 +50,6 @@ export async function POST(req: Request) {
     });
   }
 
-  // TODO:
   return NextResponse.json({isSuccess: true});
 }
 

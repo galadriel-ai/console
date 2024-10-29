@@ -20,6 +20,7 @@
   --Light-grey-5: #ADB0B4;
 
   --Red: #FC5A8D;
+  --Red-2: #ec457a;
 
   --White: #FCFCFC;
 
@@ -293,6 +294,11 @@ input:focus {
 .gal-button-warning {
   color: var(--White);
   background: var(--Red);
+}
+
+.gal-button-warning:hover {
+  color: var(--White);
+  background: var(--Red-2);
 }
 
 .gal-api-keys-wrapper {

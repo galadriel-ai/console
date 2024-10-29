@@ -7,14 +7,23 @@ import {Chart} from "@/components/dashboard/components/Chart";
 import {UpdateNodeName} from "@/components/dashboard/components/UpdateNodeName";
 
 interface Props {
-  gpuNode: GpuNode | null
+  gpuNode: GpuNode
   onChangePage: (pageName: PageName) => void
   onNameUpdated: (gpuNode: GpuNode) => void
+  onArchiveStatusUpdated: (gpuNode: GpuNode) => void
 }
 
-export function DisplayNode({gpuNode, onChangePage, onNameUpdated}: Props) {
+export function DisplayNode(
+  {
+    gpuNode,
+    onChangePage,
+    onNameUpdated,
+    onArchiveStatusUpdated
+  }: Props) {
 
+  const [isArchived, setIsArchived] = useState<boolean>(gpuNode.isArchived)
   const [isCopyActive, setIsCopyActive] = useState<boolean>(false)
+  const [isArchivalLoading, setIsArchivalLoading] = useState<boolean>(false)
 
   const [chartData, setChartData] = useState<ChartData | undefined>()
   const [isChartLoading, setIsChartLoading] = useState(false);
@@ -65,6 +74,40 @@ export function DisplayNode({gpuNode, onChangePage, onNameUpdated}: Props) {
     setIsChartLoading(false)
   }
 
+  const onUpdateArchivalStatus = async () => {
+    if (!gpuNode) return
+    if (isArchivalLoading) return
+
+    setIsArchivalLoading(true)
+
+    try {
+      const newIsArchived = !isArchived
+      const response = await fetch('/api/node', {
+        method: "PUT",
+        headers: {
+          "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+          nodeId: gpuNode.nodeId,
+          isArchived: newIsArchived,
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Network stats call failed');
+      }
+      const responseJson = await response.json()
+      if (responseJson.isSuccess) {
+        setIsArchived(newIsArchived)
+        onArchiveStatusUpdated({...gpuNode, isArchived: newIsArchived})
+      } else {
+        // Error?
+      }
+    } catch {
+    }
+    setIsArchivalLoading(false)
+  }
+
   const onCopy = async () => {
     if (!gpuNode) return
     await navigator.clipboard.writeText(gpuNode.nodeId)
@@ -76,6 +119,7 @@ export function DisplayNode({gpuNode, onChangePage, onNameUpdated}: Props) {
     } catch {
     }
   }
+
   const formatVram = (vram: number): string | null => {
     if (!vram) return null
     return `${Math.round(vram / 1.048576 / 1024)} GB`
@@ -122,6 +166,32 @@ export function DisplayNode({gpuNode, onChangePage, onNameUpdated}: Props) {
               >
                 Run node
               </a>
+            </div>
+            <div>
+              {isArchived ?
+                <button
+                  className={"gal-button gal-button"}
+                  onClick={onUpdateArchivalStatus}
+                >
+                  {isArchivalLoading && <>
+                    {getIcon("spinner")}
+                  </>
+                  }
+                  Reactivate node
+                </button>
+                :
+                <button
+                  className={"gal-button gal-button-warning"}
+                  onClick={onUpdateArchivalStatus}
+                >
+                  {isArchivalLoading && <>
+                    {getIcon("spinner")}
+                  </>
+                  }
+                  Archive node
+                </button>
+              }
+
             </div>
           </div>
         </div>
