@@ -10,15 +10,15 @@ import {ppNeueBit} from "@/app/fonts/fonts";
 
 function formatCredits(credits: string) {
   if (!credits) {
-    return "0$"
+    return "$0"
   }
   try {
-    return `${parseFloat(credits).toFixed(2)}$`
+    return `$${parseFloat(credits).toFixed(2)}`
   } catch {
     try {
-      return `${credits.split(".")[0]}${credits.split(".")[1].substring(0, 2)}$`
+      return `$${credits.split(".")[0]}${credits.split(".")[1].substring(0, 2)}`
     } catch {
-      return "0$"
+      return "$0"
     }
   }
 }
