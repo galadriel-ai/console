@@ -13,7 +13,6 @@ export function ChatExample() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    // TODO: send chat
     sendChat(input)
   };
 

@@ -18,7 +18,6 @@ export function ApiKeyDeletionModal({isOpen, apiKeyId, apiKey, onDeleteSuccess, 
   }
 
   const onDelete = async () => {
-    // TODO: modal or something?
     if (isDeletionLoading) return
     setIsDeletionLoading(true)
     try {

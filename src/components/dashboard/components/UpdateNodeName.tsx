@@ -68,7 +68,7 @@ export function UpdateNodeName({node, type, onNameUpdated}: Props) {
         throw new Error('Network stats call failed');
       }
       const responseJson = await response.json()
-      if (responseJson.isSuccess) {
+      if (responseJson.isSuccess && responseJson.is_name_updated) {
         setIsUpdating(false)
         setOriginalName(name)
         onNameUpdated({...node, nameAlias: name})
