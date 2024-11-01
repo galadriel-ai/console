@@ -20,7 +20,7 @@ client = OpenAI(
 )
 
 completion = client.chat.completions.create(
-    model="llama3.1",
+    model="llama3.1:70b",
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "Hello!"},
@@ -38,7 +38,7 @@ const openai = new OpenAI({
 });
 
 const completion = await openai.chat.completions.create({
-  model: "llama3.1",
+  model: "llama3.1:70b",
   messages: [
     {role: "system", content: "You are a helpful assistant."},
     {
@@ -56,7 +56,7 @@ console.log(completion.choices[0].message);`
   -H 'Authorization: Bearer ${apiKey || "<GALADRIEL_API_KEY>"}' \\
   -H 'Content-Type: application/json' \\
   -d '{
-  "model": "llama3.1",
+  "model": "llama3.1:70b",
   "messages": [
     {
       "content": "You are a helpful assistant.",
