@@ -4,8 +4,8 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,} from "@/compone
 import {getEmail, getUsername, removeUserData} from "@/utils/user";
 import {Suspense, useState} from "react";
 
-export type MenuItemType = "" | "chat" | "limits" | "network_stats" | "node_stats" | "my_nodes" | "api_keys"
-const validMenuItems: MenuItemType[] = ["chat", "limits", "network_stats", "node_stats", "my_nodes", "api_keys"];
+export type MenuItemType = "" | "chat" | "limits" | "api_keys" | "network_stats" | "node_stats" | "my_nodes" | "api_keys_node"
+const validMenuItems: MenuItemType[] = ["chat", "limits", "api_keys", "network_stats", "node_stats", "my_nodes", "api_keys_node"];
 
 export function isMenuItemType(value: string): value is MenuItemType {
   return validMenuItems.includes(value as MenuItemType);
@@ -54,6 +54,12 @@ export default function Sidebar(
             iconName={"menu_stopwatch"}
             onClick={() => onMenuItemChange("limits")}
           />
+          <MenuItem
+            name={"API Keys"}
+            isActive={selectedMenu === "api_keys"}
+            iconName={"menu_keys"}
+            onClick={() => onMenuItemChange("api_keys")}
+          />
           <a
             href={process.env.NEXT_PUBLIC_DOCS_URL + "api-reference/quickstart"}
             target="_blank"
@@ -90,9 +96,9 @@ export default function Sidebar(
           />
           <MenuItem
             name={"API Keys"}
-            isActive={selectedMenu === "api_keys"}
+            isActive={selectedMenu === "api_keys_node"}
             iconName={"menu_keys"}
-            onClick={() => onMenuItemChange("api_keys")}
+            onClick={() => onMenuItemChange("api_keys_node")}
           />
           <a
             href={process.env.NEXT_PUBLIC_DOCS_URL + "nodes/quickstart"}

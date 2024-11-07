@@ -92,7 +92,7 @@ export default function DashboardPage() {
         {selectedMenu === "my_nodes" &&
           <MyNodes/>
         }
-        {selectedMenu === "api_keys" &&
+        {(selectedMenu === "api_keys" || selectedMenu === "api_keys_node") &&
           <ApiKeys/>
         }
 
