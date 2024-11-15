@@ -8,15 +8,18 @@ import {Progress} from "@/components/ui/progress";
 import {getIcon, IconName} from "@/components/Icons";
 import {ppNeueBit} from "@/app/fonts/fonts";
 
-function formatCredits(credits: string) {
+function formatCredits(credits: string, fractionDigits?: number) {
+  if (!fractionDigits) {
+    fractionDigits = 2
+  }
   if (!credits) {
     return "$0"
   }
   try {
-    return `$${parseFloat(credits).toFixed(2)}`
+    return `$${parseFloat(credits).toFixed(fractionDigits)}`
   } catch {
     try {
-      return `$${credits.split(".")[0]}${credits.split(".")[1].substring(0, 2)}`
+      return `$${credits.split(".")[0]}${credits.split(".")[1].substring(0, fractionDigits)}`
     } catch {
       return "$0"
     }
@@ -239,7 +242,7 @@ function LimitsTable({limits, isPriceColumnNeeded}: { limits: any[], isPriceColu
               {/*<TableCell>{"TODO"}</TableCell>*/}
               {isPriceColumnNeeded &&
                 <TableCell>{limit.price_per_million_tokens !== null ?
-                  <>{formatCredits(limit.price_per_million_tokens)}</>
+                  <>{formatCredits(limit.price_per_million_tokens, 3)}</>
                   :
                   <>-</>
                 }</TableCell>
