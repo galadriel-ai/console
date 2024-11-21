@@ -224,7 +224,7 @@ export function DisplayNode(
           >
             <div className={"gal-subtitle"}>Status</div>
             <div className={"flex flex-row gap-2 items-center"}>
-              {gpuNode.status === "online" ?
+              {(gpuNode.status && gpuNode.status.toLowerCase().includes("run")) ?
                 <div className={"gal-status-online"}/>
                 :
                 <div className={"gal-status-offline"}/>

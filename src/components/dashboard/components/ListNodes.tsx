@@ -156,7 +156,7 @@ function NodeCard(
               Status
             </div>
             <div className={"flex flex-row gap-2 items-center"}>
-              {node.status === "online" ?
+              {(node.status && node.status.toLowerCase().includes("run")) ?
                 <div className={"gal-status-online"}/>
                 :
                 <div className={"gal-status-offline"}/>
