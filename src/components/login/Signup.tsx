@@ -108,9 +108,17 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
         })
         router.push("/dashboard")
       } else {
-        if (responseJson.error && responseJson.error === "invalid_password") {
-          setErrorMessage("Invalid password.");
-        } else {
+        try {
+          if (responseJson.error) {
+            if (responseJson.error.code === "invalid_password") {
+              setErrorMessage("Invalid password.");
+            } else if (responseJson.error.message) {
+              setErrorMessage(responseJson.error.message);
+            }
+          } else {
+            setErrorMessage("An unexpected error occurred, please try again.");
+          }
+        } catch (e) {
           setErrorMessage("An unexpected error occurred, please try again.");
         }
       }
@@ -205,13 +213,13 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
                   />
                 </div>
                 <div className="text-sm text-gray-500">
-                  By signing up, you agree to our <a 
-                    href="https://galadriel.com/tos"
-                    className="gal-link"
-                    target="_blank"
-                   >
-                    terms of usage
-                  </a>
+                  By signing up, you agree to our <a
+                  href="https://galadriel.com/tos"
+                  className="gal-link"
+                  target="_blank"
+                >
+                  terms of usage
+                </a>
                 </div>
                 <button
                   type="submit"
