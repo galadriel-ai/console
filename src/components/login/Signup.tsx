@@ -204,6 +204,15 @@ export default function Signup({onLogin}: { onLogin: () => void }) {
                     className="border px-4 py-2 text-black"
                   />
                 </div>
+                <div className="text-sm text-gray-500">
+                  By signing up, you agree to our <a 
+                    href="https://galadriel.com/tos"
+                    className="gal-link"
+                    target="_blank"
+                   >
+                    terms of usage
+                  </a>
+                </div>
                 <button
                   type="submit"
                   className={"gal-button gal-button-primary"}>
