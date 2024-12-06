@@ -91,9 +91,9 @@ export function UpdateNodeName({node, type, onNameUpdated}: Props) {
               </span>
             </Title>
             :
-            <>
+            <span style={{overflowWrap: "anywhere"}}>
               {name}
-            </>
+            </span>
           }
           <div
             className={"gal-group cursor-pointer " + (type === "title" ? "pl-6" : "pl-4")}
