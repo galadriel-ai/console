@@ -86,12 +86,14 @@ export function UpdateNodeName({node, type, onNameUpdated}: Props) {
         <div className="gal-title-secondary flex flex-row gap-2 items-center">
           {type === "title" ?
             <Title>
+              <span style={{overflowWrap: "anywhere"}}>
               {name}
+              </span>
             </Title>
             :
-            <>
+            <span style={{overflowWrap: "anywhere"}}>
               {name}
-            </>
+            </span>
           }
           <div
             className={"gal-group cursor-pointer " + (type === "title" ? "pl-6" : "pl-4")}
