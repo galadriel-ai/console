@@ -46,10 +46,6 @@ export default function DashboardPage() {
     router.push(`/dashboard/${name}`)
   }
 
-  const onRunNode = () => {
-    setSelectedMenu("my_nodes")
-  }
-
   return (
     <div
       className="flex w-full min-h-screen flex-row gap-[40px] pt-12 p-0 md:p-[40px]"
