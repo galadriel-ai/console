@@ -16,47 +16,54 @@ export function CodeSnippet({isLoading, apiKey}: Props) {
 
 client = OpenAI(
     base_url="https://api.galadriel.com/v1",
-    api_key="${apiKey || "<GALADRIEL_API_KEY>"}",
+    api_key="${apiKey || "<GALADRIEL_API_KEY>"}"
 )
 
 completion = client.chat.completions.create(
-    model="llama3.1:70b",
+    model="gpt-4o",
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "Hello!"},
     ],
 )
 
-print(completion.choices[0].message)
+print(f"Message: {completion.choices[0].message}")
+print(f"Hash: {completion.hash}")
+print(f"Signed public key: {completion.public_key}")
+print(f"Signature: {completion.signature}")
+print(f"Tx hash: {completion.tx_hash}")
+print(f"Attestation: {completion.attestation}")
 `
 
   const JAVASCRIPT: string = `import OpenAI from "openai";
 
 const openai = new OpenAI({
   apiKey: "${apiKey || "<GALADRIEL_API_KEY>"}",
-  baseURL: "https://api.galadriel.com/v1"
+  baseURL: "https://api.galadriel.com/v1/verified",
 });
 
 const completion = await openai.chat.completions.create({
-  model: "llama3.1:70b",
+  model: "gpt-4o",
   messages: [
-    {role: "system", content: "You are a helpful assistant."},
-    {
-      role: "user",
-      content: "Hello!",
-    },
+    { role: "system", content: "You are a helpful assistant." },
+    { role: "user", content: "Hello!" },
   ],
 });
 
-console.log(completion.choices[0].message);`
+console.log(\`Message: \${completion.choices[0].message}\`);
+console.log(\`Hash: \${completion.hash}\`);
+console.log(\`Signed public key: \${completion.public_key}\`);
+console.log(\`Signature: \${completion.signature}\`);
+console.log(\`Tx hash: \${completion.tx_hash}\`);
+console.log(\`Attestation: \${completion.attestation}\`);`
 
   const CURL: string = `curl -X 'POST' \\
-  'https://api.galadriel.com/v1/chat/completions' \\
+  'https://api.galadriel.com/v1/verified/chat/completions' \\
   -H 'accept: application/json' \\
   -H 'Authorization: Bearer ${apiKey || "<GALADRIEL_API_KEY>"}' \\
   -H 'Content-Type: application/json' \\
   -d '{
-  "model": "llama3.1:70b",
+  "model": "gpt-4o",
   "messages": [
     {
       "content": "You are a helpful assistant.",
@@ -69,6 +76,7 @@ console.log(completion.choices[0].message);`
   ]
 }'
 `
+
   const [selectedTab, setSelectedTab] = useState<"python" | "javascript" | "curl">("python")
   const [isCopyActive, setIsCopyActive] = useState<boolean>(false)
 

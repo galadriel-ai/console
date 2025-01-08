@@ -5,6 +5,7 @@ import {getIcon} from "@/components/Icons";
 import {ApiKeyModal} from "@/components/dashboard/components/ApiKeyModal";
 import {ApiKeyDeletionModal} from "@/components/dashboard/components/ApiKeyDeletionModal";
 import {useRouter} from "next/navigation";
+import {CodeSnippet} from "@/components/dashboard/components/CodeSnippet";
 
 interface ApiKey {
   apiKeyId: string
@@ -26,9 +27,13 @@ export function ApiKeys() {
   const [isDeletionModalOpen, setIsDeletionModalOpen] = useState<boolean>(false)
   const [deletionApiKey, setDeletionApiKey] = useState<ApiKey | null>(null)
 
+  const [isExampleLoading, setIsExampleLoading] = useState<boolean>(false)
+  const [exampleApiKey, setExampleApiKey] = useState<string>("")
+
 
   useEffect(() => {
     getApiKeys()
+    getExampleApiKey()
   }, [])
 
   const getApiKeys = async () => {
@@ -57,6 +62,29 @@ export function ApiKeys() {
       // setError(error.message || 'An error occurred during login.');
     }
     setIsLoading(false)
+  }
+
+  const getExampleApiKey = async () => {
+    setIsExampleLoading(true)
+    try {
+      const response = await fetch("/api/api_key_example", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          router.push("/login")
+        }
+      }
+      const responseJson = await response.json()
+      if (responseJson.api_key) setExampleApiKey(responseJson.api_key)
+    } catch {
+      // setError(error.message || 'An error occurred during login.');
+    }
+    setIsExampleLoading(false)
   }
 
   const onCreateNewKey = async () => {
@@ -150,7 +178,7 @@ export function ApiKeys() {
       </div>
 
       <div
-        className={"flex flex-col pt-[32px] gap-[32px] px-3 md:px-0"}
+        className={"flex flex-col py-[32px] gap-[32px] px-3 md:px-0"}
       >
         <div className={"gal-api-keys-wrapper flex flex-col gap-4"}>
           <div className={"flex flex-row gap-12"}>
@@ -209,6 +237,7 @@ export function ApiKeys() {
 
         </div>
       </div>
+      <CodeSnippet isLoading={isExampleLoading} apiKey={exampleApiKey}/>
     </DashboardContent>
   )
 }

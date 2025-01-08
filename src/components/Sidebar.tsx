@@ -4,8 +4,8 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,} from "@/compone
 import {getEmail, getUsername, removeUserData} from "@/utils/user";
 import {Suspense, useState} from "react";
 
-export type MenuItemType = "" | "chat" | "limits" | "api_keys" | "network_stats" | "node_stats" | "my_nodes" | "api_keys_node"
-const validMenuItems: MenuItemType[] = ["chat", "limits", "api_keys", "network_stats", "node_stats", "my_nodes", "api_keys_node"];
+export type MenuItemType = "" | "api_keys" | "network_stats" | "node_stats" | "my_nodes" | "api_keys_node"
+const validMenuItems: MenuItemType[] = ["api_keys", "network_stats", "node_stats", "my_nodes", "api_keys_node"];
 
 export function isMenuItemType(value: string): value is MenuItemType {
   return validMenuItems.includes(value as MenuItemType);
@@ -40,20 +40,8 @@ export default function Sidebar(
     <>
       <Settings onLogout={onLogout} onMenuOpenChange={onMenuOpenChange}/>
       <div className="flex flex-col gap-4">
-        <div className="gal-subtitle">For developers</div>
+        <div className="gal-subtitle">For agent developers</div>
         <div className="flex flex-col gap-[10px]">
-          <MenuItem
-            name={"Chat"}
-            isActive={selectedMenu === "chat"}
-            iconName={"menu_chat"}
-            onClick={() => onMenuItemChange("chat")}
-          />
-          <MenuItem
-            name={"API Usage"}
-            isActive={selectedMenu === "limits"}
-            iconName={"menu_stopwatch"}
-            onClick={() => onMenuItemChange("limits")}
-          />
           <MenuItem
             name={"API Keys"}
             isActive={selectedMenu === "api_keys"}
