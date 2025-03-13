@@ -49,7 +49,7 @@ export default function Sidebar(
             onClick={() => onMenuItemChange("api_keys")}
           />
           <a
-            href={process.env.NEXT_PUBLIC_DOCS_URL + "api-reference/quickstart"}
+            href={process.env.NEXT_PUBLIC_DOCS_URL + "galadriel-network/get-started/"}
             target="_blank"
           >
             <div
@@ -62,46 +62,46 @@ export default function Sidebar(
               </div>
             </div>
           </a>
-          <div className="gal-subtitle pt-8">For nodes</div>
+          {/*<div className="gal-subtitle pt-8">For nodes</div>*/}
 
-          <MenuItem
-            name={"Network stats"}
-            isActive={selectedMenu === "network_stats"}
-            iconName={"menu_network"}
-            onClick={() => onMenuItemChange("network_stats")}
-          />
-          <MenuItem
-            name={"Node stats"}
-            isActive={selectedMenu === "node_stats"}
-            iconName={"menu_mystats"}
-            onClick={() => onMenuItemChange("node_stats")}
-          />
-          <MenuItem
-            name={"My Nodes"}
-            isActive={selectedMenu === "my_nodes"}
-            iconName={"menu_mynodes"}
-            onClick={() => onMenuItemChange("my_nodes")}
-          />
-          <MenuItem
-            name={"API Keys"}
-            isActive={selectedMenu === "api_keys_node"}
-            iconName={"menu_keys"}
-            onClick={() => onMenuItemChange("api_keys_node")}
-          />
-          <a
-            href={process.env.NEXT_PUBLIC_DOCS_URL + "nodes/quickstart"}
-            target="_blank"
-          >
-            <div
-              className={`flex flex-row gap-4 min-h-[40px] py-[10px] px-[12px] items-center cursor-pointer gal-sidebar-menu-item gal-group`}
-            >
-              {getIcon("menu_docs")}
-              <div className={"flex flex-row gap-2 items-center"}>
-                Node Docs
-                {getIcon("arrow")}
-              </div>
-            </div>
-          </a>
+          {/*<MenuItem*/}
+          {/*  name={"Network stats"}*/}
+          {/*  isActive={selectedMenu === "network_stats"}*/}
+          {/*  iconName={"menu_network"}*/}
+          {/*  onClick={() => onMenuItemChange("network_stats")}*/}
+          {/*/>*/}
+          {/*<MenuItem*/}
+          {/*  name={"Node stats"}*/}
+          {/*  isActive={selectedMenu === "node_stats"}*/}
+          {/*  iconName={"menu_mystats"}*/}
+          {/*  onClick={() => onMenuItemChange("node_stats")}*/}
+          {/*/>*/}
+          {/*<MenuItem*/}
+          {/*  name={"My Nodes"}*/}
+          {/*  isActive={selectedMenu === "my_nodes"}*/}
+          {/*  iconName={"menu_mynodes"}*/}
+          {/*  onClick={() => onMenuItemChange("my_nodes")}*/}
+          {/*/>*/}
+          {/*<MenuItem*/}
+          {/*  name={"API Keys"}*/}
+          {/*  isActive={selectedMenu === "api_keys_node"}*/}
+          {/*  iconName={"menu_keys"}*/}
+          {/*  onClick={() => onMenuItemChange("api_keys_node")}*/}
+          {/*/>*/}
+          {/*<a*/}
+          {/*  href={process.env.NEXT_PUBLIC_DOCS_URL + "nodes/quickstart"}*/}
+          {/*  target="_blank"*/}
+          {/*>*/}
+          {/*  <div*/}
+          {/*    className={`flex flex-row gap-4 min-h-[40px] py-[10px] px-[12px] items-center cursor-pointer gal-sidebar-menu-item gal-group`}*/}
+          {/*  >*/}
+          {/*    {getIcon("menu_docs")}*/}
+          {/*    <div className={"flex flex-row gap-2 items-center"}>*/}
+          {/*      Node Docs*/}
+          {/*      {getIcon("arrow")}*/}
+          {/*    </div>*/}
+          {/*  </div>*/}
+          {/*</a>*/}
         </div>
       </div>
       <div className="flex flex-col gap-4">

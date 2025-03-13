@@ -227,7 +227,7 @@ export function ApiKeys() {
             Create new key
           </button>
           <a
-            href={process.env.NEXT_PUBLIC_DOCS_URL}
+            href={process.env.NEXT_PUBLIC_DOCS_URL + "galadriel-network/get-started/"}
             target="_blank"
           >
             <button className={"gal-button w-full"}>
@@ -237,7 +237,16 @@ export function ApiKeys() {
 
         </div>
       </div>
-      <CodeSnippet isLoading={isExampleLoading} apiKey={exampleApiKey}/>
+      {/*<CodeSnippet isLoading={isExampleLoading} apiKey={exampleApiKey}/>*/}
+      <div>
+        Check out our <a
+        href={process.env.NEXT_PUBLIC_DOCS_URL + "galadriel-network/get-started/"}
+        target="_blank"
+        className="gal-link"
+      >
+        documentation
+      </a> to get started!
+      </div>
     </DashboardContent>
   )
 }
