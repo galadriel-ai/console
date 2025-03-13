@@ -5,7 +5,6 @@ import {getIcon} from "@/components/Icons";
 import {ApiKeyModal} from "@/components/dashboard/components/ApiKeyModal";
 import {ApiKeyDeletionModal} from "@/components/dashboard/components/ApiKeyDeletionModal";
 import {useRouter} from "next/navigation";
-import {CodeSnippet} from "@/components/dashboard/components/CodeSnippet";
 
 interface ApiKey {
   apiKeyId: string
@@ -27,7 +26,9 @@ export function ApiKeys() {
   const [isDeletionModalOpen, setIsDeletionModalOpen] = useState<boolean>(false)
   const [deletionApiKey, setDeletionApiKey] = useState<ApiKey | null>(null)
 
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   const [isExampleLoading, setIsExampleLoading] = useState<boolean>(false)
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   const [exampleApiKey, setExampleApiKey] = useState<string>("")
 
 
